@@ -483,6 +483,13 @@
       "actualPerson": "Pardeep",
       "favoriteOverride": null,
       "resolvedAt": "2026-03-28T22:47:53.862Z"
+    },
+    "9": {
+      "resolved": true,
+      "outcomeType": "favorite",
+      "actualPerson": null,
+      "favoriteOverride": null,
+      "resolvedAt": "2026-03-28T22:47:57.115Z"
     }
   },
   "favoriteOverrides": {},
