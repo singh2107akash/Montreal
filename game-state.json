@@ -221,6 +221,10 @@
       "9": {
         "pick": "Jodha",
         "amount": 5
+      },
+      "10": {
+        "pick": "Akash",
+        "amount": 5
       }
     }
   },
