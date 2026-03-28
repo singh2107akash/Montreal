@@ -11,6 +11,7 @@ const defaultState = {
   lockedPlayers: [],
   resolutions: {},
   favoriteOverrides: {},
+  playerPasswords: {},
   gamePhase: 'setup',
   config: GAME_CONFIG,
 };
@@ -21,10 +22,8 @@ export function GameProvider({ children }) {
   const [error, setError] = useState(null);
   const [saving, setSaving] = useState(false);
   const stateRef = useRef(state);
-  const pollingStarted = useRef(false);
   stateRef.current = state;
 
-  // Load initial state and start polling only when token is available
   useEffect(() => {
     if (!hasToken()) {
       setLoading(false);
@@ -48,33 +47,28 @@ export function GameProvider({ children }) {
 
     init();
 
-    if (!pollingStarted.current) {
-      pollingStarted.current = true;
-      startPolling((data) => {
-        if (data) {
-          setState((prev) => {
-            const newStr = JSON.stringify(data);
-            const prevStr = JSON.stringify({
-              players: prev.players,
-              nicknames: prev.nicknames,
-              bets: prev.bets,
-              lockedPlayers: prev.lockedPlayers,
-              resolutions: prev.resolutions,
-              favoriteOverrides: prev.favoriteOverrides,
-              gamePhase: prev.gamePhase,
-              config: prev.config,
-            });
-            if (newStr === prevStr) return prev;
-            return { ...defaultState, ...data };
+    startPolling((data) => {
+      if (data) {
+        setState((prev) => {
+          const newStr = JSON.stringify(data);
+          const prevStr = JSON.stringify({
+            players: prev.players,
+            nicknames: prev.nicknames,
+            bets: prev.bets,
+            lockedPlayers: prev.lockedPlayers,
+            resolutions: prev.resolutions,
+            favoriteOverrides: prev.favoriteOverrides,
+            playerPasswords: prev.playerPasswords,
+            gamePhase: prev.gamePhase,
+            config: prev.config,
           });
-        }
-      }, 8000);
-    }
+          if (newStr === prevStr) return prev;
+          return { ...defaultState, ...data };
+        });
+      }
+    }, 8000);
 
-    return () => {
-      stopPolling();
-      pollingStarted.current = false;
-    };
+    return () => stopPolling();
   }, []);
 
   const save = useCallback(async (newState) => {
@@ -88,6 +82,7 @@ export function GameProvider({ children }) {
         lockedPlayers: newState.lockedPlayers,
         resolutions: newState.resolutions,
         favoriteOverrides: newState.favoriteOverrides,
+        playerPasswords: newState.playerPasswords,
         gamePhase: newState.gamePhase,
         config: newState.config,
       };
@@ -109,6 +104,14 @@ export function GameProvider({ children }) {
     const next = {
       ...stateRef.current,
       nicknames: { ...stateRef.current.nicknames, [player]: nickname },
+    };
+    save(next);
+  }, [save]);
+
+  const setPlayerPassword = useCallback((player, password) => {
+    const next = {
+      ...stateRef.current,
+      playerPasswords: { ...stateRef.current.playerPasswords, [player]: password },
     };
     save(next);
   }, [save]);
@@ -181,6 +184,7 @@ export function GameProvider({ children }) {
     saving,
     setPlayers,
     setNickname,
+    setPlayerPassword,
     placeBet,
     lockPlayer,
     resolveQuestion,

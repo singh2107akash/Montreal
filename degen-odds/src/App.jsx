@@ -31,12 +31,19 @@ function AuthGate() {
   );
 }
 
+function AppContent() {
+  const { gameCodeReady } = useAuth();
+  return (
+    <GameProvider key={gameCodeReady ? 'active' : 'idle'}>
+      <AuthGate />
+    </GameProvider>
+  );
+}
+
 export default function App() {
   return (
     <AuthProvider>
-      <GameProvider>
-        <AuthGate />
-      </GameProvider>
+      <AppContent />
     </AuthProvider>
   );
 }

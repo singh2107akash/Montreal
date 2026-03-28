@@ -1,19 +1,25 @@
 import { useState } from 'react';
 import { useAuth } from '../AuthContext';
 import { useGame } from '../GameContext';
-import { Shield, User, Eye, EyeOff, AlertCircle, Loader2, Key } from 'lucide-react';
+import { Shield, User, Eye, EyeOff, AlertCircle, Loader2, Key, Lock, ArrowLeft } from 'lucide-react';
 
 export default function LoginPage() {
   const {
     gameCodeReady, tokenError, validating,
     submitGameCode, loginAsAdmin, loginAsPlayer,
   } = useAuth();
-  const { players, loading } = useGame();
-  const [mode, setMode] = useState(null); // null | 'admin' | 'player'
+  const { players, playerPasswords, loading, setPlayerPassword } = useGame();
+  const [mode, setMode] = useState(null);
   const [password, setPassword] = useState('');
   const [gameCode, setGameCode] = useState('');
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  // Player password flow
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const [pwInput, setPwInput] = useState('');
+  const [pwConfirm, setPwConfirm] = useState('');
+  const [pwError, setPwError] = useState('');
 
   const handleGameCode = async (e) => {
     e.preventDefault();
@@ -31,8 +37,45 @@ export default function LoginPage() {
     }
   };
 
-  const handlePlayerLogin = (name) => {
-    loginAsPlayer(name);
+  const handlePlayerSelect = (name) => {
+    setSelectedPlayer(name);
+    setPwInput('');
+    setPwConfirm('');
+    setPwError('');
+  };
+
+  const hasExistingPassword = selectedPlayer && playerPasswords && playerPasswords[selectedPlayer];
+
+  const handlePlayerPasswordSubmit = (e) => {
+    e.preventDefault();
+    setPwError('');
+
+    if (hasExistingPassword) {
+      if (pwInput !== playerPasswords[selectedPlayer]) {
+        setPwError('Wrong password');
+        setPwInput('');
+        return;
+      }
+      loginAsPlayer(selectedPlayer);
+    } else {
+      if (pwInput.length < 3) {
+        setPwError('Password must be at least 3 characters');
+        return;
+      }
+      if (pwInput !== pwConfirm) {
+        setPwError('Passwords don\'t match');
+        return;
+      }
+      setPlayerPassword(selectedPlayer, pwInput);
+      loginAsPlayer(selectedPlayer);
+    }
+  };
+
+  const resetPlayerFlow = () => {
+    setSelectedPlayer(null);
+    setPwInput('');
+    setPwConfirm('');
+    setPwError('');
   };
 
   // Game code entry screen
@@ -76,9 +119,7 @@ export default function LoginPage() {
               className="w-full bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-500 disabled:opacity-30 disabled:cursor-not-allowed text-dark-900 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
             >
               {validating ? (
-                <>
-                  <Loader2 className="w-5 h-5 animate-spin" /> Verifying...
-                </>
+                <><Loader2 className="w-5 h-5 animate-spin" /> Verifying...</>
               ) : (
                 'Join Game'
               )}
@@ -87,7 +128,7 @@ export default function LoginPage() {
 
           <div className="mt-8 bg-dark-800 border border-dark-600 rounded-xl p-4 text-left text-xs text-gray-500">
             <p className="text-gray-400 font-semibold mb-2">Don't have a game code?</p>
-            <p>Ask the admin (Akash) for it. The game code is a GitHub token that connects everyone to the same game.</p>
+            <p>Ask the admin (Akash) for it.</p>
           </div>
         </div>
 
@@ -115,15 +156,16 @@ export default function LoginPage() {
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
       <div className="max-w-md w-full text-center">
         <div className="mb-1 text-gold-400 text-sm font-semibold tracking-[0.3em] uppercase">
-          Montreal Bachelor Edition
+          Montreal Edition
         </div>
         <h1 className="text-5xl md:text-6xl font-black mb-3 bg-gradient-to-r from-gold-400 via-yellow-200 to-gold-500 bg-clip-text text-transparent leading-tight">
-          DEGEN ODDS
+          SACRÉ BLEU BETS
         </h1>
         <p className="text-gray-500 text-sm mb-10">
           Place bets before the trip. The chaos decides who wins.
         </p>
 
+        {/* Mode selection */}
         {!mode && (
           <div className="space-y-3 animate-fade-in-up">
             <button
@@ -158,6 +200,7 @@ export default function LoginPage() {
           </div>
         )}
 
+        {/* Admin login */}
         {mode === 'admin' && (
           <div className="animate-fade-in-up">
             <form onSubmit={handleAdminLogin} className="space-y-4">
@@ -199,22 +242,26 @@ export default function LoginPage() {
               onClick={() => { setMode(null); setError(''); setPassword(''); }}
               className="mt-4 text-gray-500 hover:text-gold-400 text-sm transition-colors cursor-pointer"
             >
-              &larr; Back
+              \u2190 Back
             </button>
           </div>
         )}
 
-        {mode === 'player' && (
+        {/* Player login - name selection */}
+        {mode === 'player' && !selectedPlayer && (
           <div className="animate-fade-in-up">
             <p className="text-gray-400 text-sm mb-4">Select your name</p>
             <div className="grid grid-cols-2 gap-2 mb-4">
               {players.map((name) => (
                 <button
                   key={name}
-                  onClick={() => handlePlayerLogin(name)}
-                  className="bg-dark-800 border border-dark-600 hover:border-gold-500 rounded-xl px-4 py-3 text-gray-200 hover:text-gold-400 font-medium transition-all cursor-pointer text-sm"
+                  onClick={() => handlePlayerSelect(name)}
+                  className="bg-dark-800 border border-dark-600 hover:border-gold-500 rounded-xl px-4 py-3 text-gray-200 hover:text-gold-400 font-medium transition-all cursor-pointer text-sm flex items-center justify-center gap-2"
                 >
                   {name}
+                  {playerPasswords && playerPasswords[name] && (
+                    <Lock className="w-3 h-3 text-gray-600" />
+                  )}
                 </button>
               ))}
             </div>
@@ -223,7 +270,85 @@ export default function LoginPage() {
               onClick={() => setMode(null)}
               className="mt-2 text-gray-500 hover:text-gold-400 text-sm transition-colors cursor-pointer"
             >
-              &larr; Back
+              \u2190 Back
+            </button>
+          </div>
+        )}
+
+        {/* Player login - password screen */}
+        {mode === 'player' && selectedPlayer && (
+          <div className="animate-fade-in-up">
+            <div className="flex items-center justify-center gap-2 mb-6">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent-blue to-blue-600 flex items-center justify-center text-white font-bold">
+                {selectedPlayer[0]}
+              </div>
+              <span className="text-lg font-bold text-gray-200">{selectedPlayer}</span>
+            </div>
+
+            <form onSubmit={handlePlayerPasswordSubmit} className="space-y-4">
+              {hasExistingPassword ? (
+                <>
+                  <p className="text-gray-400 text-sm mb-2">Enter your password</p>
+                  <div className="relative">
+                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600" />
+                    <input
+                      type="password"
+                      value={pwInput}
+                      onChange={(e) => { setPwInput(e.target.value); setPwError(''); }}
+                      placeholder="Password"
+                      autoFocus
+                      className="w-full bg-dark-800 border border-dark-600 focus:border-gold-500 rounded-xl pl-11 pr-4 py-4 text-gray-200 placeholder-gray-600 focus:outline-none transition-colors"
+                    />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="text-gray-400 text-sm mb-2">Create a password for your account</p>
+                  <div className="relative">
+                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600" />
+                    <input
+                      type="password"
+                      value={pwInput}
+                      onChange={(e) => { setPwInput(e.target.value); setPwError(''); }}
+                      placeholder="Create password"
+                      autoFocus
+                      className="w-full bg-dark-800 border border-dark-600 focus:border-gold-500 rounded-xl pl-11 pr-4 py-4 text-gray-200 placeholder-gray-600 focus:outline-none transition-colors"
+                    />
+                  </div>
+                  <div className="relative">
+                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600" />
+                    <input
+                      type="password"
+                      value={pwConfirm}
+                      onChange={(e) => { setPwConfirm(e.target.value); setPwError(''); }}
+                      placeholder="Confirm password"
+                      className="w-full bg-dark-800 border border-dark-600 focus:border-gold-500 rounded-xl pl-11 pr-4 py-4 text-gray-200 placeholder-gray-600 focus:outline-none transition-colors"
+                    />
+                  </div>
+                </>
+              )}
+
+              {pwError && (
+                <div className="flex items-center gap-2 text-accent-red text-sm">
+                  <AlertCircle className="w-4 h-4" />
+                  {pwError}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={!pwInput}
+                className="w-full bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-500 disabled:opacity-30 disabled:cursor-not-allowed text-dark-900 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-200 cursor-pointer"
+              >
+                {hasExistingPassword ? 'Log In' : 'Create & Log In'}
+              </button>
+            </form>
+
+            <button
+              onClick={resetPlayerFlow}
+              className="mt-4 text-gray-500 hover:text-gold-400 text-sm transition-colors cursor-pointer flex items-center gap-1 mx-auto"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" /> Pick different name
             </button>
           </div>
         )}
