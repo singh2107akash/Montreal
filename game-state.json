@@ -77,6 +77,10 @@
       "14": {
         "pick": "Jodha",
         "amount": 5
+      },
+      "15": {
+        "pick": "Aman",
+        "amount": 5
       }
     }
   },
