@@ -182,7 +182,9 @@
       }
     }
   },
-  "lockedPlayers": [],
+  "lockedPlayers": [
+    "Aman"
+  ],
   "resolutions": {},
   "favoriteOverrides": {},
   "playerPasswords": {
