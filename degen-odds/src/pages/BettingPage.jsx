@@ -9,7 +9,7 @@ export default function BettingPage() {
   const { user } = useAuth();
   const {
     players, questions, bets, lockedPlayers, config, nicknames, saving,
-    placeBet, lockPlayer,
+    placeBet, lockPlayer, bettingClosed,
   } = useGame();
 
   const isAdmin = user?.isAdmin;
@@ -181,6 +181,25 @@ export default function BettingPage() {
         </div>
       </div>
 
+      {bettingClosed && (
+        <div className="bg-dark-800 border border-accent-red/30 rounded-xl p-8 text-center mt-4">
+          <Lock className="w-10 h-10 text-accent-red mx-auto mb-3" />
+          <h2 className="text-xl font-bold text-gray-200 mb-2">Betting is Closed</h2>
+          <p className="text-gray-500 text-sm mb-4">
+            {isAdmin
+              ? 'You shut it down. Reopen from the home page if you need to.'
+              : 'The admin has closed betting. No more changes. Time for the trip to decide.'}
+          </p>
+          <button
+            onClick={() => navigate(isAdmin ? '/' : '/market')}
+            className="text-gold-400 hover:text-gold-500 text-sm font-medium transition-colors cursor-pointer"
+          >
+            {isAdmin ? 'Back to Home' : 'See the Odds'} &rarr;
+          </button>
+        </div>
+      )}
+
+      {!bettingClosed && (<>
       <h1 className="text-3xl font-black mb-1 bg-gradient-to-r from-gold-400 to-gold-500 bg-clip-text text-transparent">
         {isAdmin ? 'The War Room' : 'Put Up or Shut Up'}
       </h1>
@@ -416,6 +435,7 @@ export default function BettingPage() {
           </div>
         </>
       )}
+      </>)}
     </div>
   );
 }

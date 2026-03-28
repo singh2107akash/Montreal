@@ -15,6 +15,7 @@ const defaultState = {
   questions: QUESTIONS,
   gamePhase: 'setup',
   config: GAME_CONFIG,
+  bettingClosed: false,
 };
 
 export function GameProvider({ children }) {
@@ -63,6 +64,7 @@ export function GameProvider({ children }) {
             questions: prev.questions,
             gamePhase: prev.gamePhase,
             config: prev.config,
+            bettingClosed: prev.bettingClosed,
           });
           if (newStr === prevStr) return prev;
           return { ...defaultState, ...data };
@@ -88,6 +90,7 @@ export function GameProvider({ children }) {
         questions: newState.questions,
         gamePhase: newState.gamePhase,
         config: newState.config,
+        bettingClosed: newState.bettingClosed,
       };
       await writeState(toSave);
       setState(newState);
@@ -130,6 +133,9 @@ export function GameProvider({ children }) {
 
   const placeBet = useCallback((player, questionIndex, pick, amount) => {
     const current = stateRef.current;
+    // Block bets if betting is closed or question is already resolved
+    if (current.bettingClosed) return;
+    if (current.resolutions[questionIndex]?.resolved) return;
     const playerBets = { ...(current.bets[player] || {}) };
     playerBets[questionIndex] = { pick, amount: Number(amount) };
     const next = { ...current, bets: { ...current.bets, [player]: playerBets } };
@@ -184,6 +190,21 @@ export function GameProvider({ children }) {
     save({ ...stateRef.current, gamePhase: phase });
   }, [save]);
 
+  const closeBetting = useCallback(() => {
+    const current = stateRef.current;
+    // Lock all players and close betting
+    const next = {
+      ...current,
+      bettingClosed: true,
+      lockedPlayers: [...new Set([...current.lockedPlayers, ...current.players])],
+    };
+    save(next);
+  }, [save]);
+
+  const reopenBetting = useCallback(() => {
+    save({ ...stateRef.current, bettingClosed: false, lockedPlayers: [] });
+  }, [save]);
+
   const resetGame = useCallback(() => {
     save({ ...defaultState });
   }, [save]);
@@ -203,6 +224,8 @@ export function GameProvider({ children }) {
     unresolveQuestion,
     setFavoriteOverride,
     setGamePhase,
+    closeBetting,
+    reopenBetting,
     resetGame,
   };
 

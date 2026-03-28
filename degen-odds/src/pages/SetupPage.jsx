@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { useGame } from '../GameContext';
-import { Plus, X, ChevronRight, Users, HelpCircle, Shield, Pencil, Check, Trash2, RotateCcw, AlertTriangle } from 'lucide-react';
+import { Plus, X, ChevronRight, Users, HelpCircle, Shield, Pencil, Check, Trash2, RotateCcw, AlertTriangle, Lock, Unlock } from 'lucide-react';
 
 export default function SetupPage() {
   const navigate = useNavigate();
@@ -10,6 +10,7 @@ export default function SetupPage() {
   const {
     players, nicknames, questions, config, lockedPlayers,
     setPlayers, setNickname, setQuestions, resetGame, saving,
+    bettingClosed, closeBetting, reopenBetting,
   } = useGame();
   const [newPlayer, setNewPlayer] = useState('');
   const [showQuestions, setShowQuestions] = useState(false);
@@ -284,6 +285,30 @@ export default function SetupPage() {
             )}
           </div>
         )}
+      </div>
+
+      {/* End / Reopen Betting */}
+      <div className="mb-6">
+        {!bettingClosed ? (
+          <button
+            onClick={closeBetting}
+            className="w-full bg-accent-red/10 border border-accent-red/30 hover:bg-accent-red/20 text-accent-red font-bold py-4 px-8 rounded-xl text-lg transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <Lock className="w-5 h-5" /> End Betting — Lock Everyone Out
+          </button>
+        ) : (
+          <button
+            onClick={reopenBetting}
+            className="w-full bg-accent-green/10 border border-accent-green/30 hover:bg-accent-green/20 text-accent-green font-bold py-4 px-8 rounded-xl text-lg transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <Unlock className="w-5 h-5" /> Reopen Betting — Unlock Everyone
+          </button>
+        )}
+        <p className="text-center text-xs text-gray-600 mt-2">
+          {bettingClosed
+            ? 'Betting is closed. No one can place or change bets.'
+            : 'Close betting when everyone is done. This locks all players.'}
+        </p>
       </div>
 
       {/* Admin nav */}
