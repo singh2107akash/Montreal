@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { QUESTIONS, DEFAULT_PLAYERS, GAME_CONFIG } from './data/questions';
-import { readState, writeState, startPolling, stopPolling } from './github-storage';
+import { readState, writeState, startPolling, stopPolling, hasToken } from './github-storage';
 
 const GameContext = createContext(null);
 
@@ -21,17 +21,22 @@ export function GameProvider({ children }) {
   const [error, setError] = useState(null);
   const [saving, setSaving] = useState(false);
   const stateRef = useRef(state);
+  const pollingStarted = useRef(false);
   stateRef.current = state;
 
-  // Load initial state and start polling
+  // Load initial state and start polling only when token is available
   useEffect(() => {
+    if (!hasToken()) {
+      setLoading(false);
+      return;
+    }
+
     const init = async () => {
       try {
         const data = await readState();
         if (data) {
           setState({ ...defaultState, ...data });
         } else {
-          // File doesn't exist yet - create it
           await writeState(defaultState);
         }
       } catch (err) {
@@ -43,29 +48,33 @@ export function GameProvider({ children }) {
 
     init();
 
-    // Start polling for real-time updates
-    startPolling((data) => {
-      if (data) {
-        setState((prev) => {
-          // Only update if data actually changed
-          const newStr = JSON.stringify(data);
-          const prevStr = JSON.stringify({
-            players: prev.players,
-            nicknames: prev.nicknames,
-            bets: prev.bets,
-            lockedPlayers: prev.lockedPlayers,
-            resolutions: prev.resolutions,
-            favoriteOverrides: prev.favoriteOverrides,
-            gamePhase: prev.gamePhase,
-            config: prev.config,
+    if (!pollingStarted.current) {
+      pollingStarted.current = true;
+      startPolling((data) => {
+        if (data) {
+          setState((prev) => {
+            const newStr = JSON.stringify(data);
+            const prevStr = JSON.stringify({
+              players: prev.players,
+              nicknames: prev.nicknames,
+              bets: prev.bets,
+              lockedPlayers: prev.lockedPlayers,
+              resolutions: prev.resolutions,
+              favoriteOverrides: prev.favoriteOverrides,
+              gamePhase: prev.gamePhase,
+              config: prev.config,
+            });
+            if (newStr === prevStr) return prev;
+            return { ...defaultState, ...data };
           });
-          if (newStr === prevStr) return prev;
-          return { ...defaultState, ...data };
-        });
-      }
-    }, 8000);
+        }
+      }, 8000);
+    }
 
-    return () => stopPolling();
+    return () => {
+      stopPolling();
+      pollingStarted.current = false;
+    };
   }, []);
 
   const save = useCallback(async (newState) => {
@@ -105,7 +114,6 @@ export function GameProvider({ children }) {
   }, [save]);
 
   const placeBet = useCallback((player, questionIndex, pick, amount) => {
-    // Store bets locally while editing (don't save to GitHub on every keystroke)
     setState((prev) => {
       const playerBets = { ...(prev.bets[player] || {}) };
       playerBets[questionIndex] = { pick, amount: Number(amount) };
