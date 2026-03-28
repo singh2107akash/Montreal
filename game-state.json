@@ -98,6 +98,12 @@
         "pick": "Hinda",
         "amount": 5
       }
+    },
+    "Aman": {
+      "0": {
+        "pick": "Gagan",
+        "amount": 5
+      }
     }
   },
   "lockedPlayers": [],
