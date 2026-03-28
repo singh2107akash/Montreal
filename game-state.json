@@ -104,36 +104,20 @@
         "pick": "Gagan",
         "amount": 5
       },
-      "1": {
-        "pick": "Gagan",
-        "amount": 5
-      },
       "2": {
         "pick": "Akash",
+        "amount": 5
+      },
+      "3": {
+        "pick": "Robby",
         "amount": 5
       },
       "8": {
         "pick": "Dilaver",
         "amount": 5
       },
-      "9": {
-        "pick": "Surkh",
-        "amount": 5
-      },
-      "11": {
-        "pick": "Jodha",
-        "amount": 5
-      },
-      "12": {
-        "pick": "Dilaver",
-        "amount": 5
-      },
-      "13": {
-        "pick": "Harman",
-        "amount": 5
-      },
-      "14": {
-        "pick": "Robby",
+      "10": {
+        "pick": "Randy",
         "amount": 5
       }
     }
