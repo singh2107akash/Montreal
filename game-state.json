@@ -189,6 +189,10 @@
       "1": {
         "pick": "Surkh",
         "amount": 5
+      },
+      "2": {
+        "pick": "Randy",
+        "amount": 5
       }
     }
   },
