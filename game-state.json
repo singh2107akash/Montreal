@@ -180,6 +180,12 @@
         "pick": "Randy",
         "amount": 5
       }
+    },
+    "Gagan": {
+      "0": {
+        "pick": "Akash",
+        "amount": 5
+      }
     }
   },
   "lockedPlayers": [
