@@ -111,6 +111,10 @@
       "8": {
         "pick": "Dilaver",
         "amount": 5
+      },
+      "9": {
+        "pick": "Surkh",
+        "amount": 5
       }
     }
   },
