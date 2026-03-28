@@ -103,7 +103,15 @@
   "lockedPlayers": [
     "Akash"
   ],
-  "resolutions": {},
+  "resolutions": {
+    "2": {
+      "resolved": true,
+      "outcomeType": "favorite",
+      "actualPerson": null,
+      "favoriteOverride": null,
+      "resolvedAt": "2026-03-28T22:04:49.777Z"
+    }
+  },
   "favoriteOverrides": {},
   "playerPasswords": {
     "Akash": "Rav"
