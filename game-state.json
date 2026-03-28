@@ -103,6 +103,10 @@
       "0": {
         "pick": "Gagan",
         "amount": 5
+      },
+      "1": {
+        "pick": "Akash",
+        "amount": 5
       }
     }
   },
