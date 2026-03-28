@@ -152,37 +152,50 @@ export default function MarketPage() {
             <div className="bg-dark-900/50 px-4 py-3 border-t border-dark-700">
               <div className="flex items-center gap-1 text-xs text-gray-600 mb-2">
                 <Users className="w-3 h-3" />
-                Bet breakdown
+                Who got picked
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              <div className="space-y-1.5">
                 {players
                   .filter((p) => md.pointsByPlayer?.[p] > 0)
                   .sort((a, b) => (md.pointsByPlayer[b] || 0) - (md.pointsByPlayer[a] || 0))
-                  .map((p) => (
-                    <div
-                      key={p}
-                      className={`flex items-center justify-between text-xs px-2 py-1.5 rounded ${
-                        p === md.favorite ? 'bg-gold-500/10 text-gold-400' : 'text-gray-400'
-                      }`}
-                    >
-                      <span className="truncate">{p}</span>
-                      <span className="font-bold ml-1">{md.pointsByPlayer[p]}</span>
-                    </div>
-                  ))}
-              </div>
-              {/* Who bet on whom */}
-              <div className="mt-2 space-y-1">
-                {Object.entries(bets).map(([bettor, playerBets]) => {
-                  const bet = playerBets[md.index];
-                  if (!bet?.pick) return null;
-                  return (
-                    <div key={bettor} className="text-[11px] text-gray-600">
-                      <span className="text-gray-400">{bettor}</span> bet{' '}
-                      <span className="text-gold-400">{bet.amount}</span> on{' '}
-                      <span className="text-gray-400">{bet.pick}</span>
-                    </div>
-                  );
-                })}
+                  .map((p) => {
+                    const pts = md.pointsByPlayer[p] || 0;
+                    const backers = md.backersByPlayer?.[p] || 0;
+                    const isFav = p === md.favorite;
+                    const barWidth = md.pot > 0 ? Math.max(8, (pts / md.pot) * 100) : 0;
+                    return (
+                      <div key={p}>
+                        <div className="flex items-center justify-between text-sm mb-0.5">
+                          <div className="flex items-center gap-2">
+                            {isFav && <Crown className="w-3.5 h-3.5 text-gold-400" />}
+                            <span className={`font-medium ${isFav ? 'text-gold-400' : 'text-gray-300'}`}>
+                              {displayName(p)}
+                            </span>
+                            {isFav && (
+                              <span className="text-[10px] bg-gold-500/20 text-gold-400 px-1.5 py-0.5 rounded font-bold">
+                                FAVORITE
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-2 text-xs">
+                            <span className="text-gray-500">{backers} {backers === 1 ? 'bet' : 'bets'}</span>
+                            <span className={`font-bold ${isFav ? 'text-gold-400' : 'text-gray-400'}`}>{pts} pts</span>
+                          </div>
+                        </div>
+                        <div className="w-full bg-dark-700 rounded-full h-1.5">
+                          <div
+                            className={`h-1.5 rounded-full transition-all duration-300 ${
+                              isFav ? 'bg-gold-500' : 'bg-gray-600'
+                            }`}
+                            style={{ width: `${barWidth}%` }}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                {players.filter((p) => md.pointsByPlayer?.[p] > 0).length === 0 && (
+                  <p className="text-xs text-gray-600">No bets placed yet</p>
+                )}
               </div>
             </div>
           </div>
