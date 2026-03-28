@@ -262,6 +262,12 @@
         "pick": "Akash",
         "amount": 25
       }
+    },
+    "Robby": {
+      "0": {
+        "pick": "Akash",
+        "amount": 20
+      }
     }
   },
   "lockedPlayers": [
