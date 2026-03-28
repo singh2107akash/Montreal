@@ -469,6 +469,13 @@
       "actualPerson": null,
       "favoriteOverride": null,
       "resolvedAt": "2026-03-28T22:47:41.016Z"
+    },
+    "7": {
+      "resolved": true,
+      "outcomeType": "favorite",
+      "actualPerson": null,
+      "favoriteOverride": null,
+      "resolvedAt": "2026-03-28T22:47:44.530Z"
     }
   },
   "favoriteOverrides": {},
