@@ -2,81 +2,155 @@ import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { useGame } from '../GameContext';
-import { Lock, ChevronRight, AlertCircle, Check, ChevronDown, Shield } from 'lucide-react';
+import { Lock, ChevronRight, ChevronLeft, AlertCircle, Check, ChevronDown, Shield } from 'lucide-react';
 
 export default function BettingPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const {
-    players, questions, bets, lockedPlayers, config, nicknames,
+    players, questions, bets, lockedPlayers, config, nicknames, saving,
     placeBet, lockPlayer,
   } = useGame();
 
   const isAdmin = user?.isAdmin;
 
-  // Players can only bet for themselves. Admin can manage any player.
   const [activePlayer, setActivePlayer] = useState(() => {
     if (!isAdmin) return user.name;
     return players.find((p) => !lockedPlayers.includes(p)) || players[0];
   });
-  const [errors, setErrors] = useState({});
+  const [currentQ, setCurrentQ] = useState(0);
   const [showPlayerSelect, setShowPlayerSelect] = useState(false);
+  const [localPick, setLocalPick] = useState('');
+  const [localAmount, setLocalAmount] = useState('');
+  const [error, setError] = useState('');
 
   const playerBets = bets[activePlayer] || {};
+  const isLocked = lockedPlayers.includes(activePlayer);
+  const allLocked = players.every((p) => lockedPlayers.includes(p));
 
   const totalSpent = useMemo(() => {
     return Object.values(playerBets).reduce((sum, b) => sum + (b?.amount || 0), 0);
   }, [playerBets]);
 
   const remaining = config.totalBudget - totalSpent;
-  const isLocked = lockedPlayers.includes(activePlayer);
-  const allLocked = players.every((p) => lockedPlayers.includes(p));
 
   const questionsAnswered = Object.keys(playerBets).filter(
     (k) => playerBets[k]?.pick && playerBets[k]?.amount >= config.minBetPerQuestion
   ).length;
 
-  const handleBet = (qi, pick, amount) => {
-    if (isLocked && !isAdmin) return;
-
-    const numAmount = Number(amount);
-    const newErrors = { ...errors };
-    delete newErrors[qi];
-
-    if (amount !== '' && numAmount < config.minBetPerQuestion) {
-      newErrors[qi] = `Min bet is ${config.minBetPerQuestion} pts`;
-    }
-
-    const otherSpent = Object.entries(playerBets)
-      .filter(([k]) => Number(k) !== qi)
-      .reduce((sum, [, b]) => sum + (b?.amount || 0), 0);
-
-    if (numAmount + otherSpent > config.totalBudget) {
-      newErrors[qi] = `Exceeds budget (${config.totalBudget - otherSpent} remaining)`;
-    }
-
-    setErrors(newErrors);
-    placeBet(activePlayer, qi, pick, amount === '' ? 0 : numAmount);
+  // Sync local state when switching questions or players
+  const currentBet = playerBets[currentQ];
+  const syncLocal = (qi) => {
+    const bet = playerBets[qi];
+    setLocalPick(bet?.pick || '');
+    setLocalAmount(bet?.amount ? String(bet.amount) : '');
+    setError('');
   };
 
-  const canSubmit = useMemo(() => {
-    if (questionsAnswered < questions.length) return false;
-    if (totalSpent > config.totalBudget) return false;
-    if (totalSpent < config.minBetPerQuestion * questions.length) return false;
-    return Object.keys(errors).length === 0;
-  }, [questionsAnswered, totalSpent, config, questions.length, errors]);
+  // Initialize local state for current question if empty
+  useState(() => {
+    if (currentBet) {
+      setLocalPick(currentBet.pick || '');
+      setLocalAmount(currentBet.amount ? String(currentBet.amount) : '');
+    }
+  });
+
+  const otherPlayers = players.filter((p) => p !== activePlayer);
+  const displayName = (p) => nicknames[p] ? `${p} (${nicknames[p]})` : p;
+
+  const spentOnOthers = Object.entries(playerBets)
+    .filter(([k]) => Number(k) !== currentQ)
+    .reduce((sum, [, b]) => sum + (b?.amount || 0), 0);
+  const maxForThis = config.totalBudget - spentOnOthers;
+
+  const validateAndSave = () => {
+    const amount = Number(localAmount);
+    if (!localPick) {
+      setError('Pick a player');
+      return false;
+    }
+    if (!localAmount || amount < config.minBetPerQuestion) {
+      setError(`Min bet is ${config.minBetPerQuestion} pts`);
+      return false;
+    }
+    if (amount > maxForThis) {
+      setError(`Over budget! Max ${maxForThis} pts for this question`);
+      return false;
+    }
+    setError('');
+    placeBet(activePlayer, currentQ, localPick, amount);
+    return true;
+  };
+
+  const goNext = () => {
+    if (localPick || localAmount) {
+      if (!validateAndSave()) return;
+    }
+    if (currentQ < questions.length - 1) {
+      const next = currentQ + 1;
+      setCurrentQ(next);
+      syncLocal(next);
+    }
+  };
+
+  const goPrev = () => {
+    if (localPick || localAmount) {
+      validateAndSave(); // save silently when going back
+    }
+    if (currentQ > 0) {
+      const prev = currentQ - 1;
+      setCurrentQ(prev);
+      syncLocal(prev);
+    }
+  };
+
+  const goToQuestion = (qi) => {
+    if (localPick || localAmount) {
+      validateAndSave();
+    }
+    setCurrentQ(qi);
+    syncLocal(qi);
+  };
 
   const handleSubmit = () => {
-    if (!canSubmit) return;
+    // Validate current question first
+    if (localPick || localAmount) {
+      if (!validateAndSave()) return;
+    }
+    // Check all questions are answered
+    const allAnswered = questions.every((_, qi) => {
+      const b = playerBets[qi];
+      return b?.pick && b?.amount >= config.minBetPerQuestion;
+    });
+    if (!allAnswered) {
+      setError('Answer all questions before locking in');
+      return;
+    }
+    const total = Object.values(playerBets).reduce((s, b) => s + (b?.amount || 0), 0);
+    if (total > config.totalBudget) {
+      setError('Over budget!');
+      return;
+    }
     lockPlayer(activePlayer);
     if (isAdmin) {
       const next = players.find((p) => !lockedPlayers.includes(p) && p !== activePlayer);
-      if (next) setActivePlayer(next);
+      if (next) {
+        setActivePlayer(next);
+        setCurrentQ(0);
+        syncLocal(0);
+      }
     }
   };
 
-  const displayName = (p) => nicknames[p] ? `${p} (${nicknames[p]})` : p;
-  const otherPlayers = players.filter((p) => p !== activePlayer);
+  const switchPlayer = (p) => {
+    setActivePlayer(p);
+    setShowPlayerSelect(false);
+    setCurrentQ(0);
+    const bet = (bets[p] || {})[0];
+    setLocalPick(bet?.pick || '');
+    setLocalAmount(bet?.amount ? String(bet.amount) : '');
+    setError('');
+  };
 
   return (
     <div className="min-h-screen px-4 py-8 max-w-2xl mx-auto">
@@ -88,6 +162,9 @@ export default function BettingPage() {
           &larr; Home
         </button>
         <div className="flex items-center gap-3">
+          {saving && (
+            <span className="text-xs text-gold-400 animate-pulse">Saving...</span>
+          )}
           {isAdmin && (
             <span className="flex items-center gap-1 text-xs text-gold-400">
               <Shield className="w-3 h-3" /> Admin
@@ -111,7 +188,7 @@ export default function BettingPage() {
         {lockedPlayers.length}/{players.length} players locked in
       </p>
 
-      {/* Player selector - admin can switch, players see only themselves */}
+      {/* Player selector */}
       {isAdmin ? (
         <div className="relative mb-6">
           <button
@@ -140,7 +217,7 @@ export default function BettingPage() {
               {players.map((p) => (
                 <button
                   key={p}
-                  onClick={() => { setActivePlayer(p); setShowPlayerSelect(false); setErrors({}); }}
+                  onClick={() => switchPlayer(p)}
                   className={`w-full px-4 py-3 text-left flex items-center justify-between hover:bg-dark-600 transition-colors cursor-pointer ${
                     p === activePlayer ? 'bg-dark-600' : ''
                   }`}
@@ -210,84 +287,132 @@ export default function BettingPage() {
         </div>
       ) : (
         <>
-          {/* Question cards */}
-          <div className="space-y-3 mb-8">
-            {questions.map((q, qi) => {
+          {/* Question progress dots */}
+          <div className="flex flex-wrap gap-1.5 mb-6 justify-center">
+            {questions.map((_, qi) => {
               const bet = playerBets[qi];
-              const hasError = errors[qi];
-              const isComplete = bet?.pick && bet?.amount >= config.minBetPerQuestion;
-
+              const done = bet?.pick && bet?.amount >= config.minBetPerQuestion;
+              const isCurrent = qi === currentQ;
               return (
-                <div
+                <button
                   key={qi}
-                  className={`bg-dark-800 border rounded-xl p-4 transition-colors ${
-                    hasError ? 'border-accent-red/50' : isComplete ? 'border-accent-green/30' : 'border-dark-600'
+                  onClick={() => goToQuestion(qi)}
+                  className={`w-8 h-8 rounded-full text-xs font-bold transition-all cursor-pointer flex items-center justify-center ${
+                    isCurrent
+                      ? 'bg-gold-500 text-dark-900 scale-110'
+                      : done
+                      ? 'bg-accent-green/20 text-accent-green'
+                      : 'bg-dark-700 text-gray-500 hover:bg-dark-600'
                   }`}
                 >
-                  <div className="flex items-start gap-2 mb-3">
-                    <span className={`text-xs font-bold mt-0.5 shrink-0 w-7 h-7 rounded-full flex items-center justify-center ${
-                      isComplete ? 'bg-accent-green/20 text-accent-green' : 'bg-dark-600 text-gray-500'
-                    }`}>
-                      {isComplete ? <Check className="w-3.5 h-3.5" /> : qi + 1}
-                    </span>
-                    <p className="text-sm text-gray-300 leading-relaxed">{q}</p>
-                  </div>
-
-                  <div className="flex gap-2 flex-col sm:flex-row">
-                    <select
-                      value={bet?.pick || ''}
-                      onChange={(e) => handleBet(qi, e.target.value, bet?.amount || config.minBetPerQuestion)}
-                      className="flex-1 bg-dark-700 border border-dark-600 rounded-lg px-3 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-gold-500 cursor-pointer appearance-none"
-                    >
-                      <option value="">Pick a player...</option>
-                      {otherPlayers.map((p) => (
-                        <option key={p} value={p}>{displayName(p)}</option>
-                      ))}
-                    </select>
-
-                    <div className="relative w-full sm:w-28">
-                      <input
-                        type="number"
-                        min={config.minBetPerQuestion}
-                        max={config.totalBudget}
-                        value={bet?.amount || ''}
-                        onChange={(e) => handleBet(qi, bet?.pick || '', e.target.value)}
-                        placeholder={`${config.minBetPerQuestion}+`}
-                        className="w-full bg-dark-700 border border-dark-600 rounded-lg px-3 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-gold-500"
-                      />
-                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-600">pts</span>
-                    </div>
-                  </div>
-
-                  {hasError && (
-                    <div className="flex items-center gap-1 mt-2 text-accent-red text-xs">
-                      <AlertCircle className="w-3 h-3" />
-                      {errors[qi]}
-                    </div>
-                  )}
-                </div>
+                  {done && !isCurrent ? <Check className="w-3.5 h-3.5" /> : qi + 1}
+                </button>
               );
             })}
           </div>
 
-          {/* Submit */}
-          <div className="sticky bottom-4">
-            <button
-              onClick={handleSubmit}
-              disabled={!canSubmit}
-              className="w-full bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-500 disabled:opacity-30 disabled:cursor-not-allowed text-dark-900 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-200 shadow-lg cursor-pointer"
-            >
-              Lock In {isAdmin ? `${activePlayer}'s` : 'My'} Bets ({questionsAnswered}/{questions.length})
-            </button>
-            {!canSubmit && questionsAnswered > 0 && (
-              <p className="text-center text-xs text-gray-600 mt-2">
-                {questionsAnswered < questions.length
-                  ? `Answer all ${questions.length} questions`
-                  : remaining < 0
-                  ? 'Over budget!'
-                  : 'Fix errors above'}
-              </p>
+          {/* Single question card */}
+          <div className="bg-dark-800 border border-dark-600 rounded-xl p-6 mb-6">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-gold-500 font-bold text-sm">Question {currentQ + 1} of {questions.length}</span>
+            </div>
+            <p className="text-gray-200 text-lg font-medium leading-relaxed mb-6">
+              {questions[currentQ]}
+            </p>
+
+            {/* Pick a player */}
+            <label className="block text-xs text-gray-500 mb-2 font-medium">Who do you think?</label>
+            <div className="grid grid-cols-2 gap-2 mb-5">
+              {otherPlayers.map((p) => (
+                <button
+                  key={p}
+                  onClick={() => {
+                    setLocalPick(p);
+                    if (!localAmount) setLocalAmount(String(config.minBetPerQuestion));
+                    setError('');
+                  }}
+                  className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer border ${
+                    localPick === p
+                      ? 'bg-gold-500/20 border-gold-500 text-gold-400'
+                      : 'bg-dark-700 border-dark-600 text-gray-300 hover:border-gray-500'
+                  }`}
+                >
+                  {displayName(p)}
+                </button>
+              ))}
+            </div>
+
+            {/* Bet amount */}
+            <label className="block text-xs text-gray-500 mb-2 font-medium">
+              How much? (min {config.minBetPerQuestion}, max {maxForThis} pts)
+            </label>
+            <div className="relative mb-4">
+              <input
+                type="number"
+                min={config.minBetPerQuestion}
+                max={maxForThis}
+                value={localAmount}
+                onChange={(e) => { setLocalAmount(e.target.value); setError(''); }}
+                placeholder={`${config.minBetPerQuestion}`}
+                className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-3 text-gray-200 focus:outline-none focus:border-gold-500 text-lg font-bold"
+              />
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-gray-600">pts</span>
+            </div>
+
+            {/* Quick amount buttons */}
+            <div className="flex gap-2 mb-4">
+              {[5, 10, 15, 20, 25].filter(v => v <= maxForThis).map((v) => (
+                <button
+                  key={v}
+                  onClick={() => { setLocalAmount(String(v)); setError(''); }}
+                  className={`flex-1 py-2 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
+                    Number(localAmount) === v
+                      ? 'bg-gold-500/20 text-gold-400 border border-gold-500'
+                      : 'bg-dark-700 text-gray-400 border border-dark-600 hover:border-gray-500'
+                  }`}
+                >
+                  {v}
+                </button>
+              ))}
+            </div>
+
+            {error && (
+              <div className="flex items-center gap-2 text-accent-red text-sm mb-2">
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                {error}
+              </div>
             )}
+          </div>
+
+          {/* Navigation */}
+          <div className="flex gap-3 mb-6">
+            <button
+              onClick={goPrev}
+              disabled={currentQ === 0}
+              className="flex-1 bg-dark-700 hover:bg-dark-600 disabled:opacity-30 disabled:cursor-not-allowed text-gray-300 font-medium py-3.5 px-4 rounded-xl transition-colors cursor-pointer flex items-center justify-center gap-2"
+            >
+              <ChevronLeft className="w-5 h-5" /> Previous
+            </button>
+            {currentQ < questions.length - 1 ? (
+              <button
+                onClick={goNext}
+                className="flex-1 bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-500 text-dark-900 font-bold py-3.5 px-4 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2"
+              >
+                Next <ChevronRight className="w-5 h-5" />
+              </button>
+            ) : (
+              <button
+                onClick={handleSubmit}
+                className="flex-1 bg-gradient-to-r from-accent-green to-green-500 hover:from-green-500 hover:to-accent-green text-white font-bold py-3.5 px-4 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2"
+              >
+                <Lock className="w-4 h-4" /> Lock In Bets
+              </button>
+            )}
+          </div>
+
+          {/* Progress summary */}
+          <div className="text-center text-sm text-gray-500">
+            {questionsAnswered}/{questions.length} answered &middot; {remaining} pts remaining
           </div>
         </>
       )}

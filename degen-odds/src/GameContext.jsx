@@ -129,12 +129,12 @@ export function GameProvider({ children }) {
   }, [save]);
 
   const placeBet = useCallback((player, questionIndex, pick, amount) => {
-    setState((prev) => {
-      const playerBets = { ...(prev.bets[player] || {}) };
-      playerBets[questionIndex] = { pick, amount: Number(amount) };
-      return { ...prev, bets: { ...prev.bets, [player]: playerBets } };
-    });
-  }, []);
+    const current = stateRef.current;
+    const playerBets = { ...(current.bets[player] || {}) };
+    playerBets[questionIndex] = { pick, amount: Number(amount) };
+    const next = { ...current, bets: { ...current.bets, [player]: playerBets } };
+    save(next);
+  }, [save]);
 
   const lockPlayer = useCallback((player) => {
     const current = stateRef.current;
