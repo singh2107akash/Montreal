@@ -21,6 +21,10 @@
       "0": {
         "pick": "Pardeep",
         "amount": 15
+      },
+      "1": {
+        "pick": "Gagan",
+        "amount": 10
       }
     }
   },
