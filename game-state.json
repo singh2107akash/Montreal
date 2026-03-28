@@ -20,7 +20,9 @@
   "lockedPlayers": [],
   "resolutions": {},
   "favoriteOverrides": {},
-  "playerPasswords": {},
+  "playerPasswords": {
+    "Akash": "Rav"
+  },
   "questions": [
     "Who is most likely to be the first person to ask the car to stop so he can pee on the way there?",
     "Who is most likely to be the first person to complain about the car, the temperature, the drive, or say that you all should have just flown?",
