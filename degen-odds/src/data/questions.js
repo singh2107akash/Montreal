@@ -1,0 +1,45 @@
+export const QUESTIONS = [
+  "Who is most likely to be the first person to ask the car to stop so he can pee on the way there?",
+  "Who is most likely to be the first person to complain about the car, the temperature, the drive, or say that you all should have just flown?",
+  "Who is most likely to be the last person to get ready for the first day dinner?",
+  "Who is most likely to be the first person to flirt with the waiter/waitress at dinner?",
+  "Who is most likely to be the first person to act as a wingman for someone?",
+  "Who is most likely to be the first person to take 3 shots in a row?",
+  "Who is most likely to be the first person to chug a full can of beer?",
+  "Who is most likely to be the first person to become too loud at dinner?",
+  "Who is most likely to be the first person to record a video with a stranger in it and make the stranger say something in Punjabi?",
+  "Who is most likely to be the first person to get sentimental and cry while hugging the groom?",
+  "Who is most likely to be the first person to lose something?",
+  "Who is most likely to be the first person to yak on the first night?",
+  "Who is most likely to be the first person to wake up on Saturday morning?",
+  "Who is most likely to be the last person to wake up on Saturday morning?",
+  "Who is most likely to be the one to sleep on the couch or the floor instead of the bed?",
+  "Who is most likely to forget something at the Airbnb?",
+  "Who is most likely to end up in the worst room with the double bed?",
+  "Who is most likely to get the bachelor trip's best group photo?",
+  "Who is most likely to get kicked out of a bar?",
+  "Who is most likely to give the best toast to the groom?",
+];
+
+export const DEFAULT_PLAYERS = [
+  "Akash",
+  "Aman",
+  "Gagan",
+  "Robby",
+  "Matab",
+  "Dilaver",
+  "Pardeep",
+  "Harjit",
+  "Harman",
+  "Randy",
+  "Surkh",
+  "Hinda",
+  "Jodha",
+  "Goldy",
+];
+
+export const GAME_CONFIG = {
+  totalBudget: 150,
+  minBetPerQuestion: 5,
+  questionCount: 20,
+};
