@@ -2,14 +2,21 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { useGame } from '../GameContext';
-import { Plus, X, ChevronRight, Users, HelpCircle, Shield } from 'lucide-react';
+import { Plus, X, ChevronRight, Users, HelpCircle, Shield, Pencil, Check, Trash2 } from 'lucide-react';
 
 export default function SetupPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { players, nicknames, questions, config, lockedPlayers, setPlayers, setNickname } = useGame();
+  const {
+    players, nicknames, questions, config, lockedPlayers,
+    setPlayers, setNickname, setQuestions, saving,
+  } = useGame();
   const [newPlayer, setNewPlayer] = useState('');
   const [showQuestions, setShowQuestions] = useState(false);
+  const [editingQ, setEditingQ] = useState(null);
+  const [editText, setEditText] = useState('');
+  const [newQuestion, setNewQuestion] = useState('');
+  const [showAddQ, setShowAddQ] = useState(false);
 
   if (!user?.isAdmin) {
     navigate('/');
@@ -25,12 +32,39 @@ export default function SetupPage() {
   };
 
   const removePlayer = (name) => {
-    if (lockedPlayers.includes(name)) return; // can't remove locked players
+    if (lockedPlayers.includes(name)) return;
     setPlayers(players.filter((p) => p !== name));
   };
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') addPlayer();
+  };
+
+  const startEditQ = (i) => {
+    setEditingQ(i);
+    setEditText(questions[i]);
+  };
+
+  const saveEditQ = () => {
+    if (editingQ === null || !editText.trim()) return;
+    const updated = [...questions];
+    updated[editingQ] = editText.trim();
+    setQuestions(updated);
+    setEditingQ(null);
+    setEditText('');
+  };
+
+  const deleteQ = (i) => {
+    const updated = questions.filter((_, idx) => idx !== i);
+    setQuestions(updated);
+  };
+
+  const addQuestion = () => {
+    const text = newQuestion.trim();
+    if (!text) return;
+    setQuestions([...questions, text]);
+    setNewQuestion('');
+    setShowAddQ(false);
   };
 
   return (
@@ -47,8 +81,11 @@ export default function SetupPage() {
         <h1 className="text-3xl md:text-4xl font-black bg-gradient-to-r from-gold-400 to-gold-500 bg-clip-text text-transparent">
           Admin Setup
         </h1>
+        {saving && (
+          <span className="text-xs text-gold-400 animate-pulse ml-2">Saving...</span>
+        )}
       </div>
-      <p className="text-gray-500 mb-8">Manage players and review questions.</p>
+      <p className="text-gray-500 mb-8">Manage players and questions.</p>
 
       {/* Config summary */}
       <div className="bg-dark-800 border border-dark-600 rounded-xl p-4 mb-8 flex flex-wrap gap-6 text-sm">
@@ -62,7 +99,7 @@ export default function SetupPage() {
         </div>
         <div>
           <span className="text-gray-500">Questions:</span>{' '}
-          <span className="text-gold-400 font-bold">{config.questionCount}</span>
+          <span className="text-gold-400 font-bold">{questions.length}</span>
         </div>
         <div>
           <span className="text-gray-500">Locked:</span>{' '}
@@ -138,28 +175,112 @@ export default function SetupPage() {
 
       {/* Questions */}
       <div className="mb-8">
-        <button
-          onClick={() => setShowQuestions(!showQuestions)}
-          className="flex items-center gap-2 text-gray-400 hover:text-gold-400 transition-colors cursor-pointer mb-4"
-        >
-          <HelpCircle className="w-5 h-5" />
-          <span className="font-medium">
-            {showQuestions ? 'Hide' : 'Preview'} Questions ({questions.length})
-          </span>
-        </button>
+        <div className="flex items-center justify-between mb-4">
+          <button
+            onClick={() => setShowQuestions(!showQuestions)}
+            className="flex items-center gap-2 text-gray-400 hover:text-gold-400 transition-colors cursor-pointer"
+          >
+            <HelpCircle className="w-5 h-5" />
+            <span className="font-medium">
+              {showQuestions ? 'Hide' : 'Manage'} Questions ({questions.length})
+            </span>
+          </button>
+        </div>
 
         {showQuestions && (
           <div className="space-y-2">
             {questions.map((q, i) => (
               <div
                 key={i}
-                className="bg-dark-800 border border-dark-600 rounded-lg px-4 py-3 text-sm animate-fade-in-up"
-                style={{ animationDelay: `${i * 30}ms` }}
+                className="bg-dark-800 border border-dark-600 rounded-lg px-4 py-3 text-sm group"
               >
-                <span className="text-gold-500 font-bold mr-2">Q{i + 1}.</span>
-                <span className="text-gray-300">{q}</span>
+                {editingQ === i ? (
+                  <div className="flex flex-col gap-2">
+                    <textarea
+                      value={editText}
+                      onChange={(e) => setEditText(e.target.value)}
+                      rows={3}
+                      className="w-full bg-dark-700 border border-dark-500 rounded-lg px-3 py-2 text-gray-200 focus:outline-none focus:border-gold-500 text-sm resize-none"
+                      autoFocus
+                    />
+                    <div className="flex gap-2 justify-end">
+                      <button
+                        onClick={() => setEditingQ(null)}
+                        className="text-gray-500 hover:text-gray-300 text-xs px-3 py-1.5 rounded-lg cursor-pointer"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={saveEditQ}
+                        disabled={!editText.trim()}
+                        className="bg-gold-500 hover:bg-gold-400 disabled:opacity-30 text-dark-900 font-bold text-xs px-3 py-1.5 rounded-lg cursor-pointer flex items-center gap-1"
+                      >
+                        <Check className="w-3 h-3" /> Save
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex-1">
+                      <span className="text-gold-500 font-bold mr-2">Q{i + 1}.</span>
+                      <span className="text-gray-300">{q}</span>
+                    </div>
+                    <div className="flex gap-1 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button
+                        onClick={() => startEditQ(i)}
+                        className="text-gray-500 hover:text-gold-400 cursor-pointer p-1"
+                        title="Edit question"
+                      >
+                        <Pencil className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        onClick={() => deleteQ(i)}
+                        className="text-gray-500 hover:text-accent-red cursor-pointer p-1"
+                        title="Delete question"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
+
+            {/* Add new question */}
+            {showAddQ ? (
+              <div className="bg-dark-800 border border-gold-500/30 rounded-lg px-4 py-3">
+                <textarea
+                  value={newQuestion}
+                  onChange={(e) => setNewQuestion(e.target.value)}
+                  rows={2}
+                  placeholder="Type the new question..."
+                  className="w-full bg-dark-700 border border-dark-500 rounded-lg px-3 py-2 text-gray-200 placeholder-gray-600 focus:outline-none focus:border-gold-500 text-sm resize-none mb-2"
+                  autoFocus
+                />
+                <div className="flex gap-2 justify-end">
+                  <button
+                    onClick={() => { setShowAddQ(false); setNewQuestion(''); }}
+                    className="text-gray-500 hover:text-gray-300 text-xs px-3 py-1.5 rounded-lg cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={addQuestion}
+                    disabled={!newQuestion.trim()}
+                    className="bg-gold-500 hover:bg-gold-400 disabled:opacity-30 text-dark-900 font-bold text-xs px-3 py-1.5 rounded-lg cursor-pointer flex items-center gap-1"
+                  >
+                    <Plus className="w-3 h-3" /> Add Question
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <button
+                onClick={() => setShowAddQ(true)}
+                className="w-full bg-dark-800 border border-dashed border-dark-500 hover:border-gold-500 rounded-lg px-4 py-3 text-sm text-gray-500 hover:text-gold-400 transition-colors cursor-pointer flex items-center justify-center gap-2"
+              >
+                <Plus className="w-4 h-4" /> Add New Question
+              </button>
+            )}
           </div>
         )}
       </div>

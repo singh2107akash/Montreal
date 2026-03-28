@@ -12,6 +12,7 @@ const defaultState = {
   resolutions: {},
   favoriteOverrides: {},
   playerPasswords: {},
+  questions: QUESTIONS,
   gamePhase: 'setup',
   config: GAME_CONFIG,
 };
@@ -59,6 +60,7 @@ export function GameProvider({ children }) {
             resolutions: prev.resolutions,
             favoriteOverrides: prev.favoriteOverrides,
             playerPasswords: prev.playerPasswords,
+            questions: prev.questions,
             gamePhase: prev.gamePhase,
             config: prev.config,
           });
@@ -83,6 +85,7 @@ export function GameProvider({ children }) {
         resolutions: newState.resolutions,
         favoriteOverrides: newState.favoriteOverrides,
         playerPasswords: newState.playerPasswords,
+        questions: newState.questions,
         gamePhase: newState.gamePhase,
         config: newState.config,
       };
@@ -112,6 +115,15 @@ export function GameProvider({ children }) {
     const next = {
       ...stateRef.current,
       playerPasswords: { ...stateRef.current.playerPasswords, [player]: password },
+    };
+    save(next);
+  }, [save]);
+
+  const setQuestions = useCallback((questions) => {
+    const next = {
+      ...stateRef.current,
+      questions,
+      config: { ...stateRef.current.config, questionCount: questions.length },
     };
     save(next);
   }, [save]);
@@ -178,13 +190,13 @@ export function GameProvider({ children }) {
 
   const value = {
     ...state,
-    questions: QUESTIONS,
     loading,
     error,
     saving,
     setPlayers,
     setNickname,
     setPlayerPassword,
+    setQuestions,
     placeBet,
     lockPlayer,
     resolveQuestion,
