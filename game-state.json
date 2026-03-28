@@ -448,6 +448,13 @@
       "actualPerson": null,
       "favoriteOverride": null,
       "resolvedAt": "2026-03-28T22:47:13.356Z"
+    },
+    "3": {
+      "resolved": true,
+      "outcomeType": "someone_else",
+      "actualPerson": "Akash",
+      "favoriteOverride": null,
+      "resolvedAt": "2026-03-28T22:47:22.266Z"
     }
   },
   "favoriteOverrides": {},
