@@ -17,26 +17,26 @@ function AuthGate() {
   }
 
   return (
-    <GameProvider>
-      <HashRouter>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/setup" element={user.isAdmin ? <SetupPage /> : <Navigate to="/" replace />} />
-          <Route path="/betting" element={<BettingPage />} />
-          <Route path="/market" element={<MarketPage />} />
-          <Route path="/resolve" element={user.isAdmin ? <ResolutionPage /> : <Navigate to="/market" replace />} />
-          <Route path="/results" element={<ResultsPage />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </HashRouter>
-    </GameProvider>
+    <HashRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/setup" element={user.isAdmin ? <SetupPage /> : <Navigate to="/" replace />} />
+        <Route path="/betting" element={<BettingPage />} />
+        <Route path="/market" element={<MarketPage />} />
+        <Route path="/resolve" element={user.isAdmin ? <ResolutionPage /> : <Navigate to="/market" replace />} />
+        <Route path="/results" element={<ResultsPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </HashRouter>
   );
 }
 
 export default function App() {
   return (
     <AuthProvider>
-      <AuthGate />
+      <GameProvider>
+        <AuthGate />
+      </GameProvider>
     </AuthProvider>
   );
 }
