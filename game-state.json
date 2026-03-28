@@ -16,120 +16,11 @@
     "Goldy"
   ],
   "nicknames": {},
-  "bets": {
-    "Akash": {
-      "0": {
-        "pick": "Pardeep",
-        "amount": 5
-      },
-      "1": {
-        "pick": "Gagan",
-        "amount": 5
-      },
-      "2": {
-        "pick": "Harjit",
-        "amount": 5
-      },
-      "3": {
-        "pick": "Harman",
-        "amount": 5
-      },
-      "4": {
-        "pick": "Hinda",
-        "amount": 5
-      },
-      "5": {
-        "pick": "Robby",
-        "amount": 15
-      },
-      "6": {
-        "pick": "Goldy",
-        "amount": 20
-      },
-      "7": {
-        "pick": "Gagan",
-        "amount": 5
-      },
-      "8": {
-        "pick": "Surkh",
-        "amount": 5
-      },
-      "9": {
-        "pick": "Harjit",
-        "amount": 5
-      },
-      "10": {
-        "pick": "Gagan",
-        "amount": 5
-      },
-      "11": {
-        "pick": "Aman",
-        "amount": 5
-      },
-      "12": {
-        "pick": "Matab",
-        "amount": 5
-      },
-      "13": {
-        "pick": "Harjit",
-        "amount": 5
-      },
-      "14": {
-        "pick": "Jodha",
-        "amount": 5
-      },
-      "15": {
-        "pick": "Aman",
-        "amount": 5
-      },
-      "16": {
-        "pick": "Jodha",
-        "amount": 5
-      },
-      "17": {
-        "pick": "Dilaver",
-        "amount": 15
-      },
-      "18": {
-        "pick": "Pardeep",
-        "amount": 15
-      },
-      "19": {
-        "pick": "Pardeep",
-        "amount": 10
-      }
-    }
-  },
-  "lockedPlayers": [
-    "Akash"
-  ],
-  "resolutions": {
-    "2": {
-      "resolved": true,
-      "outcomeType": "favorite",
-      "actualPerson": null,
-      "favoriteOverride": null,
-      "resolvedAt": "2026-03-28T22:04:49.777Z"
-    },
-    "4": {
-      "resolved": true,
-      "outcomeType": "favorite",
-      "actualPerson": null,
-      "favoriteOverride": null,
-      "resolvedAt": "2026-03-28T22:04:53.536Z"
-    },
-    "6": {
-      "resolved": true,
-      "outcomeType": "favorite",
-      "actualPerson": null,
-      "favoriteOverride": null,
-      "resolvedAt": "2026-03-28T22:05:01.578Z"
-    }
-  },
+  "bets": {},
+  "lockedPlayers": [],
+  "resolutions": {},
   "favoriteOverrides": {},
-  "playerPasswords": {
-    "Akash": "Rav"
-  },
+  "playerPasswords": {},
   "questions": [
     "Who is most likely to be the first person to ask the car to stop so he can pee on the way there?",
     "Who is most likely to be the first person to complain about the car, the temperature, the drive, or say that you all should have just flown?",
@@ -146,7 +37,7 @@
     "Who is most likely to be the first person to wake up on Saturday morning?",
     "Who is most likely to be the last person to wake up on Saturday morning?",
     "Who is most likely to be the one to sleep on the couch or the floor instead of the bed?",
-    "Who is most likely to wear Cowboy hat to the steakhouse?",
+    "Who is most likely to forget something at the Airbnb?",
     "Who is most likely to end up in the worst room with the double bed?",
     "Who is most likely to get the bachelor trip's best group photo?",
     "Who is most likely to get kicked out of a bar?",
