@@ -123,12 +123,12 @@ export default function BettingPage() {
       return b?.pick && b?.amount >= config.minBetPerQuestion;
     });
     if (!allAnswered) {
-      setError('Answer all questions before locking in');
+      setError('Finish all questions before you lock in, coward');
       return;
     }
     const total = Object.values(playerBets).reduce((s, b) => s + (b?.amount || 0), 0);
     if (total > config.totalBudget) {
-      setError('Over budget!');
+      setError('You\'re broke! Over budget!');
       return;
     }
     lockPlayer(activePlayer);
@@ -175,17 +175,17 @@ export default function BettingPage() {
               onClick={() => navigate('/market')}
               className="text-gold-400 hover:text-gold-500 text-sm font-medium transition-colors flex items-center gap-1 cursor-pointer"
             >
-              View Market <ChevronRight className="w-4 h-4" />
+              The Odds Board <ChevronRight className="w-4 h-4" />
             </button>
           )}
         </div>
       </div>
 
       <h1 className="text-3xl font-black mb-1 bg-gradient-to-r from-gold-400 to-gold-500 bg-clip-text text-transparent">
-        {isAdmin ? 'Manage Bets' : 'Place Your Bets'}
+        {isAdmin ? 'The War Room' : 'Put Up or Shut Up'}
       </h1>
       <p className="text-gray-500 text-sm mb-6">
-        {lockedPlayers.length}/{players.length} players locked in
+        {lockedPlayers.length}/{players.length} degens committed
       </p>
 
       {/* Player selector */}
@@ -202,7 +202,7 @@ export default function BettingPage() {
               <div>
                 <div className="font-medium text-gray-200">{displayName(activePlayer)}</div>
                 <div className="text-xs text-gray-500">
-                  {isLocked ? 'Bets locked' : `${questionsAnswered}/${questions.length} answered`}
+                  {isLocked ? 'Locked in, no backing out' : `${questionsAnswered}/${questions.length} calls made`}
                 </div>
               </div>
             </div>
@@ -237,7 +237,7 @@ export default function BettingPage() {
           <div>
             <div className="font-medium text-gray-200">{displayName(user.name)}</div>
             <div className="text-xs text-gray-500">
-              {isLocked ? 'Bets locked' : `${questionsAnswered}/${questions.length} answered`}
+              {isLocked ? 'Locked in, no backing out' : `${questionsAnswered}/${questions.length} calls made`}
             </div>
           </div>
           {isLocked && <Lock className="w-4 h-4 text-gold-400 ml-auto" />}
@@ -272,17 +272,17 @@ export default function BettingPage() {
       {isLocked ? (
         <div className="bg-dark-800 border border-gold-500/30 rounded-xl p-8 text-center">
           <Lock className="w-10 h-10 text-gold-400 mx-auto mb-3" />
-          <h2 className="text-xl font-bold text-gray-200 mb-2">Bets Locked</h2>
+          <h2 className="text-xl font-bold text-gray-200 mb-2">You're Locked In</h2>
           <p className="text-gray-500 text-sm mb-4">
             {isAdmin
-              ? `${activePlayer}'s bets are locked. Select another player above.`
-              : 'Your bets are in! Check the market to see favorites.'}
+              ? `${activePlayer} is locked and loaded. Pick another degen above.`
+              : 'No backing out now. Go see who the group thinks is gonna deliver.'}
           </p>
           <button
             onClick={() => navigate('/market')}
             className="text-gold-400 hover:text-gold-500 text-sm font-medium transition-colors cursor-pointer"
           >
-            View Market &rarr;
+            See the Odds &rarr;
           </button>
         </div>
       ) : (
@@ -321,7 +321,7 @@ export default function BettingPage() {
             </p>
 
             {/* Pick a player */}
-            <label className="block text-xs text-gray-500 mb-2 font-medium">Who do you think?</label>
+            <label className="block text-xs text-gray-500 mb-2 font-medium">Who's catching this one?</label>
             <div className="grid grid-cols-2 gap-2 mb-5">
               {otherPlayers.map((p) => (
                 <button
@@ -344,7 +344,7 @@ export default function BettingPage() {
 
             {/* Bet amount */}
             <label className="block text-xs text-gray-500 mb-2 font-medium">
-              How much? (min {config.minBetPerQuestion}, max {maxForThis} pts)
+              How confident are you? (min {config.minBetPerQuestion}, max {maxForThis} pts)
             </label>
             <div className="relative mb-4">
               <input
@@ -405,14 +405,14 @@ export default function BettingPage() {
                 onClick={handleSubmit}
                 className="flex-1 bg-gradient-to-r from-accent-green to-green-500 hover:from-green-500 hover:to-accent-green text-white font-bold py-3.5 px-4 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2"
               >
-                <Lock className="w-4 h-4" /> Lock In Bets
+                <Lock className="w-4 h-4" /> Lock It In, No Excuses
               </button>
             )}
           </div>
 
           {/* Progress summary */}
           <div className="text-center text-sm text-gray-500">
-            {questionsAnswered}/{questions.length} answered &middot; {remaining} pts remaining
+            {questionsAnswered}/{questions.length} calls made &middot; {remaining} pts left to blow
           </div>
         </>
       )}

@@ -54,26 +54,26 @@ export default function MarketPage() {
               onClick={() => navigate('/resolve')}
               className="text-gold-400 hover:text-gold-500 text-sm font-medium transition-colors flex items-center gap-1 cursor-pointer"
             >
-              Resolution <ChevronRight className="w-4 h-4" />
+              Judgment Day <ChevronRight className="w-4 h-4" />
             </button>
           )}
           <button
             onClick={() => navigate('/results')}
             className="text-gold-400 hover:text-gold-500 text-sm font-medium transition-colors flex items-center gap-1 cursor-pointer"
           >
-            Leaderboard <ChevronRight className="w-4 h-4" />
+            Who's Winning <ChevronRight className="w-4 h-4" />
           </button>
         </div>
       </div>
 
       <h1 className="text-3xl font-black mb-1 bg-gradient-to-r from-gold-400 to-gold-500 bg-clip-text text-transparent">
-        The Market
+        The Odds Board
       </h1>
       <p className="text-gray-500 text-sm mb-6">
-        Favorites, pots, and breakdown for each question.
+        See who the group is putting their money on. No hiding now.
         {!allLocked && (
           <span className="text-yellow-500 ml-2">
-            ({players.length - lockedPlayers.length} players still betting)
+            ({players.length - lockedPlayers.length} degens still deciding)
           </span>
         )}
       </p>
@@ -152,7 +152,7 @@ export default function MarketPage() {
             <div className="bg-dark-900/50 px-4 py-3 border-t border-dark-700">
               <div className="flex items-center gap-1 text-xs text-gray-600 mb-2">
                 <Users className="w-3 h-3" />
-                Who got picked
+                Who's on the hook
               </div>
               <div className="space-y-1.5">
                 {players
@@ -194,7 +194,7 @@ export default function MarketPage() {
                     );
                   })}
                 {players.filter((p) => md.pointsByPlayer?.[p] > 0).length === 0 && (
-                  <p className="text-xs text-gray-600">No bets placed yet</p>
+                  <p className="text-xs text-gray-600">Nobody has the guts to bet yet</p>
                 )}
               </div>
             </div>
@@ -208,7 +208,7 @@ export default function MarketPage() {
           onClick={() => navigate(isAdmin ? '/resolve' : '/results')}
           className="w-full bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-500 text-dark-900 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-200 cursor-pointer"
         >
-          {isAdmin ? 'Go to Resolution' : 'View Leaderboard'}
+          {isAdmin ? 'Time to Settle Scores' : 'Who\'s Winning?'}
         </button>
       </div>
     </div>

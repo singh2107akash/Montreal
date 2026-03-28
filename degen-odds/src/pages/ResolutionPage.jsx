@@ -46,15 +46,15 @@ export default function ResolutionPage() {
           onClick={() => navigate('/results')}
           className="text-gold-400 hover:text-gold-500 text-sm font-medium transition-colors flex items-center gap-1 cursor-pointer"
         >
-          Leaderboard <ChevronRight className="w-4 h-4" />
+          Who's Winning <ChevronRight className="w-4 h-4" />
         </button>
       </div>
 
       <h1 className="text-3xl font-black mb-1 bg-gradient-to-r from-gold-400 to-gold-500 bg-clip-text text-transparent">
-        Resolution
+        Judgment Day
       </h1>
       <p className="text-gray-500 text-sm mb-6">
-        {resolvedCount}/{questions.length} questions resolved
+        {resolvedCount}/{questions.length} fates sealed
       </p>
 
       {/* Progress bar */}
@@ -83,7 +83,7 @@ export default function ResolutionPage() {
           onClick={() => navigate('/results')}
           className="w-full bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-500 text-dark-900 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-200 cursor-pointer"
         >
-          View Leaderboard
+          Who's on Top?
         </button>
       </div>
     </div>
@@ -171,19 +171,19 @@ function ResolutionCard({ data, players, bets, onResolve, onUnresolve }) {
             {resolution.outcomeType === 'favorite' && (
               <div className="flex items-center gap-2">
                 <Crown className="w-4 h-4" />
-                <span className="font-semibold">{favorite}</span> delivered as favorite!
+                <span className="font-semibold">{favorite}</span> stepped up and delivered!
               </div>
             )}
             {resolution.outcomeType === 'someone_else' && (
               <div className="flex items-center gap-2">
                 <UserCheck className="w-4 h-4" />
-                <span className="font-semibold">{resolution.actualPerson}</span> stole it from {favorite}!
+                <span className="font-semibold">{resolution.actualPerson}</span> came out of nowhere and humbled {favorite}!
               </div>
             )}
             {resolution.outcomeType === 'nobody' && (
               <div className="flex items-center gap-2">
                 <X className="w-4 h-4" />
-                Nobody did it. {favorite} penalized as favorite.
+                Nobody had the guts. {favorite} takes the L as favorite.
               </div>
             )}
           </div>
@@ -200,7 +200,7 @@ function ResolutionCard({ data, players, bets, onResolve, onUnresolve }) {
                 }`}
               >
                 <Crown className="w-3.5 h-3.5 inline mr-1" />
-                Favorite did it
+                Favorite delivered
               </button>
               <button
                 onClick={() => { setSelectedOutcome('someone_else'); setShowPreview(true); }}
@@ -211,7 +211,7 @@ function ResolutionCard({ data, players, bets, onResolve, onUnresolve }) {
                 }`}
               >
                 <UserCheck className="w-3.5 h-3.5 inline mr-1" />
-                Someone else
+                Got upstaged
               </button>
               <button
                 onClick={() => { setSelectedOutcome('nobody'); setSelectedPerson(''); setShowPreview(true); }}
@@ -222,7 +222,7 @@ function ResolutionCard({ data, players, bets, onResolve, onUnresolve }) {
                 }`}
               >
                 <X className="w-3.5 h-3.5 inline mr-1" />
-                Nobody
+                All talk, no action
               </button>
             </div>
 
@@ -233,7 +233,7 @@ function ResolutionCard({ data, players, bets, onResolve, onUnresolve }) {
                 onChange={(e) => setSelectedPerson(e.target.value)}
                 className="w-full bg-dark-700 border border-dark-600 rounded-lg px-3 py-2.5 text-sm text-gray-200 focus:outline-none focus:border-gold-500 mb-3 cursor-pointer appearance-none"
               >
-                <option value="">Who actually did it?</option>
+                <option value="">Who actually pulled it off?</option>
                 {players.filter((p) => p !== favorite).map((p) => (
                   <option key={p} value={p}>{p}</option>
                 ))}
@@ -243,7 +243,7 @@ function ResolutionCard({ data, players, bets, onResolve, onUnresolve }) {
             {/* Score preview */}
             {showPreview && previewChanges && (
               <div className="bg-dark-900/50 rounded-lg p-3 mb-3">
-                <div className="text-xs text-gray-500 mb-2 font-medium">Score Preview</div>
+                <div className="text-xs text-gray-500 mb-2 font-medium">Damage Report</div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
                   {Object.entries(previewChanges)
                     .filter(([, v]) => v !== 0)
@@ -266,7 +266,7 @@ function ResolutionCard({ data, players, bets, onResolve, onUnresolve }) {
               disabled={!selectedOutcome || (selectedOutcome === 'someone_else' && !selectedPerson)}
               className="w-full bg-gold-500 hover:bg-gold-400 disabled:opacity-30 disabled:cursor-not-allowed text-dark-900 font-bold py-2.5 px-4 rounded-lg text-sm transition-colors cursor-pointer"
             >
-              Resolve Q{index + 1}
+              Seal Q{index + 1}'s Fate
             </button>
           </>
         )}
