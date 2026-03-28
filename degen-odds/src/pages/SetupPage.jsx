@@ -2,17 +2,18 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { useGame } from '../GameContext';
-import { Plus, X, ChevronRight, Users, HelpCircle, Shield, Pencil, Check, Trash2 } from 'lucide-react';
+import { Plus, X, ChevronRight, Users, HelpCircle, Shield, Pencil, Check, Trash2, RotateCcw, AlertTriangle } from 'lucide-react';
 
 export default function SetupPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const {
     players, nicknames, questions, config, lockedPlayers,
-    setPlayers, setNickname, setQuestions, saving,
+    setPlayers, setNickname, setQuestions, resetGame, saving,
   } = useGame();
   const [newPlayer, setNewPlayer] = useState('');
   const [showQuestions, setShowQuestions] = useState(false);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [editingQ, setEditingQ] = useState(null);
   const [editText, setEditText] = useState('');
   const [newQuestion, setNewQuestion] = useState('');
@@ -314,6 +315,40 @@ export default function SetupPage() {
             Leaderboard
           </button>
         </div>
+      </div>
+
+      {/* Reset Game */}
+      <div className="mt-12 pt-8 border-t border-dark-700">
+        {!showResetConfirm ? (
+          <button
+            onClick={() => setShowResetConfirm(true)}
+            className="w-full flex items-center justify-center gap-2 text-gray-600 hover:text-accent-red text-sm py-3 transition-colors cursor-pointer"
+          >
+            <RotateCcw className="w-4 h-4" /> Reset Game
+          </button>
+        ) : (
+          <div className="bg-dark-800 border border-accent-red/30 rounded-xl p-5 text-center">
+            <AlertTriangle className="w-8 h-8 text-accent-red mx-auto mb-3" />
+            <p className="text-gray-200 font-bold mb-1">Reset entire game?</p>
+            <p className="text-gray-500 text-sm mb-4">
+              This will clear all bets, passwords, resolutions, and locked players. Questions and players will reset to defaults. This cannot be undone.
+            </p>
+            <div className="flex gap-3 justify-center">
+              <button
+                onClick={() => setShowResetConfirm(false)}
+                className="px-5 py-2.5 rounded-lg text-sm text-gray-400 hover:text-gray-200 bg-dark-700 hover:bg-dark-600 transition-colors cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => { resetGame(); setShowResetConfirm(false); }}
+                className="px-5 py-2.5 rounded-lg text-sm font-bold text-white bg-accent-red hover:bg-red-500 transition-colors cursor-pointer"
+              >
+                Yes, Reset Everything
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
