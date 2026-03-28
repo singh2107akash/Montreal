@@ -344,6 +344,12 @@
         "pick": "Akash",
         "amount": 20
       }
+    },
+    "Matab": {
+      "0": {
+        "pick": "Pardeep",
+        "amount": 5
+      }
     }
   },
   "lockedPlayers": [
