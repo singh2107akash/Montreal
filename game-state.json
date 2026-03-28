@@ -271,6 +271,10 @@
       "1": {
         "pick": "Akash",
         "amount": 25
+      },
+      "2": {
+        "pick": "Akash",
+        "amount": 5
       }
     }
   },
