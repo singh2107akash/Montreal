@@ -14,7 +14,7 @@ export const QUESTIONS = [
   "Who is most likely to be the first person to wake up on Saturday morning?",
   "Who is most likely to be the last person to wake up on Saturday morning?",
   "Who is most likely to be the one to sleep on the couch or the floor instead of the bed?",
-  "Who is most likely to forget something at the Airbnb?",
+  "Who is most likely to wear Cowboy hat to the steakhouse?",
   "Who is most likely to end up in the worst room with the double bed?",
   "Who is most likely to get the bachelor trip's best group photo?",
   "Who is most likely to get kicked out of a bar?",
