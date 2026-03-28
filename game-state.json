@@ -193,6 +193,10 @@
       "2": {
         "pick": "Randy",
         "amount": 5
+      },
+      "4": {
+        "pick": "Aman",
+        "amount": 5
       }
     }
   },
