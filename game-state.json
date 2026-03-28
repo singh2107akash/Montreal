@@ -115,6 +115,10 @@
       "4": {
         "pick": "Robby",
         "amount": 5
+      },
+      "5": {
+        "pick": "Pardeep",
+        "amount": 5
       }
     }
   },
