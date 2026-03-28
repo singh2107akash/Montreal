@@ -238,22 +238,26 @@ export default function LandingPage() {
               {/* Tips */}
               <div>
                 <h3 className="text-gold-400 font-bold text-sm mb-2 uppercase tracking-wider">Pro Tips</h3>
-                <ul className="text-gray-300 text-sm leading-relaxed space-y-1.5">
+                <ul className="text-gray-300 text-sm leading-relaxed space-y-2.5">
                   <li className="flex gap-2">
                     <span className="text-gold-500 shrink-0">&bull;</span>
-                    Don't put all your points on a few questions — spread them out to hedge risk.
+                    <span>If you're the <span className="text-gold-400 font-bold">Favorite</span>, you better deliver. The group put their money on you for a reason — don't choke. Show up or get humbled.</span>
                   </li>
                   <li className="flex gap-2">
                     <span className="text-gold-500 shrink-0">&bull;</span>
-                    Betting on the underdog (someone who's NOT the favorite) pays off big if they actually do it.
+                    <span>If you bet on the favorite, don't just sit there — <span className="text-gold-400 font-bold">make your favorite deliver</span>. Peer pressure is a valid strategy. You invested in them, now manage your asset.</span>
                   </li>
                   <li className="flex gap-2">
                     <span className="text-gold-500 shrink-0">&bull;</span>
-                    If you're the favorite for a question, you better deliver — or you lose points!
+                    <span>Think you're the underdog? Think nobody believes in you? <span className="text-accent-red font-bold">Good.</span> Deliver it anyway and kick all the doubters right in the Sacré Bleu Balls. Nothing hits harder than proving the haters wrong.</span>
                   </li>
                   <li className="flex gap-2">
                     <span className="text-gold-500 shrink-0">&bull;</span>
-                    Check the Market page to see who the favorites are and where the money is going.
+                    <span>Spread your points — don't dump everything on one question like a degenerate. Unless you ARE that degenerate. Then go all in, we respect it.</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-gold-500 shrink-0">&bull;</span>
+                    <span>Check the <span className="text-gold-400 font-bold">Market page</span> to see who the favorites are, where the money is going, and who the group thinks is absolutely going to embarrass themselves.</span>
                   </li>
                 </ul>
               </div>
