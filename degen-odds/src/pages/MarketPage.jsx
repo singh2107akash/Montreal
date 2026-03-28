@@ -1,11 +1,14 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
 import { useGame } from '../GameContext';
 import { calculateFavorite } from '../utils/scoring';
 import { Crown, ChevronRight, AlertTriangle, Users, TrendingUp } from 'lucide-react';
 
 export default function MarketPage() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const isAdmin = user?.isAdmin;
   const {
     players, questions, bets, lockedPlayers, nicknames,
     favoriteOverrides, setFavoriteOverride, resolutions,
@@ -40,17 +43,27 @@ export default function MarketPage() {
     <div className="min-h-screen px-4 py-8 max-w-3xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <button
-          onClick={() => navigate('/betting')}
+          onClick={() => navigate('/')}
           className="text-gray-500 hover:text-gold-400 text-sm transition-colors cursor-pointer"
         >
-          &larr; Betting
+          &larr; Home
         </button>
-        <button
-          onClick={() => navigate('/resolve')}
-          className="text-gold-400 hover:text-gold-500 text-sm font-medium transition-colors flex items-center gap-1 cursor-pointer"
-        >
-          Resolution <ChevronRight className="w-4 h-4" />
-        </button>
+        <div className="flex gap-3">
+          {isAdmin && (
+            <button
+              onClick={() => navigate('/resolve')}
+              className="text-gold-400 hover:text-gold-500 text-sm font-medium transition-colors flex items-center gap-1 cursor-pointer"
+            >
+              Resolution <ChevronRight className="w-4 h-4" />
+            </button>
+          )}
+          <button
+            onClick={() => navigate('/results')}
+            className="text-gold-400 hover:text-gold-500 text-sm font-medium transition-colors flex items-center gap-1 cursor-pointer"
+          >
+            Leaderboard <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
       </div>
 
       <h1 className="text-3xl font-black mb-1 bg-gradient-to-r from-gold-400 to-gold-500 bg-clip-text text-transparent">
@@ -116,17 +129,21 @@ export default function MarketPage() {
                     <AlertTriangle className="w-4 h-4" />
                     <span className="font-semibold">Tie for favorite!</span>
                   </div>
-                  <div className="flex flex-wrap gap-2">
-                    {md.tiedPlayers.map((tp) => (
-                      <button
-                        key={tp}
-                        onClick={() => setFavoriteOverride(md.index, tp)}
-                        className="bg-dark-700 hover:bg-gold-500/20 border border-dark-500 hover:border-gold-500 text-gray-300 hover:text-gold-400 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer"
-                      >
-                        Set {tp} as favorite
-                      </button>
-                    ))}
-                  </div>
+                  {isAdmin ? (
+                    <div className="flex flex-wrap gap-2">
+                      {md.tiedPlayers.map((tp) => (
+                        <button
+                          key={tp}
+                          onClick={() => setFavoriteOverride(md.index, tp)}
+                          className="bg-dark-700 hover:bg-gold-500/20 border border-dark-500 hover:border-gold-500 text-gray-300 hover:text-gold-400 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer"
+                        >
+                          Set {tp} as favorite
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-xs text-yellow-400/70">Admin will resolve this tie.</p>
+                  )}
                 </div>
               )}
             </div>
@@ -172,13 +189,13 @@ export default function MarketPage() {
         ))}
       </div>
 
-      {/* Continue to resolution */}
+      {/* Continue */}
       <div className="mt-8">
         <button
-          onClick={() => navigate('/resolve')}
+          onClick={() => navigate(isAdmin ? '/resolve' : '/results')}
           className="w-full bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-500 text-dark-900 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-200 cursor-pointer"
         >
-          Go to Resolution
+          {isAdmin ? 'Go to Resolution' : 'View Leaderboard'}
         </button>
       </div>
     </div>

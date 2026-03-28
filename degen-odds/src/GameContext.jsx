@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { QUESTIONS, DEFAULT_PLAYERS, GAME_CONFIG } from './data/questions';
-import { loadGameState, saveGameState } from './utils/storage';
+import { writeData, updateData, onData, removeData, isFirebaseConfigured } from './firebase';
 
 const GameContext = createContext(null);
 
@@ -11,92 +11,109 @@ const defaultState = {
   lockedPlayers: [],
   resolutions: {},
   favoriteOverrides: {},
-  gamePhase: 'landing', // landing | setup | betting | market | resolution | results
+  gamePhase: 'setup',
   config: GAME_CONFIG,
 };
 
 export function GameProvider({ children }) {
-  const [state, setState] = useState(() => {
-    const saved = loadGameState();
-    return saved || { ...defaultState };
-  });
+  const [state, setState] = useState({ ...defaultState });
+  const [loading, setLoading] = useState(true);
+  const [firebaseReady, setFirebaseReady] = useState(false);
 
+  // Listen to Firebase for real-time updates
   useEffect(() => {
-    saveGameState(state);
-  }, [state]);
+    if (!isFirebaseConfigured()) {
+      setLoading(false);
+      return;
+    }
 
-  const update = useCallback((partial) => {
-    setState((prev) => ({ ...prev, ...partial }));
+    setFirebaseReady(true);
+    const unsubscribe = onData('', (data) => {
+      if (data) {
+        setState({
+          players: data.players || DEFAULT_PLAYERS,
+          nicknames: data.nicknames || {},
+          bets: data.bets || {},
+          lockedPlayers: data.lockedPlayers || [],
+          resolutions: data.resolutions || {},
+          favoriteOverrides: data.favoriteOverrides || {},
+          gamePhase: data.gamePhase || 'setup',
+          config: data.config || GAME_CONFIG,
+        });
+      } else {
+        // First time - initialize Firebase with defaults
+        writeData('', defaultState);
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
+
+  const syncToFirebase = useCallback((path, value) => {
+    if (firebaseReady) {
+      writeData(path, value).catch(console.error);
+    }
+  }, [firebaseReady]);
 
   const setPlayers = useCallback((players) => {
-    update({ players });
-  }, [update]);
+    syncToFirebase('players', players);
+  }, [syncToFirebase]);
 
   const setNickname = useCallback((player, nickname) => {
-    setState((prev) => ({
-      ...prev,
-      nicknames: { ...prev.nicknames, [player]: nickname },
-    }));
-  }, []);
+    const updated = { ...state.nicknames, [player]: nickname };
+    syncToFirebase('nicknames', updated);
+  }, [syncToFirebase, state.nicknames]);
 
   const placeBet = useCallback((player, questionIndex, pick, amount) => {
-    setState((prev) => {
-      const playerBets = { ...(prev.bets[player] || {}) };
-      playerBets[questionIndex] = { pick, amount: Number(amount) };
-      return { ...prev, bets: { ...prev.bets, [player]: playerBets } };
-    });
-  }, []);
+    const playerBets = { ...(state.bets[player] || {}) };
+    playerBets[questionIndex] = { pick, amount: Number(amount) };
+    syncToFirebase(`bets/${player}`, playerBets);
+  }, [syncToFirebase, state.bets]);
 
   const lockPlayer = useCallback((player) => {
-    setState((prev) => ({
-      ...prev,
-      lockedPlayers: [...new Set([...prev.lockedPlayers, player])],
-    }));
-  }, []);
+    const updated = [...new Set([...state.lockedPlayers, player])];
+    syncToFirebase('lockedPlayers', updated);
+  }, [syncToFirebase, state.lockedPlayers]);
 
   const resolveQuestion = useCallback((questionIndex, outcomeType, actualPerson = null) => {
-    setState((prev) => ({
-      ...prev,
-      resolutions: {
-        ...prev.resolutions,
-        [questionIndex]: {
-          resolved: true,
-          outcomeType,
-          actualPerson,
-          favoriteOverride: prev.favoriteOverrides[questionIndex] || null,
-          resolvedAt: new Date().toISOString(),
-        },
+    const updated = {
+      ...state.resolutions,
+      [questionIndex]: {
+        resolved: true,
+        outcomeType,
+        actualPerson,
+        favoriteOverride: state.favoriteOverrides[questionIndex] || null,
+        resolvedAt: new Date().toISOString(),
       },
-    }));
-  }, []);
+    };
+    syncToFirebase('resolutions', updated);
+  }, [syncToFirebase, state.resolutions, state.favoriteOverrides]);
 
   const unresolveQuestion = useCallback((questionIndex) => {
-    setState((prev) => {
-      const resolutions = { ...prev.resolutions };
-      delete resolutions[questionIndex];
-      return { ...prev, resolutions };
-    });
-  }, []);
+    const updated = { ...state.resolutions };
+    delete updated[questionIndex];
+    syncToFirebase('resolutions', updated);
+  }, [syncToFirebase, state.resolutions]);
 
   const setFavoriteOverride = useCallback((questionIndex, player) => {
-    setState((prev) => ({
-      ...prev,
-      favoriteOverrides: { ...prev.favoriteOverrides, [questionIndex]: player },
-    }));
-  }, []);
+    const updated = { ...state.favoriteOverrides, [questionIndex]: player };
+    syncToFirebase('favoriteOverrides', updated);
+  }, [syncToFirebase, state.favoriteOverrides]);
+
+  const setGamePhase = useCallback((phase) => {
+    syncToFirebase('gamePhase', phase);
+  }, [syncToFirebase]);
 
   const resetGame = useCallback(() => {
-    setState({ ...defaultState });
-  }, []);
-
-  const loadState = useCallback((newState) => {
-    setState(newState);
+    writeData('', defaultState).catch(console.error);
   }, []);
 
   const value = {
     ...state,
     questions: QUESTIONS,
+    loading,
+    firebaseReady,
     setPlayers,
     setNickname,
     placeBet,
@@ -104,9 +121,8 @@ export function GameProvider({ children }) {
     resolveQuestion,
     unresolveQuestion,
     setFavoriteOverride,
-    update,
+    setGamePhase,
     resetGame,
-    loadState,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

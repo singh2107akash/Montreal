@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
 import { useGame } from '../GameContext';
 import { calculateLeaderboard, calculateFavorite } from '../utils/scoring';
-import { exportGameState } from '../utils/storage';
 import {
   Trophy, Crown, TrendingUp, TrendingDown, Flame, Target,
-  Download, RotateCcw, Check, X, UserCheck,
+  RotateCcw, Check, X,
 } from 'lucide-react';
 
 const RANK_STYLES = [
@@ -18,6 +18,8 @@ const RANK_LABELS = ['1st', '2nd', '3rd'];
 
 export default function ResultsPage() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const isAdmin = user?.isAdmin;
   const {
     players, questions, bets, resolutions, favoriteOverrides, nicknames,
     resetGame,
@@ -53,25 +55,19 @@ export default function ResultsPage() {
     <div className="min-h-screen px-4 py-8 max-w-3xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <button
-          onClick={() => navigate('/resolve')}
+          onClick={() => navigate('/')}
           className="text-gray-500 hover:text-gold-400 text-sm transition-colors cursor-pointer"
         >
-          &larr; Resolution
+          &larr; Home
         </button>
-        <div className="flex gap-3">
-          <button
-            onClick={exportGameState}
-            className="text-gray-500 hover:text-gold-400 text-sm transition-colors flex items-center gap-1 cursor-pointer"
-          >
-            <Download className="w-3.5 h-3.5" /> Export
-          </button>
+        {isAdmin && (
           <button
             onClick={handleReset}
             className="text-gray-500 hover:text-accent-red text-sm transition-colors flex items-center gap-1 cursor-pointer"
           >
-            <RotateCcw className="w-3.5 h-3.5" /> Reset
+            <RotateCcw className="w-3.5 h-3.5" /> Reset Game
           </button>
-        </div>
+        )}
       </div>
 
       {/* Title */}
@@ -265,11 +261,19 @@ export default function ResultsPage() {
       {/* Nav buttons */}
       <div className="flex gap-3 mb-12">
         <button
-          onClick={() => navigate('/resolve')}
+          onClick={() => navigate('/market')}
           className="flex-1 bg-dark-700 hover:bg-dark-600 text-gray-300 font-medium py-3 px-4 rounded-xl text-sm transition-colors cursor-pointer"
         >
-          Back to Resolution
+          View Market
         </button>
+        {isAdmin && (
+          <button
+            onClick={() => navigate('/resolve')}
+            className="flex-1 bg-dark-700 hover:bg-dark-600 text-gray-300 font-medium py-3 px-4 rounded-xl text-sm transition-colors cursor-pointer"
+          >
+            Resolution
+          </button>
+        )}
         <button
           onClick={() => navigate('/')}
           className="flex-1 bg-dark-700 hover:bg-dark-600 text-gray-300 font-medium py-3 px-4 rounded-xl text-sm transition-colors cursor-pointer"

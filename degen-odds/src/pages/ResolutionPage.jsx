@@ -37,10 +37,10 @@ export default function ResolutionPage() {
     <div className="min-h-screen px-4 py-8 max-w-2xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <button
-          onClick={() => navigate('/market')}
+          onClick={() => navigate('/')}
           className="text-gray-500 hover:text-gold-400 text-sm transition-colors cursor-pointer"
         >
-          &larr; Market
+          &larr; Home
         </button>
         <button
           onClick={() => navigate('/results')}
