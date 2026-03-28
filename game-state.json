@@ -434,7 +434,15 @@
     "Robby",
     "Matab"
   ],
-  "resolutions": {},
+  "resolutions": {
+    "0": {
+      "resolved": true,
+      "outcomeType": "favorite",
+      "actualPerson": null,
+      "favoriteOverride": null,
+      "resolvedAt": "2026-03-28T22:47:11.857Z"
+    }
+  },
   "favoriteOverrides": {},
   "playerPasswords": {
     "Akash": "Rav",
