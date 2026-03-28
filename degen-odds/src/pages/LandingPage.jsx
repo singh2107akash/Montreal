@@ -37,10 +37,10 @@ export default function LandingPage() {
 
       <div className="max-w-2xl w-full text-center">
         <div className="mb-2 text-gold-400 text-sm font-semibold tracking-[0.3em] uppercase">
-          Montreal Bachelor Edition
+          Montreal Edition
         </div>
         <h1 className="text-5xl md:text-7xl font-black mb-4 bg-gradient-to-r from-gold-400 via-yellow-200 to-gold-500 bg-clip-text text-transparent leading-tight">
-          DEGEN ODDS
+          SACRÉ BLEU BETS
         </h1>
         <p className="text-gray-400 text-lg md:text-xl mb-10 max-w-lg mx-auto leading-relaxed">
           Place your bets before the trip starts.

@@ -8,11 +8,11 @@ let cachedState = null;
 let etag = null;
 
 function getToken() {
-  return localStorage.getItem('degen-odds-game-code') || '';
+  return localStorage.getItem('sacre-bleu-bets-code') || '';
 }
 
 export function setToken(token) {
-  localStorage.setItem('degen-odds-game-code', token);
+  localStorage.setItem('sacre-bleu-bets-code', token);
 }
 
 export function hasToken() {
@@ -20,7 +20,7 @@ export function hasToken() {
 }
 
 export function clearToken() {
-  localStorage.removeItem('degen-odds-game-code');
+  localStorage.removeItem('sacre-bleu-bets-code');
 }
 
 async function apiRequest(method, body = null, extraHeaders = {}) {

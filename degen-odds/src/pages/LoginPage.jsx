@@ -41,10 +41,10 @@ export default function LoginPage() {
       <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
         <div className="max-w-md w-full text-center">
           <div className="mb-1 text-gold-400 text-sm font-semibold tracking-[0.3em] uppercase">
-            Montreal Bachelor Edition
+            Montreal Edition
           </div>
           <h1 className="text-5xl md:text-6xl font-black mb-3 bg-gradient-to-r from-gold-400 via-yellow-200 to-gold-500 bg-clip-text text-transparent leading-tight">
-            DEGEN ODDS
+            SACRÉ BLEU BETS
           </h1>
           <p className="text-gray-500 text-sm mb-8">
             Enter the game code to join.

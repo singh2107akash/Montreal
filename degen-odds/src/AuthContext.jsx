@@ -5,7 +5,7 @@ const AuthContext = createContext(null);
 
 const ADMIN_NAME = 'Akash';
 const ADMIN_PASSWORD = 'montreal';
-const SESSION_KEY = 'degen-odds-session';
+const SESSION_KEY = 'sacre-bleu-bets-session';
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {

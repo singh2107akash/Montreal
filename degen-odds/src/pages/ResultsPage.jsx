@@ -73,7 +73,7 @@ export default function ResultsPage() {
       {/* Title */}
       <div className="text-center mb-8">
         <div className="text-gold-400 text-sm font-semibold tracking-[0.3em] uppercase mb-1">
-          Montreal Bachelor Edition
+          Montreal Edition
         </div>
         <h1 className="text-4xl md:text-5xl font-black bg-gradient-to-r from-gold-400 via-yellow-200 to-gold-500 bg-clip-text text-transparent mb-2">
           LEADERBOARD
