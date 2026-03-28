@@ -115,6 +115,10 @@
       "9": {
         "pick": "Surkh",
         "amount": 5
+      },
+      "11": {
+        "pick": "Jodha",
+        "amount": 5
       }
     }
   },
