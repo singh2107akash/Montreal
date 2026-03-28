@@ -147,6 +147,10 @@
       "11": {
         "pick": "Harman",
         "amount": 5
+      },
+      "12": {
+        "pick": "Hinda",
+        "amount": 5
       }
     }
   },
