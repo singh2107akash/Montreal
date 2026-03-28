@@ -504,6 +504,13 @@
       "actualPerson": null,
       "favoriteOverride": null,
       "resolvedAt": "2026-03-28T22:48:02.872Z"
+    },
+    "13": {
+      "resolved": true,
+      "outcomeType": "someone_else",
+      "actualPerson": "Robby",
+      "favoriteOverride": null,
+      "resolvedAt": "2026-03-28T22:48:10.772Z"
     }
   },
   "favoriteOverrides": {},
