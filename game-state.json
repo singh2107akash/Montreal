@@ -25,6 +25,10 @@
       "1": {
         "pick": "Gagan",
         "amount": 10
+      },
+      "2": {
+        "pick": "Harjit",
+        "amount": 20
       }
     }
   },
