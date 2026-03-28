@@ -40,7 +40,7 @@ export default function LandingPage() {
           Montreal Edition
         </div>
         <h1 className="text-5xl md:text-7xl font-black mb-4 bg-gradient-to-r from-gold-400 via-yellow-200 to-gold-500 bg-clip-text text-transparent leading-tight">
-          SACRÉ BLEU BETS
+          SACRÉ BETS
         </h1>
         <p className="text-gray-400 text-lg md:text-xl mb-10 max-w-lg mx-auto leading-relaxed">
           Place your bets before the trip starts.

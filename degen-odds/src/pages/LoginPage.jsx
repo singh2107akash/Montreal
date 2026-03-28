@@ -87,7 +87,7 @@ export default function LoginPage() {
             Montreal Edition
           </div>
           <h1 className="text-5xl md:text-6xl font-black mb-3 bg-gradient-to-r from-gold-400 via-yellow-200 to-gold-500 bg-clip-text text-transparent leading-tight">
-            SACRÉ BLEU BETS
+            SACRÉ BETS
           </h1>
           <p className="text-gray-500 text-sm mb-8">
             Enter the game code to join.
@@ -159,7 +159,7 @@ export default function LoginPage() {
           Montreal Edition
         </div>
         <h1 className="text-5xl md:text-6xl font-black mb-3 bg-gradient-to-r from-gold-400 via-yellow-200 to-gold-500 bg-clip-text text-transparent leading-tight">
-          SACRÉ BLEU BETS
+          SACRÉ BETS
         </h1>
         <p className="text-gray-500 text-sm mb-10">
           Place bets before the trip. The chaos decides who wins.
