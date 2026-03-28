@@ -33,6 +33,10 @@
       "3": {
         "pick": "Harman",
         "amount": 15
+      },
+      "4": {
+        "pick": "Hinda",
+        "amount": 5
       }
     }
   },
