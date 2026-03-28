@@ -1,12 +1,14 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { useGame } from '../GameContext';
-import { Trophy, Target, Users, Zap, LogOut, Shield, Loader2 } from 'lucide-react';
+import { Trophy, Target, Users, Zap, LogOut, Shield, Loader2, BookOpen, ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function LandingPage() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-  const { players, lockedPlayers, questions, resolutions, saving, error } = useGame();
+  const { players, lockedPlayers, questions, resolutions, config, saving, error } = useGame();
+  const [showRules, setShowRules] = useState(false);
 
   const isAdmin = user?.isAdmin;
   const isLocked = lockedPlayers.includes(user?.name);
@@ -14,7 +16,7 @@ export default function LandingPage() {
   const resolvedCount = Object.values(resolutions).filter((r) => r?.resolved).length;
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12 relative">
+    <div className="min-h-screen flex flex-col items-center px-4 py-12 relative">
       {/* Header bar */}
       <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
         <div className="flex items-center gap-2 text-sm">
@@ -35,7 +37,7 @@ export default function LandingPage() {
         </div>
       </div>
 
-      <div className="max-w-2xl w-full text-center">
+      <div className="max-w-2xl w-full text-center mt-12">
         <div className="mb-2 text-gold-400 text-sm font-semibold tracking-[0.3em] uppercase">
           Montreal Edition
         </div>
@@ -59,7 +61,7 @@ export default function LandingPage() {
             <div className="text-sm font-medium text-gray-200">
               {isLocked ? 'Bets Locked' : 'Place Bets'}
             </div>
-            <div className="text-xs text-gray-500">150 pts, 20 questions</div>
+            <div className="text-xs text-gray-500">{config.totalBudget} pts, {questions.length} questions</div>
           </div>
           <div className="bg-dark-800 border border-dark-600 rounded-xl p-4">
             <Zap className="w-5 h-5 text-gold-400 mb-2" />
@@ -75,7 +77,6 @@ export default function LandingPage() {
 
         {/* Action buttons */}
         <div className="flex flex-col gap-3 items-center">
-          {/* Primary action based on role */}
           {!isLocked && !isAdmin ? (
             <button
               onClick={() => navigate('/betting')}
@@ -96,7 +97,6 @@ export default function LandingPage() {
             </div>
           )}
 
-          {/* Nav links */}
           <div className="flex flex-wrap justify-center gap-3 mt-2">
             {isAdmin && (
               <button
@@ -128,9 +128,141 @@ export default function LandingPage() {
             </button>
           </div>
         </div>
+
+        {/* Rules Section */}
+        <div className="mt-12 max-w-lg mx-auto">
+          <button
+            onClick={() => setShowRules(!showRules)}
+            className="w-full flex items-center justify-center gap-2 text-gray-400 hover:text-gold-400 transition-colors cursor-pointer py-3"
+          >
+            <BookOpen className="w-4 h-4" />
+            <span className="font-semibold text-sm">How to Play</span>
+            {showRules ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+          </button>
+
+          {showRules && (
+            <div className="bg-dark-800 border border-dark-600 rounded-xl p-5 text-left space-y-5 animate-fade-in-up">
+
+              {/* The Game */}
+              <div>
+                <h3 className="text-gold-400 font-bold text-sm mb-2 uppercase tracking-wider">The Game</h3>
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  Sacré Bets is a pre-trip betting game. There are {questions.length} questions, all in the format
+                  "Who is most likely to..." — you bet on which player you think will actually do each thing during the Montreal trip.
+                </p>
+              </div>
+
+              {/* Before the Trip */}
+              <div>
+                <h3 className="text-gold-400 font-bold text-sm mb-2 uppercase tracking-wider">Before the Trip — Place Your Bets</h3>
+                <ul className="text-gray-300 text-sm leading-relaxed space-y-1.5">
+                  <li className="flex gap-2">
+                    <span className="text-gold-500 shrink-0">1.</span>
+                    You get <span className="text-gold-400 font-bold">{config.totalBudget} points</span> to spread across all {questions.length} questions.
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-gold-500 shrink-0">2.</span>
+                    For each question, pick which player you think will do it and bet points on it.
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-gold-500 shrink-0">3.</span>
+                    Minimum bet is <span className="text-gold-400 font-bold">{config.minBetPerQuestion} pts</span> per question. You must answer all {questions.length}.
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-gold-500 shrink-0">4.</span>
+                    Bet more on questions you feel confident about. Strategy matters!
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-gold-500 shrink-0">5.</span>
+                    Once you lock in, your bets are final. No changes.
+                  </li>
+                </ul>
+              </div>
+
+              {/* The Favorite */}
+              <div>
+                <h3 className="text-gold-400 font-bold text-sm mb-2 uppercase tracking-wider">The Favorite</h3>
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  After everyone locks in, the player with the <span className="text-gold-400 font-bold">most total points</span> bet
+                  on them for a question becomes the <span className="text-gold-400 font-bold">Favorite</span>.
+                  The total points on the favorite is called the <span className="text-gold-400 font-bold">Pot</span>.
+                  Half the pot is the <span className="text-accent-red font-bold">Challenge Value</span> — this
+                  is the personal stake for the favorite.
+                </p>
+              </div>
+
+              {/* During the Trip */}
+              <div>
+                <h3 className="text-gold-400 font-bold text-sm mb-2 uppercase tracking-wider">During the Trip — Resolution</h3>
+                <p className="text-gray-300 text-sm leading-relaxed mb-2">
+                  As things happen on the trip, the admin resolves each question with one of three outcomes:
+                </p>
+                <div className="space-y-3">
+                  <div className="bg-dark-700 rounded-lg p-3">
+                    <div className="text-accent-green font-bold text-xs mb-1">FAVORITE DID IT</div>
+                    <ul className="text-gray-400 text-xs space-y-1">
+                      <li>Everyone who bet on the favorite <span className="text-accent-green font-semibold">wins</span> their bet amount</li>
+                      <li>The favorite <span className="text-accent-green font-semibold">wins</span> the challenge value (pot/2) as a personal bonus</li>
+                    </ul>
+                  </div>
+                  <div className="bg-dark-700 rounded-lg p-3">
+                    <div className="text-accent-red font-bold text-xs mb-1">SOMEONE ELSE DID IT</div>
+                    <ul className="text-gray-400 text-xs space-y-1">
+                      <li>Everyone who bet on the favorite <span className="text-accent-red font-semibold">loses</span> their bet amount</li>
+                      <li>Everyone who correctly bet on the actual person <span className="text-accent-green font-semibold">wins</span> their bet amount</li>
+                      <li>The favorite <span className="text-accent-red font-semibold">loses</span> the challenge value (pot/2)</li>
+                      <li>The actual person <span className="text-accent-green font-semibold">wins</span> the challenge value (pot/2)</li>
+                    </ul>
+                  </div>
+                  <div className="bg-dark-700 rounded-lg p-3">
+                    <div className="text-yellow-400 font-bold text-xs mb-1">NOBODY DID IT</div>
+                    <ul className="text-gray-400 text-xs space-y-1">
+                      <li>Everyone who bet on the favorite <span className="text-accent-red font-semibold">loses</span> their bet amount</li>
+                      <li>The favorite <span className="text-accent-red font-semibold">loses</span> the challenge value (pot/2)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Winning */}
+              <div>
+                <h3 className="text-gold-400 font-bold text-sm mb-2 uppercase tracking-wider">Winning the Game</h3>
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  After all {questions.length} questions are resolved, the player with the
+                  <span className="text-gold-400 font-bold"> highest total score</span> wins.
+                  Points come from correct bets AND from being the favorite who delivers.
+                  Being the favorite is high-risk/high-reward — you get a bonus if you deliver, but a penalty if you don't.
+                </p>
+              </div>
+
+              {/* Tips */}
+              <div>
+                <h3 className="text-gold-400 font-bold text-sm mb-2 uppercase tracking-wider">Pro Tips</h3>
+                <ul className="text-gray-300 text-sm leading-relaxed space-y-1.5">
+                  <li className="flex gap-2">
+                    <span className="text-gold-500 shrink-0">&bull;</span>
+                    Don't put all your points on a few questions — spread them out to hedge risk.
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-gold-500 shrink-0">&bull;</span>
+                    Betting on the underdog (someone who's NOT the favorite) pays off big if they actually do it.
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-gold-500 shrink-0">&bull;</span>
+                    If you're the favorite for a question, you better deliver — or you lose points!
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-gold-500 shrink-0">&bull;</span>
+                    Check the Market page to see who the favorites are and where the money is going.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="absolute bottom-6 text-center text-xs text-dark-500">
+      <div className="mt-8 text-center text-xs text-dark-500">
         No live betting. All bets placed before the trip.
       </div>
     </div>
