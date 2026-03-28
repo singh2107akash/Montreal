@@ -1,6 +1,6 @@
-import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { QUESTIONS, DEFAULT_PLAYERS, GAME_CONFIG } from './data/questions';
-import { writeData, updateData, onData, removeData, isFirebaseConfigured } from './firebase';
+import { readState, writeState, startPolling, stopPolling } from './github-storage';
 
 const GameContext = createContext(null);
 
@@ -18,102 +18,159 @@ const defaultState = {
 export function GameProvider({ children }) {
   const [state, setState] = useState({ ...defaultState });
   const [loading, setLoading] = useState(true);
-  const [firebaseReady, setFirebaseReady] = useState(false);
+  const [error, setError] = useState(null);
+  const [saving, setSaving] = useState(false);
+  const stateRef = useRef(state);
+  stateRef.current = state;
 
-  // Listen to Firebase for real-time updates
+  // Load initial state and start polling
   useEffect(() => {
-    if (!isFirebaseConfigured()) {
-      setLoading(false);
-      return;
-    }
-
-    setFirebaseReady(true);
-    const unsubscribe = onData('', (data) => {
-      if (data) {
-        setState({
-          players: data.players || DEFAULT_PLAYERS,
-          nicknames: data.nicknames || {},
-          bets: data.bets || {},
-          lockedPlayers: data.lockedPlayers || [],
-          resolutions: data.resolutions || {},
-          favoriteOverrides: data.favoriteOverrides || {},
-          gamePhase: data.gamePhase || 'setup',
-          config: data.config || GAME_CONFIG,
-        });
-      } else {
-        // First time - initialize Firebase with defaults
-        writeData('', defaultState);
+    const init = async () => {
+      try {
+        const data = await readState();
+        if (data) {
+          setState({ ...defaultState, ...data });
+        } else {
+          // File doesn't exist yet - create it
+          await writeState(defaultState);
+        }
+      } catch (err) {
+        console.error('Init error:', err);
+        setError(err.message);
       }
       setLoading(false);
-    });
+    };
 
-    return () => unsubscribe();
+    init();
+
+    // Start polling for real-time updates
+    startPolling((data) => {
+      if (data) {
+        setState((prev) => {
+          // Only update if data actually changed
+          const newStr = JSON.stringify(data);
+          const prevStr = JSON.stringify({
+            players: prev.players,
+            nicknames: prev.nicknames,
+            bets: prev.bets,
+            lockedPlayers: prev.lockedPlayers,
+            resolutions: prev.resolutions,
+            favoriteOverrides: prev.favoriteOverrides,
+            gamePhase: prev.gamePhase,
+            config: prev.config,
+          });
+          if (newStr === prevStr) return prev;
+          return { ...defaultState, ...data };
+        });
+      }
+    }, 8000);
+
+    return () => stopPolling();
   }, []);
 
-  const syncToFirebase = useCallback((path, value) => {
-    if (firebaseReady) {
-      writeData(path, value).catch(console.error);
+  const save = useCallback(async (newState) => {
+    setSaving(true);
+    setError(null);
+    try {
+      const toSave = {
+        players: newState.players,
+        nicknames: newState.nicknames,
+        bets: newState.bets,
+        lockedPlayers: newState.lockedPlayers,
+        resolutions: newState.resolutions,
+        favoriteOverrides: newState.favoriteOverrides,
+        gamePhase: newState.gamePhase,
+        config: newState.config,
+      };
+      await writeState(toSave);
+      setState(newState);
+    } catch (err) {
+      console.error('Save error:', err);
+      setError('Failed to save. Try again.');
     }
-  }, [firebaseReady]);
+    setSaving(false);
+  }, []);
 
   const setPlayers = useCallback((players) => {
-    syncToFirebase('players', players);
-  }, [syncToFirebase]);
+    const next = { ...stateRef.current, players };
+    save(next);
+  }, [save]);
 
   const setNickname = useCallback((player, nickname) => {
-    const updated = { ...state.nicknames, [player]: nickname };
-    syncToFirebase('nicknames', updated);
-  }, [syncToFirebase, state.nicknames]);
+    const next = {
+      ...stateRef.current,
+      nicknames: { ...stateRef.current.nicknames, [player]: nickname },
+    };
+    save(next);
+  }, [save]);
 
   const placeBet = useCallback((player, questionIndex, pick, amount) => {
-    const playerBets = { ...(state.bets[player] || {}) };
-    playerBets[questionIndex] = { pick, amount: Number(amount) };
-    syncToFirebase(`bets/${player}`, playerBets);
-  }, [syncToFirebase, state.bets]);
+    // Store bets locally while editing (don't save to GitHub on every keystroke)
+    setState((prev) => {
+      const playerBets = { ...(prev.bets[player] || {}) };
+      playerBets[questionIndex] = { pick, amount: Number(amount) };
+      return { ...prev, bets: { ...prev.bets, [player]: playerBets } };
+    });
+  }, []);
 
   const lockPlayer = useCallback((player) => {
-    const updated = [...new Set([...state.lockedPlayers, player])];
-    syncToFirebase('lockedPlayers', updated);
-  }, [syncToFirebase, state.lockedPlayers]);
+    const current = stateRef.current;
+    const next = {
+      ...current,
+      bets: { ...current.bets },
+      lockedPlayers: [...new Set([...current.lockedPlayers, player])],
+    };
+    save(next);
+  }, [save]);
 
   const resolveQuestion = useCallback((questionIndex, outcomeType, actualPerson = null) => {
-    const updated = {
-      ...state.resolutions,
-      [questionIndex]: {
-        resolved: true,
-        outcomeType,
-        actualPerson,
-        favoriteOverride: state.favoriteOverrides[questionIndex] || null,
-        resolvedAt: new Date().toISOString(),
+    const current = stateRef.current;
+    const next = {
+      ...current,
+      resolutions: {
+        ...current.resolutions,
+        [questionIndex]: {
+          resolved: true,
+          outcomeType,
+          actualPerson,
+          favoriteOverride: current.favoriteOverrides[questionIndex] || null,
+          resolvedAt: new Date().toISOString(),
+        },
       },
     };
-    syncToFirebase('resolutions', updated);
-  }, [syncToFirebase, state.resolutions, state.favoriteOverrides]);
+    save(next);
+  }, [save]);
 
   const unresolveQuestion = useCallback((questionIndex) => {
-    const updated = { ...state.resolutions };
-    delete updated[questionIndex];
-    syncToFirebase('resolutions', updated);
-  }, [syncToFirebase, state.resolutions]);
+    const current = stateRef.current;
+    const resolutions = { ...current.resolutions };
+    delete resolutions[questionIndex];
+    save({ ...current, resolutions });
+  }, [save]);
 
   const setFavoriteOverride = useCallback((questionIndex, player) => {
-    const updated = { ...state.favoriteOverrides, [questionIndex]: player };
-    syncToFirebase('favoriteOverrides', updated);
-  }, [syncToFirebase, state.favoriteOverrides]);
+    const current = stateRef.current;
+    const next = {
+      ...current,
+      favoriteOverrides: { ...current.favoriteOverrides, [questionIndex]: player },
+    };
+    save(next);
+  }, [save]);
 
   const setGamePhase = useCallback((phase) => {
-    syncToFirebase('gamePhase', phase);
-  }, [syncToFirebase]);
+    save({ ...stateRef.current, gamePhase: phase });
+  }, [save]);
 
   const resetGame = useCallback(() => {
-    writeData('', defaultState).catch(console.error);
-  }, []);
+    save({ ...defaultState });
+  }, [save]);
 
   const value = {
     ...state,
     questions: QUESTIONS,
     loading,
-    firebaseReady,
+    error,
+    saving,
     setPlayers,
     setNickname,
     placeBet,

@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { useGame } from '../GameContext';
-import { Trophy, Target, Users, Zap, LogOut, Shield } from 'lucide-react';
+import { Trophy, Target, Users, Zap, LogOut, Shield, Loader2 } from 'lucide-react';
 
 export default function LandingPage() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-  const { players, lockedPlayers, questions, resolutions } = useGame();
+  const { players, lockedPlayers, questions, resolutions, saving, error } = useGame();
 
   const isAdmin = user?.isAdmin;
   const isLocked = lockedPlayers.includes(user?.name);
@@ -24,12 +24,15 @@ export default function LandingPage() {
             {isAdmin && <span className="text-gold-400 ml-1">(Admin)</span>}
           </span>
         </div>
-        <button
-          onClick={logout}
-          className="text-gray-600 hover:text-gray-400 transition-colors cursor-pointer flex items-center gap-1 text-sm"
-        >
-          <LogOut className="w-3.5 h-3.5" /> Logout
-        </button>
+        <div className="flex items-center gap-3">
+          {saving && <Loader2 className="w-3.5 h-3.5 text-gold-400 animate-spin" />}
+          <button
+            onClick={logout}
+            className="text-gray-600 hover:text-gray-400 transition-colors cursor-pointer flex items-center gap-1 text-sm"
+          >
+            <LogOut className="w-3.5 h-3.5" /> Logout
+          </button>
+        </div>
       </div>
 
       <div className="max-w-2xl w-full text-center">

@@ -1,15 +1,25 @@
 import { useState } from 'react';
 import { useAuth } from '../AuthContext';
 import { useGame } from '../GameContext';
-import { Shield, User, Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { Shield, User, Eye, EyeOff, AlertCircle, Loader2, Key } from 'lucide-react';
 
 export default function LoginPage() {
-  const { loginAsAdmin, loginAsPlayer } = useAuth();
+  const {
+    gameCodeReady, tokenError, validating,
+    submitGameCode, loginAsAdmin, loginAsPlayer,
+  } = useAuth();
   const { players, loading } = useGame();
   const [mode, setMode] = useState(null); // null | 'admin' | 'player'
   const [password, setPassword] = useState('');
+  const [gameCode, setGameCode] = useState('');
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleGameCode = async (e) => {
+    e.preventDefault();
+    if (!gameCode.trim()) return;
+    await submitGameCode(gameCode);
+  };
 
   const handleAdminLogin = (e) => {
     e.preventDefault();
@@ -25,6 +35,70 @@ export default function LoginPage() {
     loginAsPlayer(name);
   };
 
+  // Game code entry screen
+  if (!gameCodeReady) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
+        <div className="max-w-md w-full text-center">
+          <div className="mb-1 text-gold-400 text-sm font-semibold tracking-[0.3em] uppercase">
+            Montreal Bachelor Edition
+          </div>
+          <h1 className="text-5xl md:text-6xl font-black mb-3 bg-gradient-to-r from-gold-400 via-yellow-200 to-gold-500 bg-clip-text text-transparent leading-tight">
+            DEGEN ODDS
+          </h1>
+          <p className="text-gray-500 text-sm mb-8">
+            Enter the game code to join.
+          </p>
+
+          <form onSubmit={handleGameCode} className="space-y-4">
+            <div className="relative">
+              <Key className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600" />
+              <input
+                type="text"
+                value={gameCode}
+                onChange={(e) => setGameCode(e.target.value)}
+                placeholder="Paste game code here..."
+                autoFocus
+                className="w-full bg-dark-800 border border-dark-600 focus:border-gold-500 rounded-xl pl-11 pr-4 py-4 text-gray-200 placeholder-gray-600 focus:outline-none transition-colors font-mono text-sm"
+              />
+            </div>
+
+            {tokenError && (
+              <div className="flex items-center gap-2 text-accent-red text-sm">
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                {tokenError}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={!gameCode.trim() || validating}
+              className="w-full bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-500 disabled:opacity-30 disabled:cursor-not-allowed text-dark-900 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
+            >
+              {validating ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" /> Verifying...
+                </>
+              ) : (
+                'Join Game'
+              )}
+            </button>
+          </form>
+
+          <div className="mt-8 bg-dark-800 border border-dark-600 rounded-xl p-4 text-left text-xs text-gray-500">
+            <p className="text-gray-400 font-semibold mb-2">Don't have a game code?</p>
+            <p>Ask the admin (Akash) for it. The game code is a GitHub token that connects everyone to the same game.</p>
+          </div>
+        </div>
+
+        <div className="absolute bottom-6 text-center text-xs text-dark-500">
+          All bets placed before the trip. The trip decides everything.
+        </div>
+      </div>
+    );
+  }
+
+  // Loading game data
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -36,10 +110,10 @@ export default function LoginPage() {
     );
   }
 
+  // Login selection screen
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
       <div className="max-w-md w-full text-center">
-        {/* Title */}
         <div className="mb-1 text-gold-400 text-sm font-semibold tracking-[0.3em] uppercase">
           Montreal Bachelor Edition
         </div>

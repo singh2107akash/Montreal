@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { hasToken, setToken, clearToken, validateToken } from './github-storage';
 
 const AuthContext = createContext(null);
 
@@ -16,6 +17,10 @@ export function AuthProvider({ children }) {
     }
   });
 
+  const [gameCodeReady, setGameCodeReady] = useState(hasToken());
+  const [tokenError, setTokenError] = useState('');
+  const [validating, setValidating] = useState(false);
+
   useEffect(() => {
     if (user) {
       sessionStorage.setItem(SESSION_KEY, JSON.stringify(user));
@@ -23,6 +28,24 @@ export function AuthProvider({ children }) {
       sessionStorage.removeItem(SESSION_KEY);
     }
   }, [user]);
+
+  const submitGameCode = async (code) => {
+    setValidating(true);
+    setTokenError('');
+    setToken(code.trim());
+
+    const result = await validateToken();
+    setValidating(false);
+
+    if (result.valid) {
+      setGameCodeReady(true);
+      return true;
+    } else {
+      clearToken();
+      setTokenError('Invalid game code. Make sure you copied the full token.');
+      return false;
+    }
+  };
 
   const loginAsAdmin = (password) => {
     if (password === ADMIN_PASSWORD) {
@@ -41,8 +64,17 @@ export function AuthProvider({ children }) {
     setUser(null);
   };
 
+  const fullLogout = () => {
+    setUser(null);
+    clearToken();
+    setGameCodeReady(false);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loginAsAdmin, loginAsPlayer, logout }}>
+    <AuthContext.Provider value={{
+      user, gameCodeReady, tokenError, validating,
+      submitGameCode, loginAsAdmin, loginAsPlayer, logout, fullLogout,
+    }}>
       {children}
     </AuthContext.Provider>
   );
