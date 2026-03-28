@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { GameProvider } from './GameContext';
 import LandingPage from './pages/LandingPage';
 import SetupPage from './pages/SetupPage';
@@ -10,7 +10,7 @@ import ResultsPage from './pages/ResultsPage';
 export default function App() {
   return (
     <GameProvider>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/setup" element={<SetupPage />} />
@@ -20,7 +20,7 @@ export default function App() {
           <Route path="/results" element={<ResultsPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </GameProvider>
   );
 }
