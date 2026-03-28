@@ -45,33 +45,33 @@ export default function LandingPage() {
           SACRÉ BETS
         </h1>
         <p className="text-gray-400 text-lg md:text-xl mb-10 max-w-lg mx-auto leading-relaxed">
-          Place your bets before the trip starts.
-          When the trip begins, the chaos decides who wins.
+          Talk is cheap. Put your points where your mouth is.
+          Montreal will expose who's all bark and no bite.
         </p>
 
         {/* Status cards */}
         <div className="grid grid-cols-2 gap-3 md:gap-4 mb-10 max-w-md mx-auto text-left">
           <div className="bg-dark-800 border border-dark-600 rounded-xl p-4">
             <Users className="w-5 h-5 text-gold-400 mb-2" />
-            <div className="text-sm font-medium text-gray-200">{players.length} Players</div>
-            <div className="text-xs text-gray-500">{lockedPlayers.length} locked in</div>
+            <div className="text-sm font-medium text-gray-200">{players.length} Degens</div>
+            <div className="text-xs text-gray-500">{lockedPlayers.length} committed</div>
           </div>
           <div className="bg-dark-800 border border-dark-600 rounded-xl p-4">
             <Target className="w-5 h-5 text-gold-400 mb-2" />
             <div className="text-sm font-medium text-gray-200">
-              {isLocked ? 'Bets Locked' : 'Place Bets'}
+              {isLocked ? 'Locked & Loaded' : 'Put Up or Shut Up'}
             </div>
             <div className="text-xs text-gray-500">{config.totalBudget} pts, {questions.length} questions</div>
           </div>
           <div className="bg-dark-800 border border-dark-600 rounded-xl p-4">
             <Zap className="w-5 h-5 text-gold-400 mb-2" />
-            <div className="text-sm font-medium text-gray-200">{resolvedCount} Resolved</div>
-            <div className="text-xs text-gray-500">of {questions.length} questions</div>
+            <div className="text-sm font-medium text-gray-200">{resolvedCount} Fates Sealed</div>
+            <div className="text-xs text-gray-500">of {questions.length} showdowns</div>
           </div>
           <div className="bg-dark-800 border border-dark-600 rounded-xl p-4">
             <Trophy className="w-5 h-5 text-gold-400 mb-2" />
-            <div className="text-sm font-medium text-gray-200">Leaderboard</div>
-            <div className="text-xs text-gray-500">{allLocked ? 'Live' : 'After betting'}</div>
+            <div className="text-sm font-medium text-gray-200">Who's Winning</div>
+            <div className="text-xs text-gray-500">{allLocked ? 'It\'s live, baby' : 'After everyone locks in'}</div>
           </div>
         </div>
 
@@ -82,18 +82,18 @@ export default function LandingPage() {
               onClick={() => navigate('/betting')}
               className="w-full max-w-xs bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-500 text-dark-900 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-200 pulse-gold cursor-pointer"
             >
-              Place Your Bets
+              Time to Bet, Degen
             </button>
           ) : isAdmin ? (
             <button
               onClick={() => navigate('/setup')}
               className="w-full max-w-xs bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-500 text-dark-900 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-200 pulse-gold cursor-pointer"
             >
-              Admin Dashboard
+              Command Center
             </button>
           ) : (
             <div className="bg-dark-800 border border-accent-green/30 rounded-xl px-6 py-4 text-accent-green text-sm font-medium">
-              Your bets are locked in! Waiting for the trip to begin.
+              You're locked in. No backing out now. Montreal decides everything.
             </div>
           )}
 
@@ -103,28 +103,28 @@ export default function LandingPage() {
                 onClick={() => navigate('/betting')}
                 className="text-sm text-gray-400 hover:text-gold-400 transition-colors cursor-pointer"
               >
-                Betting
+                Place Bets
               </button>
             )}
             <button
               onClick={() => navigate('/market')}
               className="text-sm text-gray-400 hover:text-gold-400 transition-colors cursor-pointer"
             >
-              View Market
+              The Odds Board
             </button>
             {isAdmin && (
               <button
                 onClick={() => navigate('/resolve')}
                 className="text-sm text-gray-400 hover:text-gold-400 transition-colors cursor-pointer"
               >
-                Resolution
+                Judgment Day
               </button>
             )}
             <button
               onClick={() => navigate('/results')}
               className="text-sm text-gray-400 hover:text-gold-400 transition-colors cursor-pointer"
             >
-              Leaderboard
+              Who's Winning
             </button>
           </div>
         </div>
@@ -267,7 +267,7 @@ export default function LandingPage() {
       </div>
 
       <div className="mt-8 text-center text-xs text-dark-500">
-        No live betting. All bets placed before the trip.
+        No live betting. You commit before the trip. Montreal does the rest.
       </div>
     </div>
   );

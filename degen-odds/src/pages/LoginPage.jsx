@@ -90,7 +90,7 @@ export default function LoginPage() {
             SACRÉ BETS
           </h1>
           <p className="text-gray-500 text-sm mb-8">
-            Enter the game code to join.
+            Got the code? Get in here, degen.
           </p>
 
           <form onSubmit={handleGameCode} className="space-y-4">
@@ -127,13 +127,13 @@ export default function LoginPage() {
           </form>
 
           <div className="mt-8 bg-dark-800 border border-dark-600 rounded-xl p-4 text-left text-xs text-gray-500">
-            <p className="text-gray-400 font-semibold mb-2">Don't have a game code?</p>
-            <p>Ask the admin (Akash) for it.</p>
+            <p className="text-gray-400 font-semibold mb-2">No code? No entry.</p>
+            <p>Beg Akash for it. He runs this show.</p>
           </div>
         </div>
 
         <div className="absolute bottom-6 text-center text-xs text-dark-500">
-          All bets placed before the trip. The trip decides everything.
+          No backing out. Montreal will expose the truth.
         </div>
       </div>
     );
@@ -145,7 +145,7 @@ export default function LoginPage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-gold-400 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-500 text-sm">Loading game...</p>
+          <p className="text-gray-500 text-sm">Warming up the chaos...</p>
         </div>
       </div>
     );
@@ -162,7 +162,7 @@ export default function LoginPage() {
           SACRÉ BETS
         </h1>
         <p className="text-gray-500 text-sm mb-10">
-          Place bets before the trip. The chaos decides who wins.
+          Talk is cheap. Put your points where your mouth is.
         </p>
 
         {/* Mode selection */}
@@ -179,7 +179,7 @@ export default function LoginPage() {
                 <div className="font-bold text-gray-200 group-hover:text-gold-400 transition-colors">
                   Admin Login
                 </div>
-                <div className="text-xs text-gray-500">Manage game, resolve bets</div>
+                <div className="text-xs text-gray-500">Run the show, settle the scores</div>
               </div>
             </button>
 
@@ -194,7 +194,7 @@ export default function LoginPage() {
                 <div className="font-bold text-gray-200 group-hover:text-gold-400 transition-colors">
                   Player Login
                 </div>
-                <div className="text-xs text-gray-500">Place your bets, view results</div>
+                <div className="text-xs text-gray-500">Time to back it up or shut up</div>
               </div>
             </button>
           </div>
@@ -234,7 +234,7 @@ export default function LoginPage() {
                 disabled={!password}
                 className="w-full bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-500 disabled:opacity-30 disabled:cursor-not-allowed text-dark-900 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-200 cursor-pointer"
               >
-                Enter as Admin
+                Enter the War Room
               </button>
             </form>
 
@@ -250,7 +250,7 @@ export default function LoginPage() {
         {/* Player login - name selection */}
         {mode === 'player' && !selectedPlayer && (
           <div className="animate-fade-in-up">
-            <p className="text-gray-400 text-sm mb-4">Select your name</p>
+            <p className="text-gray-400 text-sm mb-4">Who are you, degen?</p>
             <div className="grid grid-cols-2 gap-2 mb-4">
               {players.map((name) => (
                 <button
@@ -288,7 +288,7 @@ export default function LoginPage() {
             <form onSubmit={handlePlayerPasswordSubmit} className="space-y-4">
               {hasExistingPassword ? (
                 <>
-                  <p className="text-gray-400 text-sm mb-2">Enter your password</p>
+                  <p className="text-gray-400 text-sm mb-2">Prove it's you, degenerate</p>
                   <div className="relative">
                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600" />
                     <input
@@ -303,7 +303,7 @@ export default function LoginPage() {
                 </>
               ) : (
                 <>
-                  <p className="text-gray-400 text-sm mb-2">Create a password for your account</p>
+                  <p className="text-gray-400 text-sm mb-2">Lock it down — create your password</p>
                   <div className="relative">
                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600" />
                     <input
@@ -340,7 +340,7 @@ export default function LoginPage() {
                 disabled={!pwInput}
                 className="w-full bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-500 disabled:opacity-30 disabled:cursor-not-allowed text-dark-900 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-200 cursor-pointer"
               >
-                {hasExistingPassword ? 'Log In' : 'Create & Log In'}
+                {hasExistingPassword ? 'Let Me In' : 'Lock In & Enter'}
               </button>
             </form>
 
@@ -348,14 +348,14 @@ export default function LoginPage() {
               onClick={resetPlayerFlow}
               className="mt-4 text-gray-500 hover:text-gold-400 text-sm transition-colors cursor-pointer flex items-center gap-1 mx-auto"
             >
-              <ArrowLeft className="w-3.5 h-3.5" /> Pick different name
+              <ArrowLeft className="w-3.5 h-3.5" /> That ain't me
             </button>
           </div>
         )}
       </div>
 
       <div className="absolute bottom-6 text-center text-xs text-dark-500">
-        All bets placed before the trip. The trip decides everything.
+        No backing out. Montreal will expose the truth.
       </div>
     </div>
   );
