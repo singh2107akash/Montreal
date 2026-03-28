@@ -104,24 +104,8 @@
         "pick": "Gagan",
         "amount": 5
       },
-      "1": {
+      "2": {
         "pick": "Akash",
-        "amount": 5
-      },
-      "3": {
-        "pick": "Gagan",
-        "amount": 5
-      },
-      "4": {
-        "pick": "Robby",
-        "amount": 5
-      },
-      "5": {
-        "pick": "Pardeep",
-        "amount": 5
-      },
-      "6": {
-        "pick": "Harjit",
         "amount": 5
       }
     }
