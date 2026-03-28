@@ -16,7 +16,14 @@
     "Goldy"
   ],
   "nicknames": {},
-  "bets": {},
+  "bets": {
+    "Akash": {
+      "0": {
+        "pick": "Pardeep",
+        "amount": 15
+      }
+    }
+  },
   "lockedPlayers": [],
   "resolutions": {},
   "favoriteOverrides": {},
