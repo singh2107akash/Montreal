@@ -426,6 +426,12 @@
         "pick": "Pardeep",
         "amount": 25
       }
+    },
+    "Dilaver": {
+      "0": {
+        "pick": "Akash",
+        "amount": 5
+      }
     }
   },
   "lockedPlayers": [
