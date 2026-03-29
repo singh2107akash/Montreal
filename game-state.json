@@ -443,6 +443,10 @@
       "3": {
         "pick": "Surkh",
         "amount": 5
+      },
+      "4": {
+        "pick": "Matab",
+        "amount": 5
       }
     }
   },
