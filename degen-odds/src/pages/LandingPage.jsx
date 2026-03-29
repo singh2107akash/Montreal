@@ -222,17 +222,17 @@ export default function LandingPage() {
                   <div className="bg-dark-700 rounded-lg p-3">
                     <div className="text-accent-green font-bold text-xs mb-1">FAVORITE DID IT</div>
                     <ul className="text-gray-400 text-xs space-y-1">
-                      <li>Everyone who bet on the favorite <span className="text-accent-green font-semibold">wins</span> their bet amount</li>
-                      <li>The favorite <span className="text-accent-green font-semibold">wins</span> the challenge value (pot/2) as a personal bonus</li>
+                      <li>Everyone who bet on the favorite <span className="text-accent-green font-semibold">wins 1.5x</span> their bet amount</li>
+                      <li>The favorite <span className="text-accent-green font-semibold">wins</span> 50% of the pot as a personal bonus</li>
                     </ul>
                   </div>
                   <div className="bg-dark-700 rounded-lg p-3">
                     <div className="text-accent-red font-bold text-xs mb-1">SOMEONE ELSE DID IT</div>
                     <ul className="text-gray-400 text-xs space-y-1">
                       <li>Everyone who bet on the favorite <span className="text-accent-red font-semibold">loses</span> their bet amount</li>
-                      <li>Everyone who correctly bet on the actual person <span className="text-accent-green font-semibold">wins</span> their bet amount</li>
-                      <li>The favorite <span className="text-accent-red font-semibold">loses</span> the challenge value (pot/2)</li>
-                      <li>The actual person <span className="text-accent-green font-semibold">wins</span> the challenge value (pot/2)</li>
+                      <li>Everyone who correctly bet on the actual person <span className="text-accent-green font-semibold">wins 1.5x</span> their bet amount</li>
+                      <li>The favorite <span className="text-accent-red font-semibold">loses</span> 50% of the pot</li>
+                      <li>The actual person <span className="text-accent-green font-semibold">wins</span> 50% of the pot</li>
                     </ul>
                   </div>
                   <div className="bg-dark-700 rounded-lg p-3">
@@ -251,8 +251,8 @@ export default function LandingPage() {
                 <p className="text-gray-300 text-sm leading-relaxed">
                   After all {questions.length} questions are resolved, the player with the
                   <span className="text-gold-400 font-bold"> highest total score</span> wins.
-                  Points come from correct bets AND from being the favorite who delivers.
-                  Being the favorite is high-risk/high-reward — you get a bonus if you deliver, but a penalty if you don't.
+                  Correct bets pay <span className="text-gold-400 font-bold">1.5x</span> your wager. Plus you earn bonus points from being the favorite who delivers.
+                  Being the favorite is high-risk/high-reward — you get 50% of the pot if you deliver, but lose 50% if you don't.
                 </p>
               </div>
 
