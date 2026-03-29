@@ -82,7 +82,7 @@ export function calculateScoreChanges(questionIndex, bets, players, favorite, po
       if (bet && bet.pick === favorite) {
         changes[player] = (changes[player] || 0) - bet.amount;
       } else if (bet && actualPerson && bet.pick === actualPerson) {
-        changes[player] = (changes[player] || 0) + Math.floor(bet.amount * 1.5);
+        changes[player] = (changes[player] || 0) + Math.floor(bet.amount * 2.5);
       }
     });
     // The favorite loses 50% of pot
