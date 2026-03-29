@@ -439,6 +439,10 @@
       "2": {
         "pick": "Jodha",
         "amount": 5
+      },
+      "3": {
+        "pick": "Surkh",
+        "amount": 5
       }
     }
   },
