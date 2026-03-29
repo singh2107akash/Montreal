@@ -447,6 +447,10 @@
       "4": {
         "pick": "Matab",
         "amount": 5
+      },
+      "5": {
+        "pick": "Robby",
+        "amount": 5
       }
     }
   },
