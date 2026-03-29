@@ -455,6 +455,10 @@
       "6": {
         "pick": "Surkh",
         "amount": 25
+      },
+      "7": {
+        "pick": "Harman",
+        "amount": 25
       }
     }
   },
