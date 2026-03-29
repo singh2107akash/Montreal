@@ -230,7 +230,7 @@ export default function LandingPage() {
                     <div className="text-accent-purple font-bold text-xs mb-1">THE UNDERDOG STEALS IT</div>
                     <ul className="text-gray-400 text-xs space-y-1">
                       <li>Everyone who bet on the favorite <span className="text-accent-red font-semibold">loses</span> their bet amount</li>
-                      <li>Everyone who correctly bet on the underdog <span className="text-accent-green font-semibold">wins 1.5x</span> their bet amount</li>
+                      <li>Everyone who correctly bet on the underdog <span className="text-accent-green font-semibold">wins 2.5x</span> their bet amount — massive reward for believing in the underdog</li>
                       <li>The favorite <span className="text-accent-red font-semibold">loses</span> 50% of the pot</li>
                       <li>The underdog <span className="text-accent-green font-semibold">wins 75% of the pot</span> — the biggest single payout in the game</li>
                     </ul>
