@@ -65,29 +65,29 @@ export function calculateScoreChanges(questionIndex, bets, players, favorite, po
   });
 
   if (outcomeType === 'favorite') {
-    // Everyone who bet on the favorite wins points equal to their bet amount
+    // Everyone who bet on the favorite wins 1.5x their bet amount
     Object.entries(bets).forEach(([player, playerBets]) => {
       const bet = playerBets[questionIndex];
       if (bet && bet.pick === favorite) {
-        changes[player] = (changes[player] || 0) + bet.amount;
+        changes[player] = (changes[player] || 0) + Math.floor(bet.amount * 1.5);
       }
     });
-    // The favorite wins points equal to half the pot
+    // The favorite wins 50% of pot
     changes[favorite] = (changes[favorite] || 0) + challengeValue;
   } else if (outcomeType === 'someone_else') {
-    // Everyone who bet on the favorite loses points equal to their bet amount
-    // Everyone who correctly bet on the actual person wins points equal to their bet amount
+    // Everyone who bet on the favorite loses their bet amount
+    // Everyone who correctly bet on the actual person wins 1.5x their bet amount
     Object.entries(bets).forEach(([player, playerBets]) => {
       const bet = playerBets[questionIndex];
       if (bet && bet.pick === favorite) {
         changes[player] = (changes[player] || 0) - bet.amount;
       } else if (bet && actualPerson && bet.pick === actualPerson) {
-        changes[player] = (changes[player] || 0) + bet.amount;
+        changes[player] = (changes[player] || 0) + Math.floor(bet.amount * 1.5);
       }
     });
-    // The favorite loses points equal to half the pot
+    // The favorite loses 50% of pot
     changes[favorite] = (changes[favorite] || 0) - challengeValue;
-    // The actual person who did it wins points equal to half the pot
+    // The actual person who did it wins 50% of pot
     if (actualPerson) {
       changes[actualPerson] = (changes[actualPerson] || 0) + challengeValue;
     }
