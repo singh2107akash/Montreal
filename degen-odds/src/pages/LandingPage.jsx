@@ -226,13 +226,13 @@ export default function LandingPage() {
                       <li>The favorite <span className="text-accent-green font-semibold">wins</span> 50% of the pot as a personal bonus</li>
                     </ul>
                   </div>
-                  <div className="bg-dark-700 rounded-lg p-3">
-                    <div className="text-accent-red font-bold text-xs mb-1">SOMEONE ELSE DID IT</div>
+                  <div className="bg-dark-700 rounded-lg p-3 border border-accent-purple/30">
+                    <div className="text-accent-purple font-bold text-xs mb-1">THE UNDERDOG STEALS IT</div>
                     <ul className="text-gray-400 text-xs space-y-1">
                       <li>Everyone who bet on the favorite <span className="text-accent-red font-semibold">loses</span> their bet amount</li>
-                      <li>Everyone who correctly bet on the actual person <span className="text-accent-green font-semibold">wins 1.5x</span> their bet amount</li>
+                      <li>Everyone who correctly bet on the underdog <span className="text-accent-green font-semibold">wins 1.5x</span> their bet amount</li>
                       <li>The favorite <span className="text-accent-red font-semibold">loses</span> 50% of the pot</li>
-                      <li>The actual person <span className="text-accent-green font-semibold">wins</span> 50% of the pot</li>
+                      <li>The underdog <span className="text-accent-green font-semibold">wins 75% of the pot</span> — the biggest single payout in the game</li>
                     </ul>
                   </div>
                   <div className="bg-dark-700 rounded-lg p-3">
@@ -251,8 +251,8 @@ export default function LandingPage() {
                 <p className="text-gray-300 text-sm leading-relaxed">
                   After all {questions.length} questions are resolved, the player with the
                   <span className="text-gold-400 font-bold"> highest total score</span> wins.
-                  Correct bets pay <span className="text-gold-400 font-bold">1.5x</span> your wager. Plus you earn bonus points from being the favorite who delivers.
-                  Being the favorite is high-risk/high-reward — you get 50% of the pot if you deliver, but lose 50% if you don't.
+                  Correct bets pay <span className="text-gold-400 font-bold">1.5x</span> your wager. Favorites who deliver get 50% of the pot.
+                  But the real chaos move? <span className="text-accent-purple font-bold">Be the underdog.</span> If someone else steals it from the favorite, they take home <span className="text-accent-purple font-bold">75% of the pot</span> — the single biggest payout in the game. High risk, massive reward.
                 </p>
               </div>
 
@@ -268,9 +268,11 @@ export default function LandingPage() {
                     <span className="text-gold-500 shrink-0">&bull;</span>
                     <span>If you bet on the favorite, don't just sit there — <span className="text-gold-400 font-bold">make your favorite deliver</span>. Peer pressure is a valid strategy. You invested in them, now manage your asset.</span>
                   </li>
-                  <li className="flex gap-2">
-                    <span className="text-gold-500 shrink-0">&bull;</span>
-                    <span>Think you're the underdog? Think nobody believes in you? <span className="text-accent-red font-bold">Good.</span> Deliver it anyway and kick all the doubters right in the Sacré Bleu Balls. Nothing hits harder than proving the haters wrong.</span>
+                  <li className="bg-accent-purple/10 border border-accent-purple/30 rounded-lg p-3 -mx-1">
+                    <div className="flex gap-2">
+                      <span className="text-accent-purple shrink-0 font-bold text-lg">!</span>
+                      <span><span className="text-accent-purple font-bold">THE UNDERDOG PATH:</span> Not the favorite? <span className="text-accent-purple font-bold">GOOD.</span> That's where the real money is. If you steal it from the favorite, you take <span className="text-accent-purple font-bold">75% of the pot</span> — the biggest payout in the game. Nobody sees you coming. Nobody expects it. Then you deliver and kick every doubter right in the Sacré Bleu Balls. The favorite gets humbled, you walk away loaded. This is the chaos play. This is how legends are made in Montreal.</span>
+                    </div>
                   </li>
                   <li className="flex gap-2">
                     <span className="text-gold-500 shrink-0">&bull;</span>

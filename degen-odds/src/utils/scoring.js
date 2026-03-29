@@ -87,9 +87,10 @@ export function calculateScoreChanges(questionIndex, bets, players, favorite, po
     });
     // The favorite loses 50% of pot
     changes[favorite] = (changes[favorite] || 0) - challengeValue;
-    // The actual person who did it wins 50% of pot
+    // The underdog who actually did it wins 75% of pot
     if (actualPerson) {
-      changes[actualPerson] = (changes[actualPerson] || 0) + challengeValue;
+      const underdogBonus = Math.floor(pot * 0.75);
+      changes[actualPerson] = (changes[actualPerson] || 0) + underdogBonus;
     }
   } else if (outcomeType === 'nobody') {
     // Everyone who bet on the favorite loses points equal to their bet amount
