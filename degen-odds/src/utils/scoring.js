@@ -76,13 +76,13 @@ export function calculateScoreChanges(questionIndex, bets, players, favorite, po
     changes[favorite] = (changes[favorite] || 0) + challengeValue;
   } else if (outcomeType === 'someone_else') {
     // Everyone who bet on the favorite loses their bet amount
-    // Everyone who correctly bet on the actual person wins 1.5x their bet amount
+    // Everyone who correctly bet on the actual person wins 2.5x their bet amount
     Object.entries(bets).forEach(([player, playerBets]) => {
       const bet = playerBets[questionIndex];
       if (bet && bet.pick === favorite) {
         changes[player] = (changes[player] || 0) - bet.amount;
       } else if (bet && actualPerson && bet.pick === actualPerson) {
-        changes[player] = (changes[player] || 0) + Math.floor(bet.amount * 1.5);
+        changes[player] = (changes[player] || 0) + Math.floor(bet.amount * 2.5);
       }
     });
     // The favorite loses 50% of pot
