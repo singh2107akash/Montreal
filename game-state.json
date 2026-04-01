@@ -117,6 +117,10 @@
       "24": {
         "pick": "Matab",
         "amount": 5
+      },
+      "25": {
+        "pick": "Matab",
+        "amount": 25
       }
     }
   },
