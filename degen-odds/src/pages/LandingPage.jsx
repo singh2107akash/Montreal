@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { useGame } from '../GameContext';
-import { Trophy, Target, Users, Zap, LogOut, Shield, Loader2, BookOpen, ChevronDown, ChevronUp, Lock, Unlock } from 'lucide-react';
+import { Trophy, Target, Users, Zap, LogOut, Shield, Loader2, BookOpen, ChevronDown, ChevronUp, Lock, Unlock, TrendingUp } from 'lucide-react';
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -49,106 +49,104 @@ export default function LandingPage() {
           Montreal will expose who's all bark and no bite.
         </p>
 
-        {/* Status cards */}
-        <div className="grid grid-cols-2 gap-3 md:gap-4 mb-10 max-w-md mx-auto text-left">
-          <div className="bg-dark-800 border border-dark-600 rounded-xl p-4">
-            <Users className="w-5 h-5 text-gold-400 mb-2" />
-            <div className="text-sm font-medium text-gray-200">{players.length} Degens</div>
-            <div className="text-xs text-gray-500">{lockedPlayers.length} committed</div>
-          </div>
-          <div className="bg-dark-800 border border-dark-600 rounded-xl p-4">
-            <Target className="w-5 h-5 text-gold-400 mb-2" />
-            <div className="text-sm font-medium text-gray-200">
-              {isLocked ? 'Locked & Loaded' : 'Put Up or Shut Up'}
-            </div>
-            <div className="text-xs text-gray-500">{config.totalBudget} pts, {questions.length} questions</div>
-          </div>
-          <div className="bg-dark-800 border border-dark-600 rounded-xl p-4">
-            <Zap className="w-5 h-5 text-gold-400 mb-2" />
-            <div className="text-sm font-medium text-gray-200">{resolvedCount} Fates Sealed</div>
-            <div className="text-xs text-gray-500">of {questions.length} showdowns</div>
-          </div>
-          <div className="bg-dark-800 border border-dark-600 rounded-xl p-4">
-            <Trophy className="w-5 h-5 text-gold-400 mb-2" />
-            <div className="text-sm font-medium text-gray-200">Who's Winning</div>
-            <div className="text-xs text-gray-500">{allLocked ? 'It\'s live, baby' : 'After everyone locks in'}</div>
-          </div>
-        </div>
-
-        {/* Action buttons */}
-        <div className="flex flex-col gap-3 items-center">
-          {!isLocked && !isAdmin ? (
+        {/* Main action buttons - what players actually want to do */}
+        <div className="grid grid-cols-2 gap-3 mb-6 max-w-md mx-auto">
+          {!isAdmin ? (
             <button
               onClick={() => navigate('/betting')}
-              className="w-full max-w-xs bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-500 text-dark-900 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-200 pulse-gold cursor-pointer"
+              className={`rounded-xl px-4 py-5 flex flex-col items-center gap-2 transition-all cursor-pointer border ${
+                isLocked
+                  ? 'bg-dark-800 border-accent-green/30 opacity-60'
+                  : 'bg-gradient-to-br from-gold-500/20 to-gold-600/10 border-gold-500/50 hover:border-gold-400'
+              }`}
             >
-              Time to Bet, Degen
-            </button>
-          ) : isAdmin ? (
-            <button
-              onClick={() => navigate('/setup')}
-              className="w-full max-w-xs bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-500 text-dark-900 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-200 pulse-gold cursor-pointer"
-            >
-              Command Center
+              <Target className={`w-6 h-6 ${isLocked ? 'text-accent-green' : 'text-gold-400'}`} />
+              <div className={`text-sm font-bold ${isLocked ? 'text-accent-green' : 'text-gold-400'}`}>
+                {isLocked ? 'Locked In' : 'Place Bets'}
+              </div>
+              <div className="text-[11px] text-gray-500">{isLocked ? 'No backing out' : `${config.totalBudget} pts to spend`}</div>
             </button>
           ) : (
-            <div className="bg-dark-800 border border-accent-green/30 rounded-xl px-6 py-4 text-accent-green text-sm font-medium">
-              You're locked in. No backing out now. Montreal decides everything.
-            </div>
+            <button
+              onClick={() => navigate('/setup')}
+              className="bg-gradient-to-br from-gold-500/20 to-gold-600/10 border border-gold-500/50 hover:border-gold-400 rounded-xl px-4 py-5 flex flex-col items-center gap-2 transition-all cursor-pointer"
+            >
+              <Shield className="w-6 h-6 text-gold-400" />
+              <div className="text-sm font-bold text-gold-400">Command Center</div>
+              <div className="text-[11px] text-gray-500">Run the show</div>
+            </button>
           )}
 
-          <div className="flex flex-wrap justify-center gap-3 mt-2">
-            {isAdmin && (
-              <button
-                onClick={() => navigate('/betting')}
-                className="text-sm text-gray-400 hover:text-gold-400 transition-colors cursor-pointer"
-              >
-                Place Bets
-              </button>
-            )}
-            <button
-              onClick={() => navigate('/market')}
-              className="text-sm text-gray-400 hover:text-gold-400 transition-colors cursor-pointer"
-            >
-              The Odds Board
-            </button>
-            {isAdmin && (
-              <button
-                onClick={() => navigate('/resolve')}
-                className="text-sm text-gray-400 hover:text-gold-400 transition-colors cursor-pointer"
-              >
-                Judgment Day
-              </button>
-            )}
-            <button
-              onClick={() => navigate('/results')}
-              className="text-sm text-gray-400 hover:text-gold-400 transition-colors cursor-pointer"
-            >
-              Who's Winning
-            </button>
-          </div>
+          <button
+            onClick={() => navigate('/market')}
+            className="bg-dark-800 border border-dark-600 hover:border-gold-500/50 rounded-xl px-4 py-5 flex flex-col items-center gap-2 transition-all cursor-pointer"
+          >
+            <TrendingUp className="w-6 h-6 text-gold-400" />
+            <div className="text-sm font-bold text-gray-200">The Odds Board</div>
+            <div className="text-[11px] text-gray-500">See who's on the hook</div>
+          </button>
 
-          {/* Admin: End/Reopen Betting */}
           {isAdmin && (
-            <div className="mt-4">
-              {!bettingClosed ? (
-                <button
-                  onClick={closeBetting}
-                  className="flex items-center gap-2 mx-auto text-sm text-accent-red hover:text-red-400 transition-colors cursor-pointer font-medium"
-                >
-                  <Lock className="w-4 h-4" /> End Betting (Lock Everyone)
-                </button>
-              ) : (
-                <button
-                  onClick={reopenBetting}
-                  className="flex items-center gap-2 mx-auto text-sm text-accent-green hover:text-green-400 transition-colors cursor-pointer font-medium"
-                >
-                  <Unlock className="w-4 h-4" /> Reopen Betting
-                </button>
-              )}
-            </div>
+            <button
+              onClick={() => navigate('/resolve')}
+              className="bg-dark-800 border border-dark-600 hover:border-gold-500/50 rounded-xl px-4 py-5 flex flex-col items-center gap-2 transition-all cursor-pointer"
+            >
+              <Zap className="w-6 h-6 text-gold-400" />
+              <div className="text-sm font-bold text-gray-200">Judgment Day</div>
+              <div className="text-[11px] text-gray-500">{resolvedCount}/{questions.length} sealed</div>
+            </button>
+          )}
+
+          <button
+            onClick={() => navigate('/results')}
+            className="bg-dark-800 border border-dark-600 hover:border-gold-500/50 rounded-xl px-4 py-5 flex flex-col items-center gap-2 transition-all cursor-pointer"
+          >
+            <Trophy className="w-6 h-6 text-gold-400" />
+            <div className="text-sm font-bold text-gray-200">Who's Winning</div>
+            <div className="text-[11px] text-gray-500">Leaderboard</div>
+          </button>
+
+          {isAdmin && (
+            <button
+              onClick={() => navigate('/betting')}
+              className="bg-dark-800 border border-dark-600 hover:border-gold-500/50 rounded-xl px-4 py-5 flex flex-col items-center gap-2 transition-all cursor-pointer"
+            >
+              <Target className="w-6 h-6 text-gold-400" />
+              <div className="text-sm font-bold text-gray-200">Place Bets</div>
+              <div className="text-[11px] text-gray-500">Manage bets</div>
+            </button>
           )}
         </div>
+
+        {/* Compact stats bar */}
+        <div className="flex justify-center gap-4 text-xs text-gray-500 mb-4">
+          <span><span className="text-gold-400 font-bold">{players.length}</span> degens</span>
+          <span>&middot;</span>
+          <span><span className="text-gold-400 font-bold">{lockedPlayers.length}</span> committed</span>
+          <span>&middot;</span>
+          <span><span className="text-gold-400 font-bold">{resolvedCount}</span>/{questions.length} sealed</span>
+        </div>
+
+        {/* Admin: End/Reopen Betting */}
+        {isAdmin && (
+          <div className="mb-4">
+            {!bettingClosed ? (
+              <button
+                onClick={closeBetting}
+                className="flex items-center gap-2 mx-auto text-sm text-accent-red hover:text-red-400 transition-colors cursor-pointer font-medium"
+              >
+                <Lock className="w-4 h-4" /> End Betting (Lock Everyone)
+              </button>
+            ) : (
+              <button
+                onClick={reopenBetting}
+                className="flex items-center gap-2 mx-auto text-sm text-accent-green hover:text-green-400 transition-colors cursor-pointer font-medium"
+              >
+                <Unlock className="w-4 h-4" /> Reopen Betting
+              </button>
+            )}
+          </div>
+        )}
 
         {/* Rules Section */}
         <div className="mt-12 max-w-lg mx-auto">
