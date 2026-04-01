@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { useGame } from '../GameContext';
-import { calculateFavorite } from '../utils/scoring';
+import { calculateFavorite, getDeliveryBonusPercent } from '../utils/scoring';
 import {
   Crown, ChevronRight, ChevronDown, TrendingUp, TrendingDown,
   Zap, Target, Swords, Check, X, Minus, Flame, AlertTriangle,
@@ -27,16 +27,25 @@ export default function MyOddsPage() {
   const toggleQ = (qi) => setExpandedQ(expandedQ === qi ? null : qi);
 
   const analysis = useMemo(() => {
+    // Track deliveries so far per player (in question order) for diminishing bonus
+    const deliveriesSoFar = {};
+    players.forEach(p => deliveriesSoFar[p] = 0);
+
     return questions.map((q, qi) => {
       const bet = playerBets[qi];
       const data = calculateFavorite(qi, bets, players);
       const override = favoriteOverrides[qi];
       const favorite = override || data.favorite;
       const pot = data.pointsByPlayer?.[favorite] || data.pot;
-      const challengeValue = Math.floor(pot / 2);
+      const chokePenalty = Math.floor(pot / 2);
       const isResolved = resolutions[qi]?.resolved;
       const resolution = resolutions[qi];
       const underdogPotBonus = Math.floor(pot * 0.75);
+
+      // Delivery bonus with diminishing returns
+      const deliveryNumber = favorite ? deliveriesSoFar[favorite] + 1 : 1;
+      const bonusPercent = getDeliveryBonusPercent(deliveryNumber);
+      const deliveryBonus = Math.floor(pot * bonusPercent);
 
       const iAmFavorite = playerName === favorite;
       const iAmNotFavorite = favorite && playerName !== favorite;
@@ -50,7 +59,7 @@ export default function MyOddsPage() {
 
       if (hasBet) {
         favNet = betOnFavorite ? Math.floor(amount * 1.5) : 0;
-        if (iAmFavorite) favNet += challengeValue;
+        if (iAmFavorite) favNet += deliveryBonus;
 
         if (!betOnFavorite) {
           myPickNet = Math.floor(amount * 2.5);
@@ -64,12 +73,12 @@ export default function MyOddsPage() {
         }
 
         elseNet = betOnFavorite ? -amount : 0;
-        if (iAmFavorite) elseNet -= challengeValue;
+        if (iAmFavorite) elseNet -= chokePenalty;
 
         nobodyNet = betOnFavorite ? -amount : 0;
-        if (iAmFavorite) nobodyNet -= challengeValue;
+        if (iAmFavorite) nobodyNet -= chokePenalty;
       } else {
-        if (iAmFavorite) { favNet = challengeValue; elseNet = -challengeValue; nobodyNet = -challengeValue; }
+        if (iAmFavorite) { favNet = deliveryBonus; elseNet = -chokePenalty; nobodyNet = -chokePenalty; }
         if (iAmNotFavorite) iStealNet = underdogPotBonus;
       }
 
@@ -97,13 +106,18 @@ export default function MyOddsPage() {
         }
       }
 
+      // Track deliveries for subsequent questions
+      if (isResolved && resolution?.outcomeType === 'favorite' && favorite) {
+        deliveriesSoFar[favorite]++;
+      }
+
       const allNets = [favNet, myPickNet, iStealNet, elseNet, nobodyNet].filter(v => v !== null);
       const bestCase = Math.max(...allNets);
       const worstCase = Math.min(...allNets);
 
       return {
         question: q, index: qi, hasBet, pick, amount,
-        favorite, pot, challengeValue, betOnFavorite,
+        favorite, pot, deliveryBonus, chokePenalty, bonusPercent, betOnFavorite,
         iAmFavorite, iAmNotFavorite, underdogPotBonus,
         isResolved, resolution, actualNet, actualLabel,
         favNet, myPickNet, iStealNet, elseNet, nobodyNet,
@@ -209,16 +223,17 @@ export default function MyOddsPage() {
                         <p className="text-xs text-gray-400 leading-relaxed">{a.question}</p>
                         <div className="flex items-center gap-3 mt-2 text-[11px]">
                           <span className="text-gray-500">Pot: <span className="text-gold-400 font-bold">{a.pot}</span></span>
+                          <span className="text-gray-600">Bonus: {Math.round(a.bonusPercent * 100)}%</span>
                         </div>
                       </div>
                       <div className="shrink-0 text-right flex flex-col items-end gap-1">
                         <div className="flex items-center gap-1">
                           <TrendingUp className="w-3 h-3 text-accent-green" />
-                          <span className="text-accent-green font-black text-sm">+{a.challengeValue}</span>
+                          <span className="text-accent-green font-black text-sm">+{a.deliveryBonus}</span>
                         </div>
                         <div className="flex items-center gap-1">
                           <TrendingDown className="w-3 h-3 text-accent-red" />
-                          <span className="text-accent-red font-black text-sm">−{a.challengeValue}</span>
+                          <span className="text-accent-red font-black text-sm">−{a.chokePenalty}</span>
                         </div>
                       </div>
                     </div>
@@ -231,7 +246,7 @@ export default function MyOddsPage() {
                       <span className="text-xs text-gray-500">Q{a.index + 1}</span>
                       <span className="text-xs text-accent-green font-bold ml-2">Delivered!</span>
                     </div>
-                    <span className="text-accent-green font-black text-sm">+{a.challengeValue}</span>
+                    <span className="text-accent-green font-black text-sm">+{a.deliveryBonus}</span>
                   </div>
                 ))}
                 {chokedMissions.map(a => (
@@ -243,15 +258,15 @@ export default function MyOddsPage() {
                         {a.resolution?.outcomeType === 'someone_else' ? `${a.resolution.actualPerson} stole it from you` : 'Nobody delivered — you choked'}
                       </span>
                     </div>
-                    <span className="text-accent-red font-black text-sm">−{a.challengeValue}</span>
+                    <span className="text-accent-red font-black text-sm">−{a.chokePenalty}</span>
                   </div>
                 ))}
               </div>
               {missions.length > 0 && (
                 <div className="mt-3 bg-dark-700 rounded-lg px-3 py-2 text-center">
                   <span className="text-[11px] text-gray-400">
-                    Total at stake: <span className="text-accent-green font-bold">+{missions.reduce((s, a) => s + a.challengeValue, 0)}</span> if you deliver all,{' '}
-                    <span className="text-accent-red font-bold">−{missions.reduce((s, a) => s + a.challengeValue, 0)}</span> if you choke all
+                    Total at stake: <span className="text-accent-green font-bold">+{missions.reduce((s, a) => s + a.deliveryBonus, 0)}</span> if you deliver all,{' '}
+                    <span className="text-accent-red font-bold">−{missions.reduce((s, a) => s + a.chokePenalty, 0)}</span> if you choke all
                   </span>
                 </div>
               )}
@@ -398,8 +413,8 @@ export default function MyOddsPage() {
                       {a.iAmFavorite && (
                         <div className="flex items-center gap-2 bg-accent-green/10 border border-accent-green/30 rounded-lg px-3 py-2 mb-3">
                           <Crown className="w-4 h-4 text-accent-green shrink-0" />
-                          <span className="text-xs font-bold text-accent-green flex-1">You're the Favorite</span>
-                          <span className="text-xs"><span className="text-accent-green font-bold">+{a.challengeValue}</span> <span className="text-gray-600">/</span> <span className="text-accent-red font-bold">−{a.challengeValue}</span></span>
+                          <span className="text-xs font-bold text-accent-green flex-1">You're the Favorite <span className="text-gray-500 font-normal">({Math.round(a.bonusPercent * 100)}% bonus)</span></span>
+                          <span className="text-xs"><span className="text-accent-green font-bold">+{a.deliveryBonus}</span> <span className="text-gray-600">/</span> <span className="text-accent-red font-bold">−{a.chokePenalty}</span></span>
                         </div>
                       )}
                       {a.iAmNotFavorite && a.pot > 0 && (
@@ -451,7 +466,7 @@ export default function MyOddsPage() {
                                 ringColor: 'ring-accent-green/50',
                                 label: `${a.favorite ? dn(a.favorite) : '—'} delivers`,
                                 labelColor: 'text-gray-300',
-                                math: (a.betOnFavorite ? `${a.amount} × 1.5 = ${Math.floor(a.amount * 1.5)}` : 'No effect on bet') + (a.iAmFavorite ? ` + ${a.challengeValue} pot bonus` : ''),
+                                math: (a.betOnFavorite ? `${a.amount} × 1.5 = ${Math.floor(a.amount * 1.5)}` : 'No effect on bet') + (a.iAmFavorite ? ` + ${a.deliveryBonus} delivery bonus (${Math.round(a.bonusPercent * 100)}%)` : ''),
                               });
                               // YOU steal it
                               if (a.iStealNet !== null) {
@@ -488,7 +503,7 @@ export default function MyOddsPage() {
                                 ringColor: 'ring-accent-red/50',
                                 label: a.betOnFavorite ? 'Someone else steals it' : 'Someone else steals it',
                                 labelColor: 'text-gray-300',
-                                math: (a.betOnFavorite ? `−${a.amount} lost bet` : 'No effect on bet') + (a.iAmFavorite ? ` − ${a.challengeValue} pot penalty` : ''),
+                                math: (a.betOnFavorite ? `−${a.amount} lost bet` : 'No effect on bet') + (a.iAmFavorite ? ` − ${a.chokePenalty} choke penalty` : ''),
                               });
                               // Nobody
                               scenarios.push({
@@ -499,7 +514,7 @@ export default function MyOddsPage() {
                                 ringColor: 'ring-yellow-400/50',
                                 label: 'Nobody does it',
                                 labelColor: 'text-gray-300',
-                                math: (a.betOnFavorite ? `−${a.amount} lost bet` : 'No effect on bet') + (a.iAmFavorite ? ` − ${a.challengeValue} pot penalty` : ''),
+                                math: (a.betOnFavorite ? `−${a.amount} lost bet` : 'No effect on bet') + (a.iAmFavorite ? ` − ${a.chokePenalty} choke penalty` : ''),
                               });
                               // Sort best to worst
                               scenarios.sort((x, y) => y.net - x.net);
