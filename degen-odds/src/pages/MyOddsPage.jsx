@@ -437,78 +437,88 @@ export default function MyOddsPage() {
                             <span className="text-gold-400 font-bold ml-auto">{a.amount} pts</span>
                           </div>
 
-                          {/* Scenario breakdown */}
-                          <div className="text-[10px] text-gray-600 font-semibold uppercase tracking-wider mb-1.5">Every Scenario</div>
+                          {/* Scenario breakdown — sorted best to worst */}
+                          <div className="text-[10px] text-gray-600 font-semibold uppercase tracking-wider mb-1.5">Every Scenario — Best → Worst</div>
                           <div className="rounded-lg border border-dark-600 overflow-hidden divide-y divide-dark-700">
-                            {/* Favorite delivers */}
-                            <div className={`flex items-center gap-3 px-3 py-2.5 bg-dark-800 ${hasResult && a.resolution?.outcomeType === 'favorite' ? 'ring-1 ring-inset ring-accent-green/50' : ''}`}>
-                              <Crown className="w-3.5 h-3.5 text-accent-green shrink-0" />
-                              <div className="flex-1 min-w-0">
-                                <div className="text-xs font-medium text-gray-300">{a.favorite ? dn(a.favorite) : '—'} delivers</div>
-                                <div className="text-[10px] text-gray-600">
-                                  {a.betOnFavorite ? `${a.amount} × 1.5 = ${Math.floor(a.amount * 1.5)}` : 'No effect on bet'}
-                                  {a.iAmFavorite ? ` + ${a.challengeValue} pot bonus` : ''}
-                                </div>
-                              </div>
-                              <span className={`text-sm font-black shrink-0 ${clr(a.favNet)}`}>{a.favNet === 0 ? '—' : fmt(a.favNet)}</span>
-                              {hasResult && a.resolution?.outcomeType === 'favorite' && <Check className="w-3.5 h-3.5 text-accent-green shrink-0" />}
-                            </div>
-
-                            {/* YOU steal it */}
-                            {a.iStealNet !== null && (
-                              <div className={`flex items-center gap-3 px-3 py-2.5 bg-accent-purple/5 ${hasResult && a.actualLabel === 'You stole it!' ? 'ring-1 ring-inset ring-accent-purple/50' : ''}`}>
-                                <Swords className="w-3.5 h-3.5 text-accent-purple shrink-0" />
-                                <div className="flex-1 min-w-0">
-                                  <div className="text-xs font-medium text-accent-purple">YOU steal it</div>
-                                  <div className="text-[10px] text-gray-600">
-                                    +{Math.floor(a.pot * 0.75)} pot
-                                    {a.pick === playerName ? ` + ${Math.floor(a.amount * 2.5)} bet (×2.5)` : ''}
-                                    {a.betOnFavorite ? ` − ${a.amount} lost bet` : ''}
+                            {(() => {
+                              const scenarios = [];
+                              // Favorite delivers
+                              scenarios.push({
+                                key: 'fav', net: a.favNet,
+                                icon: <Crown className="w-3.5 h-3.5 text-accent-green shrink-0" />,
+                                bg: 'bg-dark-800',
+                                isActual: hasResult && a.resolution?.outcomeType === 'favorite',
+                                ringColor: 'ring-accent-green/50',
+                                label: `${a.favorite ? dn(a.favorite) : '—'} delivers`,
+                                labelColor: 'text-gray-300',
+                                math: (a.betOnFavorite ? `${a.amount} × 1.5 = ${Math.floor(a.amount * 1.5)}` : 'No effect on bet') + (a.iAmFavorite ? ` + ${a.challengeValue} pot bonus` : ''),
+                              });
+                              // YOU steal it
+                              if (a.iStealNet !== null) {
+                                scenarios.push({
+                                  key: 'isteal', net: a.iStealNet,
+                                  icon: <Swords className="w-3.5 h-3.5 text-accent-purple shrink-0" />,
+                                  bg: 'bg-accent-purple/5',
+                                  isActual: hasResult && a.actualLabel === 'You stole it!',
+                                  ringColor: 'ring-accent-purple/50',
+                                  label: 'YOU steal it',
+                                  labelColor: 'text-accent-purple',
+                                  math: `+${Math.floor(a.pot * 0.75)} pot` + (a.pick === playerName ? ` + ${Math.floor(a.amount * 2.5)} bet (×2.5)` : '') + (a.betOnFavorite ? ` − ${a.amount} lost bet` : ''),
+                                });
+                              }
+                              // Your pick steals (underdog, not self)
+                              if (a.myPickNet !== null && a.pick !== playerName) {
+                                scenarios.push({
+                                  key: 'mypick', net: a.myPickNet,
+                                  icon: <Zap className="w-3.5 h-3.5 text-accent-purple shrink-0" />,
+                                  bg: 'bg-dark-800',
+                                  isActual: hasResult && a.resolution?.outcomeType === 'someone_else' && a.resolution?.actualPerson === a.pick,
+                                  ringColor: 'ring-accent-purple/50',
+                                  label: `${dn(a.pick)} steals it`,
+                                  labelColor: 'text-gray-300',
+                                  math: `${a.amount} × 2.5 = ${Math.floor(a.amount * 2.5)}`,
+                                });
+                              }
+                              // Someone else steals
+                              scenarios.push({
+                                key: 'else', net: a.elseNet,
+                                icon: <AlertTriangle className="w-3.5 h-3.5 text-yellow-400 shrink-0" />,
+                                bg: 'bg-dark-800',
+                                isActual: hasResult && a.resolution?.outcomeType === 'someone_else' && a.actualNet === a.elseNet && a.actualLabel !== 'You stole it!',
+                                ringColor: 'ring-accent-red/50',
+                                label: a.betOnFavorite ? 'Someone else steals it' : 'Wrong underdog wins',
+                                labelColor: 'text-gray-300',
+                                math: (a.betOnFavorite ? `−${a.amount} lost bet` : 'No effect on bet') + (a.iAmFavorite ? ` − ${a.challengeValue} pot penalty` : ''),
+                              });
+                              // Nobody
+                              scenarios.push({
+                                key: 'nobody', net: a.nobodyNet,
+                                icon: <Minus className="w-3.5 h-3.5 text-gray-500 shrink-0" />,
+                                bg: 'bg-dark-800',
+                                isActual: hasResult && a.resolution?.outcomeType === 'nobody',
+                                ringColor: 'ring-yellow-400/50',
+                                label: 'Nobody does it',
+                                labelColor: 'text-gray-300',
+                                math: (a.betOnFavorite ? `−${a.amount} lost bet` : 'No effect on bet') + (a.iAmFavorite ? ` − ${a.challengeValue} pot penalty` : ''),
+                              });
+                              // Sort best to worst
+                              scenarios.sort((x, y) => y.net - x.net);
+                              return scenarios.map((s, si) => (
+                                <div key={s.key} className={`flex items-center gap-3 px-3 py-2.5 ${s.bg} ${s.isActual ? `ring-1 ring-inset ${s.ringColor}` : ''}`}>
+                                  {s.icon}
+                                  <div className="flex-1 min-w-0">
+                                    <div className={`text-xs font-medium ${s.labelColor}`}>
+                                      {si === 0 && <span className="text-[9px] text-accent-green mr-1.5">BEST</span>}
+                                      {si === scenarios.length - 1 && <span className="text-[9px] text-accent-red mr-1.5">WORST</span>}
+                                      {s.label}
+                                    </div>
+                                    <div className="text-[10px] text-gray-600">{s.math}</div>
                                   </div>
+                                  <span className={`text-sm font-black shrink-0 ${clr(s.net)}`}>{s.net === 0 ? '—' : fmt(s.net)}</span>
+                                  {s.isActual && <Check className={`w-3.5 h-3.5 shrink-0 ${s.net >= 0 ? 'text-accent-green' : 'text-accent-red'}`} />}
                                 </div>
-                                <span className={`text-sm font-black shrink-0 ${clr(a.iStealNet)}`}>{fmt(a.iStealNet)}</span>
-                                {hasResult && a.actualLabel === 'You stole it!' && <Check className="w-3.5 h-3.5 text-accent-purple shrink-0" />}
-                              </div>
-                            )}
-
-                            {/* Your pick steals (if underdog and not self) */}
-                            {a.myPickNet !== null && a.pick !== playerName && (
-                              <div className={`flex items-center gap-3 px-3 py-2.5 bg-dark-800 ${hasResult && a.resolution?.outcomeType === 'someone_else' && a.resolution?.actualPerson === a.pick ? 'ring-1 ring-inset ring-accent-purple/50' : ''}`}>
-                                <Zap className="w-3.5 h-3.5 text-accent-purple shrink-0" />
-                                <div className="flex-1 min-w-0">
-                                  <div className="text-xs font-medium text-gray-300">{dn(a.pick)} steals it</div>
-                                  <div className="text-[10px] text-gray-600">{a.amount} × 2.5 = {Math.floor(a.amount * 2.5)}</div>
-                                </div>
-                                <span className={`text-sm font-black shrink-0 ${clr(a.myPickNet)}`}>{fmt(a.myPickNet)}</span>
-                                {hasResult && a.resolution?.outcomeType === 'someone_else' && a.resolution?.actualPerson === a.pick && <Check className="w-3.5 h-3.5 text-accent-green shrink-0" />}
-                              </div>
-                            )}
-
-                            {/* Someone else steals */}
-                            <div className={`flex items-center gap-3 px-3 py-2.5 bg-dark-800 ${hasResult && a.resolution?.outcomeType === 'someone_else' && a.actualNet === a.elseNet && a.actualLabel !== 'You stole it!' ? 'ring-1 ring-inset ring-accent-red/50' : ''}`}>
-                              <AlertTriangle className="w-3.5 h-3.5 text-yellow-400 shrink-0" />
-                              <div className="flex-1 min-w-0">
-                                <div className="text-xs font-medium text-gray-300">{a.betOnFavorite ? 'Someone else steals it' : 'Wrong underdog wins'}</div>
-                                <div className="text-[10px] text-gray-600">
-                                  {a.betOnFavorite ? `−${a.amount} lost bet` : 'No effect on bet'}
-                                  {a.iAmFavorite ? ` − ${a.challengeValue} pot penalty` : ''}
-                                </div>
-                              </div>
-                              <span className={`text-sm font-black shrink-0 ${clr(a.elseNet)}`}>{a.elseNet === 0 ? '—' : fmt(a.elseNet)}</span>
-                            </div>
-
-                            {/* Nobody */}
-                            <div className={`flex items-center gap-3 px-3 py-2.5 bg-dark-800 ${hasResult && a.resolution?.outcomeType === 'nobody' ? 'ring-1 ring-inset ring-yellow-400/50' : ''}`}>
-                              <Minus className="w-3.5 h-3.5 text-gray-500 shrink-0" />
-                              <div className="flex-1 min-w-0">
-                                <div className="text-xs font-medium text-gray-300">Nobody does it</div>
-                                <div className="text-[10px] text-gray-600">
-                                  {a.betOnFavorite ? `−${a.amount} lost bet` : 'No effect on bet'}
-                                  {a.iAmFavorite ? ` − ${a.challengeValue} pot penalty` : ''}
-                                </div>
-                              </div>
-                              <span className={`text-sm font-black shrink-0 ${clr(a.nobodyNet)}`}>{a.nobodyNet === 0 ? '—' : fmt(a.nobodyNet)}</span>
-                            </div>
+                              ));
+                            })()}
                           </div>
 
                           {/* Range bar */}
