@@ -38,16 +38,20 @@
         "pick": "Surkh",
         "amount": 5
       },
-      "5": {
-        "pick": "Dilaver",
+      "6": {
+        "pick": "Surkh",
         "amount": 5
       },
-      "7": {
-        "pick": "Randy",
+      "8": {
+        "pick": "Harman",
         "amount": 5
       },
-      "10": {
-        "pick": "Aman",
+      "12": {
+        "pick": "Matab",
+        "amount": 5
+      },
+      "15": {
+        "pick": "Harman",
         "amount": 5
       },
       "19": {
