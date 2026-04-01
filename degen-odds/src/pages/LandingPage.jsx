@@ -216,6 +216,14 @@ export default function LandingPage() {
                   </li>
                   <li className="flex gap-2">
                     <span className="text-gold-500 shrink-0">•</span>
+                    <span>You can bet on yourself, but only on <span className="text-accent-purple font-bold">{config.maxSelfBets} questions max</span></span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-gold-500 shrink-0">•</span>
+                    <span>You must spend <span className="text-gold-400 font-bold">all {config.totalBudget} pts</span> — no saving allowed</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-gold-500 shrink-0">•</span>
                     <span>Once locked in, bets are <span className="text-accent-red font-bold">final</span> unless the admin reopens them for everyone</span>
                   </li>
                 </ul>
