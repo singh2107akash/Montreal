@@ -17,6 +17,15 @@ export default function MarketPage() {
   const allLocked = players.every((p) => lockedPlayers.includes(p));
 
   const marketData = useMemo(() => {
+    // Count how many questions each player is favorite for
+    const favoriteCounts = {};
+    questions.forEach((q, qi) => {
+      const data = calculateFavorite(qi, bets, players);
+      const override = favoriteOverrides[qi];
+      const fav = override || data.favorite;
+      if (fav) favoriteCounts[fav] = (favoriteCounts[fav] || 0) + 1;
+    });
+
     return questions.map((q, qi) => {
       const data = calculateFavorite(qi, bets, players);
       const override = favoriteOverrides[qi];
@@ -30,7 +39,7 @@ export default function MarketPage() {
         ...data,
         favorite,
         pot,
-        challengeValue: Math.floor(pot / 2),
+        favoriteCount: favorite ? favoriteCounts[favorite] : 0,
         hasOverride: !!override,
         isResolved,
       };
@@ -104,13 +113,18 @@ export default function MarketPage() {
                 )}
               </div>
 
-              {/* Favorite / Pot / Challenge */}
+              {/* Favorite / Pot */}
               <div className="flex flex-wrap gap-4 mb-3">
                 <div className="flex items-center gap-2">
                   <Crown className="w-4 h-4 text-accent-green" />
                   <span className="text-sm font-semibold text-gray-200">
                     {md.favorite ? displayName(md.favorite) : 'No bets yet'}
                   </span>
+                  {md.favorite && md.favoriteCount > 1 && (
+                    <span className="text-[10px] bg-dark-600 text-gray-400 px-1.5 py-0.5 rounded font-bold">
+                      Favorite {md.favoriteCount}x
+                    </span>
+                  )}
                   {md.hasOverride && (
                     <span className="text-[10px] bg-accent-purple/20 text-accent-purple px-1.5 py-0.5 rounded font-medium">
                       OVERRIDE
@@ -121,10 +135,6 @@ export default function MarketPage() {
                   <TrendingUp className="w-3.5 h-3.5 text-gray-500" />
                   <span className="text-gray-500">Pot:</span>
                   <span className="text-gold-400 font-bold">{md.pot}</span>
-                </div>
-                <div className="flex items-center gap-1 text-sm">
-                  <span className="text-gray-500">Challenge:</span>
-                  <span className="text-accent-red font-bold">{md.challengeValue}</span>
                 </div>
               </div>
 

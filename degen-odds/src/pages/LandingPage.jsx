@@ -252,17 +252,12 @@ export default function LandingPage() {
                     <span className="text-gold-400 font-bold text-xs">THE POT</span>
                     <span className="text-gray-400 text-xs ml-2">= total points bet on the favorite</span>
                   </div>
-                  <div className="bg-dark-700 rounded-lg p-3">
-                    <span className="text-accent-red font-bold text-xs">CHALLENGE VALUE</span>
-                    <span className="text-gray-400 text-xs ml-2">= 50% of the Pot (the favorite's personal stake)</span>
-                  </div>
                 </div>
                 <div className="bg-dark-800 border border-dark-600 rounded-md p-2.5 mt-3">
                   <div className="text-[10px] text-gray-500 font-semibold mb-1">EXAMPLE</div>
                   <div className="text-[10px] text-gray-500">Rahul gets the most bets totaling 60 pts →
                     <span className="text-accent-green"> Favorite = Rahul</span>,
-                    <span className="text-gold-400"> Pot = 60</span>,
-                    <span className="text-accent-red"> Challenge = 30</span>
+                    <span className="text-gold-400"> Pot = 60</span>
                   </div>
                 </div>
               </div>
@@ -283,7 +278,7 @@ export default function LandingPage() {
                       </li>
                       <li className="flex gap-1.5">
                         <span className="text-accent-green shrink-0">+</span>
-                        <span>The favorite <span className="text-accent-green font-semibold">earns +50% of the Pot</span> (personal bonus)</span>
+                        <span>The favorite earns a <span className="text-accent-green font-semibold">delivery bonus</span> from the Pot (see diminishing scale below)</span>
                       </li>
                       <li className="flex gap-1.5">
                         <span className="text-gray-600 shrink-0">·</span>
@@ -291,7 +286,7 @@ export default function LandingPage() {
                       </li>
                     </ul>
                     <div className="bg-dark-800 rounded-md p-2 mt-2 text-[10px] text-gray-500">
-                      Pot = 60 · You bet 10 on favorite → <span className="text-accent-green">+15</span> · Favorite → <span className="text-accent-green">+30</span> bonus
+                      Pot = 60 · You bet 10 on favorite → <span className="text-accent-green">+15</span> · Favorite (1st delivery) → <span className="text-accent-green">+30</span> bonus (50%)
                     </div>
                   </div>
 
@@ -372,11 +367,27 @@ export default function LandingPage() {
                     <div className="text-accent-purple font-bold text-xs mb-1.5">B. PERSONAL RESULT (if you're involved)</div>
                     <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-[11px]">
                       <div className="text-gray-500">You're the favorite & deliver</div>
-                      <div className="text-accent-green font-bold">+50% of Pot</div>
+                      <div className="text-accent-green font-bold">Diminishing bonus (see below)</div>
                       <div className="text-gray-500">You're the favorite & don't deliver</div>
-                      <div className="text-accent-red font-bold">−50% of Pot</div>
+                      <div className="text-accent-red font-bold">−50% of Pot (always)</div>
                       <div className="text-gray-500">You're the underdog & steal it</div>
                       <div className="text-accent-purple font-bold">+75% of Pot</div>
+                    </div>
+                  </div>
+                  <div className="bg-dark-700 rounded-lg p-3">
+                    <div className="text-accent-green font-bold text-xs mb-1.5">C. DIMINISHING DELIVERY BONUS</div>
+                    <p className="text-gray-400 text-xs mb-2">Each time the same person delivers as favorite, their bonus shrinks. Choking always costs 50%.</p>
+                    <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-[11px]">
+                      <div className="text-gray-500">1st delivery</div>
+                      <div className="text-accent-green font-bold">50% of Pot</div>
+                      <div className="text-gray-500">2nd delivery</div>
+                      <div className="text-accent-green font-bold">40% of Pot</div>
+                      <div className="text-gray-500">3rd delivery</div>
+                      <div className="text-accent-green font-bold">30% of Pot</div>
+                      <div className="text-gray-500">4th delivery</div>
+                      <div className="text-accent-green font-bold">20% of Pot</div>
+                      <div className="text-gray-500">5th+ delivery</div>
+                      <div className="text-accent-green font-bold">10% of Pot</div>
                     </div>
                   </div>
                 </div>
@@ -408,9 +419,9 @@ export default function LandingPage() {
                   <div className="col-span-2 border-t border-dark-600 my-1"></div>
                   <div className="text-gray-400 font-semibold col-span-2 mb-0.5">Personal Results</div>
                   <div className="text-gray-500">Favorite delivers</div>
-                  <div className="text-accent-green font-bold">+50% of Pot</div>
+                  <div className="text-accent-green font-bold">50→40→30→20→10% of Pot</div>
                   <div className="text-gray-500">Favorite chokes</div>
-                  <div className="text-accent-red font-bold">−50% of Pot</div>
+                  <div className="text-accent-red font-bold">−50% of Pot (always)</div>
                   <div className="text-gray-500">Underdog steals it</div>
                   <div className="text-accent-purple font-bold">+75% of Pot</div>
                 </div>

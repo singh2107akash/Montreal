@@ -1,6 +1,16 @@
 /**
+ * Diminishing delivery bonus scale.
+ * deliveryNumber is 1-indexed (1st delivery = 50%, 2nd = 40%, etc.)
+ * Choke penalty is always 50% — this only affects the bonus.
+ */
+export function getDeliveryBonusPercent(deliveryNumber) {
+  const scale = [0.5, 0.4, 0.3, 0.2];
+  return deliveryNumber <= scale.length ? scale[deliveryNumber - 1] : 0.1;
+}
+
+/**
  * Calculate the favorite for a given question based on all bets.
- * Returns { favorite, pot, challengeValue, backerCount, isTied, tiedPlayers }
+ * Returns { favorite, pot, backerCount, isTied, tiedPlayers }
  */
 export function calculateFavorite(questionIndex, bets, players) {
   const pointsByPlayer = {};
@@ -27,7 +37,7 @@ export function calculateFavorite(questionIndex, bets, players) {
     });
 
   if (sorted.length === 0) {
-    return { favorite: null, pot: 0, challengeValue: 0, backerCount: 0, isTied: false, tiedPlayers: [] };
+    return { favorite: null, pot: 0, backerCount: 0, isTied: false, tiedPlayers: [] };
   }
 
   const topPoints = sorted[0][1];
@@ -39,12 +49,10 @@ export function calculateFavorite(questionIndex, bets, players) {
   const isTied = tied.length > 1;
   const favorite = sorted[0][0];
   const pot = topPoints;
-  const challengeValue = Math.floor(pot / 2);
 
   return {
     favorite,
     pot,
-    challengeValue,
     backerCount: backersByPlayer[favorite],
     isTied,
     tiedPlayers: isTied ? tied.map(([name]) => name) : [],
@@ -55,11 +63,15 @@ export function calculateFavorite(questionIndex, bets, players) {
 
 /**
  * Calculate score changes for a resolved question.
+ * deliveryBonus: the diminishing bonus the favorite earns if they deliver.
+ * Choke penalty is always 50% of pot (computed internally).
  * outcomeType: 'favorite' | 'someone_else' | 'nobody'
  * actualPerson: the person who actually did it (only for 'someone_else')
  */
-export function calculateScoreChanges(questionIndex, bets, players, favorite, pot, challengeValue, outcomeType, actualPerson) {
+export function calculateScoreChanges(questionIndex, bets, players, favorite, pot, deliveryBonus, outcomeType, actualPerson) {
   const changes = {};
+  const chokePenalty = Math.floor(pot / 2);
+
   players.forEach((p) => {
     changes[p] = 0;
   });
@@ -72,11 +84,11 @@ export function calculateScoreChanges(questionIndex, bets, players, favorite, po
         changes[player] = (changes[player] || 0) + Math.floor(bet.amount * 1.5);
       }
     });
-    // The favorite wins 50% of pot
-    changes[favorite] = (changes[favorite] || 0) + challengeValue;
+    // The favorite earns their delivery bonus (diminishing)
+    changes[favorite] = (changes[favorite] || 0) + deliveryBonus;
   } else if (outcomeType === 'someone_else') {
     // Everyone who bet on the favorite loses their bet amount
-    // Everyone who correctly bet on the actual person wins 1.5x their bet amount
+    // Everyone who correctly bet on the actual person wins 2.5x their bet amount
     Object.entries(bets).forEach(([player, playerBets]) => {
       const bet = playerBets[questionIndex];
       if (bet && bet.pick === favorite) {
@@ -85,8 +97,8 @@ export function calculateScoreChanges(questionIndex, bets, players, favorite, po
         changes[player] = (changes[player] || 0) + Math.floor(bet.amount * 2.5);
       }
     });
-    // The favorite loses 50% of pot
-    changes[favorite] = (changes[favorite] || 0) - challengeValue;
+    // The favorite loses 50% of pot (always)
+    changes[favorite] = (changes[favorite] || 0) - chokePenalty;
     // The underdog who actually did it wins 75% of pot
     if (actualPerson) {
       const underdogBonus = Math.floor(pot * 0.75);
@@ -100,8 +112,8 @@ export function calculateScoreChanges(questionIndex, bets, players, favorite, po
         changes[player] = (changes[player] || 0) - bet.amount;
       }
     });
-    // The favorite loses points equal to half the pot
-    changes[favorite] = (changes[favorite] || 0) - challengeValue;
+    // The favorite loses 50% of pot (always)
+    changes[favorite] = (changes[favorite] || 0) - chokePenalty;
   }
 
   return changes;
@@ -109,13 +121,16 @@ export function calculateScoreChanges(questionIndex, bets, players, favorite, po
 
 /**
  * Calculate the full leaderboard from all resolved questions.
+ * Tracks delivery count per player for diminishing bonus.
  */
 export function calculateLeaderboard(players, bets, resolutions, questions) {
   const scores = {};
   const stats = {};
+  const deliveriesSoFar = {};
 
   players.forEach((p) => {
     scores[p] = 0;
+    deliveriesSoFar[p] = 0;
     stats[p] = {
       timesFavorite: 0,
       deliveredAsFavorite: 0,
@@ -133,15 +148,19 @@ export function calculateLeaderboard(players, bets, resolutions, questions) {
     const favoriteData = calculateFavorite(qi, bets, players);
     const favorite = resolution.favoriteOverride || favoriteData.favorite;
     const pot = favoriteData.pot;
-    const challengeValue = Math.floor(pot / 2);
 
     // Track favorite stats
     if (favorite) {
       stats[favorite].timesFavorite++;
     }
 
+    // Compute delivery bonus with diminishing returns
+    const deliveryNumber = favorite ? deliveriesSoFar[favorite] + 1 : 1;
+    const bonusPercent = getDeliveryBonusPercent(deliveryNumber);
+    const deliveryBonus = Math.floor(pot * bonusPercent);
+
     const changes = calculateScoreChanges(
-      qi, bets, players, favorite, pot, challengeValue,
+      qi, bets, players, favorite, pot, deliveryBonus,
       resolution.outcomeType, resolution.actualPerson
     );
 
@@ -153,6 +172,7 @@ export function calculateLeaderboard(players, bets, resolutions, questions) {
 
     if (resolution.outcomeType === 'favorite' && favorite) {
       stats[favorite].deliveredAsFavorite++;
+      deliveriesSoFar[favorite]++;
     } else if (resolution.outcomeType === 'someone_else') {
       if (favorite) stats[favorite].penalizedAsFavorite++;
       if (resolution.actualPerson) stats[resolution.actualPerson].stolenCategories++;

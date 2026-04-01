@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGame } from '../GameContext';
-import { calculateFavorite, calculateScoreChanges } from '../utils/scoring';
+import { calculateFavorite, calculateScoreChanges, getDeliveryBonusPercent } from '../utils/scoring';
 import { Crown, Check, X, UserCheck, ChevronRight, RotateCcw } from 'lucide-react';
 
 export default function ResolutionPage() {
@@ -14,20 +14,33 @@ export default function ResolutionPage() {
   const resolvedCount = Object.values(resolutions).filter((r) => r?.resolved).length;
 
   const questionsData = useMemo(() => {
+    // Count deliveries so far per player (in question order)
+    const deliveriesSoFar = {};
+    players.forEach(p => deliveriesSoFar[p] = 0);
+
     return questions.map((q, qi) => {
       const data = calculateFavorite(qi, bets, players);
       const override = favoriteOverrides[qi];
       const favorite = override || data.favorite;
       const pot = data.pointsByPlayer?.[favorite] || data.pot;
-      const challengeValue = Math.floor(pot / 2);
       const resolution = resolutions[qi];
+
+      const deliveryNumber = favorite ? deliveriesSoFar[favorite] + 1 : 1;
+      const bonusPercent = getDeliveryBonusPercent(deliveryNumber);
+      const deliveryBonus = Math.floor(pot * bonusPercent);
+
+      // Track deliveries for subsequent questions
+      if (resolution?.resolved && resolution.outcomeType === 'favorite' && favorite) {
+        deliveriesSoFar[favorite]++;
+      }
 
       return {
         question: q,
         index: qi,
         favorite,
         pot,
-        challengeValue,
+        deliveryBonus,
+        bonusPercent,
         resolution,
       };
     });
@@ -91,7 +104,7 @@ export default function ResolutionPage() {
 }
 
 function ResolutionCard({ data, players, bets, onResolve, onUnresolve }) {
-  const { question, index, favorite, pot, challengeValue, resolution } = data;
+  const { question, index, favorite, pot, deliveryBonus, bonusPercent, resolution } = data;
   const isResolved = resolution?.resolved;
   const [selectedOutcome, setSelectedOutcome] = useState(resolution?.outcomeType || '');
   const [selectedPerson, setSelectedPerson] = useState(resolution?.actualPerson || '');
@@ -101,10 +114,10 @@ function ResolutionCard({ data, players, bets, onResolve, onUnresolve }) {
     if (!selectedOutcome || !favorite) return null;
     if (selectedOutcome === 'someone_else' && !selectedPerson) return null;
     return calculateScoreChanges(
-      index, bets, players, favorite, pot, challengeValue,
+      index, bets, players, favorite, pot, deliveryBonus,
       selectedOutcome, selectedPerson
     );
-  }, [selectedOutcome, selectedPerson, index, bets, players, favorite, pot, challengeValue]);
+  }, [selectedOutcome, selectedPerson, index, bets, players, favorite, pot, deliveryBonus]);
 
   const handleResolve = () => {
     if (!selectedOutcome) return;
@@ -155,8 +168,9 @@ function ResolutionCard({ data, players, bets, onResolve, onUnresolve }) {
             <span className="text-gold-400 font-bold">{pot}</span>
           </div>
           <div>
-            <span className="text-gray-500">Challenge:</span>{' '}
-            <span className="text-accent-red font-bold">{challengeValue}</span>
+            <span className="text-gray-500">Delivery bonus:</span>{' '}
+            <span className="text-accent-green font-bold">+{deliveryBonus}</span>
+            <span className="text-gray-600 text-xs ml-1">({Math.round(bonusPercent * 100)}%)</span>
           </div>
         </div>
 
