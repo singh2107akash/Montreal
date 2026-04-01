@@ -134,7 +134,9 @@
       }
     }
   },
-  "lockedPlayers": [],
+  "lockedPlayers": [
+    "Akash"
+  ],
   "resolutions": {},
   "favoriteOverrides": {},
   "playerPasswords": {
