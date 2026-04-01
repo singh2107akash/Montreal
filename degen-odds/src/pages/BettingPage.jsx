@@ -55,7 +55,7 @@ export default function BettingPage() {
     }
   });
 
-  const otherPlayers = players.filter((p) => p !== activePlayer);
+  const pickablePlayers = players;
   const displayName = (p) => nicknames[p] ? `${p} (${nicknames[p]})` : p;
 
   const spentOnOthers = Object.entries(playerBets)
@@ -342,23 +342,31 @@ export default function BettingPage() {
             {/* Pick a player */}
             <label className="block text-xs text-gray-500 mb-2 font-medium">Who's catching this one?</label>
             <div className="grid grid-cols-2 gap-2 mb-5">
-              {otherPlayers.map((p) => (
-                <button
-                  key={p}
-                  onClick={() => {
-                    setLocalPick(p);
-                    if (!localAmount) setLocalAmount(String(config.minBetPerQuestion));
-                    setError('');
-                  }}
-                  className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer border ${
-                    localPick === p
-                      ? 'bg-gold-500/20 border-gold-500 text-gold-400'
-                      : 'bg-dark-700 border-dark-600 text-gray-300 hover:border-gray-500'
-                  }`}
-                >
-                  {displayName(p)}
-                </button>
-              ))}
+              {pickablePlayers.map((p) => {
+                const isSelf = p === activePlayer;
+                const isSelected = localPick === p;
+                return (
+                  <button
+                    key={p}
+                    onClick={() => {
+                      setLocalPick(p);
+                      if (!localAmount) setLocalAmount(String(config.minBetPerQuestion));
+                      setError('');
+                    }}
+                    className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer border ${
+                      isSelected
+                        ? isSelf
+                          ? 'bg-accent-purple/20 border-accent-purple text-accent-purple'
+                          : 'bg-gold-500/20 border-gold-500 text-gold-400'
+                        : isSelf
+                          ? 'bg-dark-700 border-accent-purple/30 text-accent-purple/70 hover:border-accent-purple/60'
+                          : 'bg-dark-700 border-dark-600 text-gray-300 hover:border-gray-500'
+                    }`}
+                  >
+                    {displayName(p)}{isSelf ? ' (You)' : ''}
+                  </button>
+                );
+              })}
             </div>
 
             {/* Bet amount */}
