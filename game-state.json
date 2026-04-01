@@ -16,124 +16,44 @@
     "Goldy"
   ],
   "nicknames": {},
-  "bets": {
-    "Akash": {
-      "0": {
-        "pick": "Aman",
-        "amount": 20
-      },
-      "1": {
-        "pick": "Gagan",
-        "amount": 5
-      },
-      "2": {
-        "pick": "Matab",
-        "amount": 5
-      },
-      "3": {
-        "pick": "Dilaver",
-        "amount": 5
-      },
-      "4": {
-        "pick": "Surkh",
-        "amount": 5
-      },
-      "5": {
-        "pick": "Gagan",
-        "amount": 5
-      },
-      "6": {
-        "pick": "Surkh",
-        "amount": 5
-      },
-      "7": {
-        "pick": "Pardeep",
-        "amount": 5
-      },
-      "8": {
-        "pick": "Aman",
-        "amount": 5
-      },
-      "9": {
-        "pick": "Dilaver",
-        "amount": 5
-      },
-      "10": {
-        "pick": "Aman",
-        "amount": 5
-      },
-      "11": {
-        "pick": "Gagan",
-        "amount": 10
-      },
-      "12": {
-        "pick": "Matab",
-        "amount": 5
-      },
-      "13": {
-        "pick": "Pardeep",
-        "amount": 5
-      },
-      "14": {
-        "pick": "Dilaver",
-        "amount": 5
-      },
-      "15": {
-        "pick": "Aman",
-        "amount": 5
-      },
-      "16": {
-        "pick": "Gagan",
-        "amount": 5
-      },
-      "17": {
-        "pick": "Surkh",
-        "amount": 5
-      },
-      "18": {
-        "pick": "Harman",
-        "amount": 25
-      },
-      "19": {
-        "pick": "Gagan",
-        "amount": 15
-      }
-    }
-  },
+  "bets": {},
   "lockedPlayers": [],
   "resolutions": {},
   "favoriteOverrides": {},
-  "playerPasswords": {
-    "Akash": "Rav",
-    "Aman": "Potter28"
-  },
+  "playerPasswords": {},
   "questions": [
-    "Who is most likely to be the first person to ask the car to stop so he can pee on the way there?",
     "Who is most likely to be the first person to complain about the car, the temperature, the drive, or say that you all should have just flown?",
-    "Who is most likely to be the last person to get ready for the first day dinner?",
-    "Who is most likely to be the first person to flirt with the waiter/waitress at dinner?",
+    "Who is most likely to be the reason you're late to literally everything?",
+    "Who is most likely to be the first person to become best friends with a stranger?",
     "Who is most likely to be the first person to act as a wingman for someone?",
-    "Who is most likely to be the first person to take 3 shots in a row?",
+    "Who is most likely to be the first person to suggest getting shots?",
     "Who is most likely to be the first person to chug a full can of beer?",
     "Who is most likely to be the first person to become too loud at dinner?",
     "Who is most likely to be the first person to record a video with a stranger in it and make the stranger say something in Punjabi?",
-    "Who is most likely to be the first person to get sentimental and cry while hugging the groom?",
-    "Who is most likely to be the first person to lose something?",
-    "Who is most likely to be the first person to yak on the first night?",
+    "Who is most likely to get sentimental and cry?",
+    "Who is most likely to be the first person to lose their phone or wallet?",
+    "Who is most likely to yak on the first night?",
     "Who is most likely to be the first person to wake up on Saturday morning?",
-    "Who is most likely to be the last person to wake up on Saturday morning?",
-    "Who is most likely to be the one to sleep on the couch or the floor instead of the bed?",
-    "Who is most likely to forget something at the Airbnb?",
-    "Who is most likely to end up in the worst room with the double bed?",
+    "Who is most likely to be the first person to fall asleep on Friday night?",
+    "Who is most likely to end up on the double bed or sofa bed?",
     "Who is most likely to get the bachelor trip's best group photo?",
     "Who is most likely to get kicked out of a bar?",
-    "Who is most likely to give the best toast to the groom?"
+    "Who is least likely to take their shirt off?",
+    "Who is most likely to be the last person to fall asleep on Friday night?",
+    "Who is most likely to disappear for two hours and come back like nothing happened?",
+    "Who is most likely to try speaking French and completely butcher it?",
+    "Who is most likely to order a huge poutine and not come close to finishing it?",
+    "Who is most likely to miss breakfast or lunch on Saturday?",
+    "Who is most likely to say \"one more\" 6 times in a row?",
+    "Who is most likely to be the last one to leave the bar?",
+    "Who is most likely to lose their voice by Saturday afternoon?",
+    "Who is most likely to wake up needing a full debrief and still say, \"I wasn't even that drunk\"?"
   ],
   "gamePhase": "setup",
   "config": {
-    "totalBudget": 150,
+    "totalBudget": 250,
     "minBetPerQuestion": 5,
-    "questionCount": 20
+    "questionCount": 26
   },
   "bettingClosed": false
 }
