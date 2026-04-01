@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { useGame } from '../GameContext';
-import { Plus, X, ChevronRight, Users, HelpCircle, Shield, Pencil, Check, Trash2, RotateCcw, AlertTriangle } from 'lucide-react';
+import { Plus, X, ChevronRight, Users, HelpCircle, Shield, Pencil, Check, Trash2, RotateCcw, AlertTriangle, Lock, Unlock } from 'lucide-react';
 
 export default function SetupPage() {
   const navigate = useNavigate();
@@ -10,6 +10,7 @@ export default function SetupPage() {
   const {
     players, nicknames, questions, config, lockedPlayers,
     setPlayers, setNickname, setQuestions, resetGame, saving,
+    bettingClosed, closeBetting, reopenBetting,
   } = useGame();
   const [newPlayer, setNewPlayer] = useState('');
   const [showQuestions, setShowQuestions] = useState(false);
@@ -80,13 +81,13 @@ export default function SetupPage() {
       <div className="flex items-center gap-2 mb-2">
         <Shield className="w-5 h-5 text-gold-400" />
         <h1 className="text-3xl md:text-4xl font-black bg-gradient-to-r from-gold-400 to-gold-500 bg-clip-text text-transparent">
-          Admin Setup
+          Command Center
         </h1>
         {saving && (
           <span className="text-xs text-gold-400 animate-pulse ml-2">Saving...</span>
         )}
       </div>
-      <p className="text-gray-500 mb-8">Manage players and questions.</p>
+      <p className="text-gray-500 mb-8">Set up the chaos. Add the degens. Write the questions.</p>
 
       {/* Config summary */}
       <div className="bg-dark-800 border border-dark-600 rounded-xl p-4 mb-8 flex flex-wrap gap-6 text-sm">
@@ -112,7 +113,7 @@ export default function SetupPage() {
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-4">
           <Users className="w-5 h-5 text-gold-400" />
-          <h2 className="text-xl font-bold text-gray-200">Players ({players.length})</h2>
+          <h2 className="text-xl font-bold text-gray-200">The Degens ({players.length})</h2>
         </div>
 
         <div className="flex gap-2 mb-4">
@@ -121,7 +122,7 @@ export default function SetupPage() {
             value={newPlayer}
             onChange={(e) => setNewPlayer(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Add a player name..."
+            placeholder="Add another degen..."
             className="flex-1 bg-dark-700 border border-dark-600 rounded-lg px-4 py-3 text-gray-200 placeholder-gray-600 focus:outline-none focus:border-gold-500 transition-colors"
           />
           <button
@@ -286,6 +287,30 @@ export default function SetupPage() {
         )}
       </div>
 
+      {/* End / Reopen Betting */}
+      <div className="mb-6">
+        {!bettingClosed ? (
+          <button
+            onClick={closeBetting}
+            className="w-full bg-accent-red/10 border border-accent-red/30 hover:bg-accent-red/20 text-accent-red font-bold py-4 px-8 rounded-xl text-lg transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <Lock className="w-5 h-5" /> End Betting — Lock Everyone Out
+          </button>
+        ) : (
+          <button
+            onClick={reopenBetting}
+            className="w-full bg-accent-green/10 border border-accent-green/30 hover:bg-accent-green/20 text-accent-green font-bold py-4 px-8 rounded-xl text-lg transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <Unlock className="w-5 h-5" /> Reopen Betting — Unlock Everyone
+          </button>
+        )}
+        <p className="text-center text-xs text-gray-600 mt-2">
+          {bettingClosed
+            ? 'Betting is closed. No one can place or change bets.'
+            : 'Close betting when everyone is done. This locks all players.'}
+        </p>
+      </div>
+
       {/* Admin nav */}
       <div className="space-y-3">
         <button
@@ -293,26 +318,26 @@ export default function SetupPage() {
           disabled={players.length < 2}
           className="w-full bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-500 disabled:opacity-30 disabled:cursor-not-allowed text-dark-900 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
         >
-          Go to Betting <ChevronRight className="w-5 h-5" />
+          Let the Betting Begin <ChevronRight className="w-5 h-5" />
         </button>
         <div className="flex gap-3">
           <button
             onClick={() => navigate('/market')}
             className="flex-1 bg-dark-700 hover:bg-dark-600 text-gray-300 font-medium py-3 px-4 rounded-xl text-sm transition-colors cursor-pointer"
           >
-            View Market
+            The Odds Board
           </button>
           <button
             onClick={() => navigate('/resolve')}
             className="flex-1 bg-dark-700 hover:bg-dark-600 text-gray-300 font-medium py-3 px-4 rounded-xl text-sm transition-colors cursor-pointer"
           >
-            Resolution
+            Judgment Day
           </button>
           <button
             onClick={() => navigate('/results')}
             className="flex-1 bg-dark-700 hover:bg-dark-600 text-gray-300 font-medium py-3 px-4 rounded-xl text-sm transition-colors cursor-pointer"
           >
-            Leaderboard
+            Who's Winning
           </button>
         </div>
       </div>
@@ -329,9 +354,9 @@ export default function SetupPage() {
         ) : (
           <div className="bg-dark-800 border border-accent-red/30 rounded-xl p-5 text-center">
             <AlertTriangle className="w-8 h-8 text-accent-red mx-auto mb-3" />
-            <p className="text-gray-200 font-bold mb-1">Reset entire game?</p>
+            <p className="text-gray-200 font-bold mb-1">Nuke everything?</p>
             <p className="text-gray-500 text-sm mb-4">
-              This will clear all bets, passwords, resolutions, and locked players. Questions and players will reset to defaults. This cannot be undone.
+              This wipes all bets, passwords, resolutions, and locks. Everything goes back to zero. There's no coming back from this.
             </p>
             <div className="flex gap-3 justify-center">
               <button
@@ -344,7 +369,7 @@ export default function SetupPage() {
                 onClick={() => { resetGame(); setShowResetConfirm(false); }}
                 className="px-5 py-2.5 rounded-lg text-sm font-bold text-white bg-accent-red hover:bg-red-500 transition-colors cursor-pointer"
               >
-                Yes, Reset Everything
+                Burn It All Down
               </button>
             </div>
           </div>

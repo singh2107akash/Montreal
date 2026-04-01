@@ -76,10 +76,10 @@ export default function ResultsPage() {
           Montreal Edition
         </div>
         <h1 className="text-4xl md:text-5xl font-black bg-gradient-to-r from-gold-400 via-yellow-200 to-gold-500 bg-clip-text text-transparent mb-2">
-          LEADERBOARD
+          WHO RUNS THIS TRIP
         </h1>
         <p className="text-gray-500 text-sm">
-          {resolvedCount}/{questions.length} questions resolved
+          {resolvedCount}/{questions.length} fates sealed
         </p>
       </div>
 
@@ -121,7 +121,7 @@ export default function ResultsPage() {
         <div className="px-4 py-3 border-b border-dark-700">
           <h2 className="font-bold text-gray-200 flex items-center gap-2">
             <Trophy className="w-4 h-4 text-gold-400" />
-            Full Rankings
+            The Pecking Order
           </h2>
         </div>
         <div className="divide-y divide-dark-700">
@@ -140,19 +140,19 @@ export default function ResultsPage() {
                 <div className="flex flex-wrap gap-3 text-[11px] text-gray-500 mt-0.5">
                   <span className="flex items-center gap-0.5">
                     <Crown className="w-3 h-3 text-gold-500" />
-                    Fav {entry.timesFavorite}x
+                    Target {entry.timesFavorite}x
                   </span>
                   <span className="flex items-center gap-0.5">
                     <Check className="w-3 h-3 text-accent-green" />
-                    Delivered {entry.deliveredAsFavorite}x
+                    Clutch {entry.deliveredAsFavorite}x
                   </span>
                   <span className="flex items-center gap-0.5">
                     <X className="w-3 h-3 text-accent-red" />
-                    Penalized {entry.penalizedAsFavorite}x
+                    Choked {entry.penalizedAsFavorite}x
                   </span>
                   <span className="flex items-center gap-0.5">
                     <Flame className="w-3 h-3 text-accent-purple" />
-                    Stolen {entry.stolenCategories}x
+                    Hijacked {entry.stolenCategories}x
                   </span>
                 </div>
               </div>
@@ -181,7 +181,7 @@ export default function ResultsPage() {
         <div className="px-4 py-3 border-b border-dark-700">
           <h2 className="font-bold text-gray-200 flex items-center gap-2">
             <Target className="w-4 h-4 text-gold-400" />
-            Betting Summary
+            Who Bet What
           </h2>
         </div>
         <div className="divide-y divide-dark-700">
@@ -216,7 +216,7 @@ export default function ResultsPage() {
       <div className="mb-8">
         <h2 className="font-bold text-gray-200 flex items-center gap-2 mb-4">
           <Target className="w-4 h-4 text-gold-400" />
-          Question Results
+          The Receipts
         </h2>
         <div className="space-y-2">
           {questionResults.map((qr) => (
@@ -241,12 +241,12 @@ export default function ResultsPage() {
                       ? 'text-accent-blue'
                       : 'text-accent-red'
                   }`}>
-                    {qr.resolution.outcomeType === 'favorite' && `${qr.favorite} delivered!`}
-                    {qr.resolution.outcomeType === 'someone_else' && `${qr.resolution.actualPerson} stole it!`}
-                    {qr.resolution.outcomeType === 'nobody' && 'Nobody did it'}
+                    {qr.resolution.outcomeType === 'favorite' && `${qr.favorite} stepped up!`}
+                    {qr.resolution.outcomeType === 'someone_else' && `${qr.resolution.actualPerson} hijacked it!`}
+                    {qr.resolution.outcomeType === 'nobody' && 'All talk, nobody delivered'}
                   </div>
                 ) : (
-                  <div className="text-xs text-gray-600">Pending...</div>
+                  <div className="text-xs text-gray-600">Waiting for chaos...</div>
                 )}
               </div>
               <div className="text-right shrink-0">
@@ -264,14 +264,14 @@ export default function ResultsPage() {
           onClick={() => navigate('/market')}
           className="flex-1 bg-dark-700 hover:bg-dark-600 text-gray-300 font-medium py-3 px-4 rounded-xl text-sm transition-colors cursor-pointer"
         >
-          View Market
+          The Odds Board
         </button>
         {isAdmin && (
           <button
             onClick={() => navigate('/resolve')}
             className="flex-1 bg-dark-700 hover:bg-dark-600 text-gray-300 font-medium py-3 px-4 rounded-xl text-sm transition-colors cursor-pointer"
           >
-            Resolution
+            Judgment Day
           </button>
         )}
         <button
