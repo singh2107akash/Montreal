@@ -202,7 +202,7 @@ export default function BettingPage() {
             onClick={() => navigate(isAdmin ? '/' : '/market')}
             className="text-gold-400 hover:text-gold-500 text-sm font-medium transition-colors cursor-pointer"
           >
-            {isAdmin ? 'Back to Home' : 'See the Odds'} &rarr;
+            {isAdmin ? 'Back to Home' : 'The Odds Board'} &rarr;
           </button>
         </div>
       )}
@@ -309,7 +309,7 @@ export default function BettingPage() {
             onClick={() => navigate('/market')}
             className="text-gold-400 hover:text-gold-500 text-sm font-medium transition-colors cursor-pointer"
           >
-            See the Odds &rarr;
+            The Odds Board &rarr;
           </button>
         </div>
       ) : (

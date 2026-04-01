@@ -138,7 +138,7 @@ export default function MyOddsPage() {
         <button onClick={() => navigate('/')} className="text-gray-500 hover:text-gold-400 text-sm transition-colors cursor-pointer">&larr; Home</button>
         <div className="flex gap-3">
           <button onClick={() => navigate('/market')} className="text-gold-400 hover:text-gold-500 text-sm font-medium transition-colors flex items-center gap-1 cursor-pointer">
-            Odds Board <ChevronRight className="w-4 h-4" />
+            The Odds Board <ChevronRight className="w-4 h-4" />
           </button>
           <button onClick={() => navigate('/results')} className="text-gold-400 hover:text-gold-500 text-sm font-medium transition-colors flex items-center gap-1 cursor-pointer">
             Leaderboard <ChevronRight className="w-4 h-4" />
@@ -240,7 +240,7 @@ export default function MyOddsPage() {
                     <div className="flex-1 min-w-0">
                       <span className="text-xs text-gray-500">Q{a.index + 1}</span>
                       <span className="text-xs text-accent-red font-bold ml-2">
-                        {a.resolution?.outcomeType === 'someone_else' ? `Got upset by ${a.resolution.actualPerson}` : 'Nobody did it — you choked'}
+                        {a.resolution?.outcomeType === 'someone_else' ? `${a.resolution.actualPerson} stole it from you` : 'Nobody delivered — you choked'}
                       </span>
                     </div>
                     <span className="text-accent-red font-black text-sm">−{a.challengeValue}</span>
@@ -486,7 +486,7 @@ export default function MyOddsPage() {
                                 bg: 'bg-dark-800',
                                 isActual: hasResult && a.resolution?.outcomeType === 'someone_else' && a.actualNet === a.elseNet && a.actualLabel !== 'You stole it!',
                                 ringColor: 'ring-accent-red/50',
-                                label: a.betOnFavorite ? 'Someone else steals it' : 'Wrong underdog wins',
+                                label: a.betOnFavorite ? 'Someone else steals it' : 'Someone else steals it',
                                 labelColor: 'text-gray-300',
                                 math: (a.betOnFavorite ? `−${a.amount} lost bet` : 'No effect on bet') + (a.iAmFavorite ? ` − ${a.challengeValue} pot penalty` : ''),
                               });
@@ -555,7 +555,7 @@ export default function MyOddsPage() {
           The Odds Board
         </button>
         <button onClick={() => navigate('/results')} className="bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-500 text-dark-900 font-bold py-3 px-6 rounded-xl text-sm transition-all cursor-pointer">
-          Who's Winning?
+          Leaderboard
         </button>
       </div>
     </div>

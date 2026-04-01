@@ -111,8 +111,8 @@ export default function LandingPage() {
             className="bg-dark-800 border border-dark-600 hover:border-gold-500/50 rounded-xl px-4 py-5 flex flex-col items-center gap-2 transition-all cursor-pointer"
           >
             <Trophy className="w-6 h-6 text-gold-400" />
-            <div className="text-sm font-bold text-gray-200">Who's Winning</div>
-            <div className="text-[11px] text-gray-500">Leaderboard</div>
+            <div className="text-sm font-bold text-gray-200">Leaderboard</div>
+            <div className="text-[11px] text-gray-500">Who's winning</div>
           </button>
 
           {isAdmin && (
@@ -352,11 +352,11 @@ export default function LandingPage() {
                     <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-[11px]">
                       <div className="text-gray-500">Correct bet on favorite</div>
                       <div className="text-accent-green font-bold">+1.5× your bet</div>
-                      <div className="text-gray-500">Correct bet on non-favorite</div>
+                      <div className="text-gray-500">Correct bet on underdog</div>
                       <div className="text-accent-green font-bold">+2.5× your bet</div>
                       <div className="text-gray-500">Wrong bet on favorite</div>
                       <div className="text-accent-red font-bold">−full bet</div>
-                      <div className="text-gray-500">Wrong bet on anyone else</div>
+                      <div className="text-gray-500">Wrong bet on underdog</div>
                       <div className="text-gray-500 font-bold">no effect</div>
                     </div>
                   </div>
@@ -391,11 +391,11 @@ export default function LandingPage() {
                   <div className="text-gray-400 font-semibold col-span-2 mb-0.5">Bet Results</div>
                   <div className="text-gray-500">Correct bet on favorite</div>
                   <div className="text-accent-green font-bold">+1.5× your bet</div>
-                  <div className="text-gray-500">Correct bet on someone else</div>
+                  <div className="text-gray-500">Correct bet on underdog</div>
                   <div className="text-accent-green font-bold">+2.5× your bet</div>
                   <div className="text-gray-500">Wrong bet on favorite</div>
                   <div className="text-accent-red font-bold">−full bet</div>
-                  <div className="text-gray-500">Wrong bet on someone else</div>
+                  <div className="text-gray-500">Wrong bet on underdog</div>
                   <div className="text-gray-500 font-bold">no effect</div>
                   <div className="col-span-2 border-t border-dark-600 my-1"></div>
                   <div className="text-gray-400 font-semibold col-span-2 mb-0.5">Personal Results</div>
@@ -425,8 +425,8 @@ export default function LandingPage() {
                     <span className="text-gray-400 text-xs">Your personal breakdown — for each question, see exactly how much you win or lose under every possible outcome. Also shows if you're the favorite or have an underdog opportunity.</span>
                   </div>
                   <div className="bg-dark-700 rounded-lg p-2.5 flex gap-3">
-                    <span className="text-gold-400 font-bold text-xs shrink-0 w-28">Who's Winning</span>
-                    <span className="text-gray-400 text-xs">The leaderboard. Shows total scores, who's been the favorite, who delivered, who choked, and who hijacked questions.</span>
+                    <span className="text-gold-400 font-bold text-xs shrink-0 w-28">Leaderboard</span>
+                    <span className="text-gray-400 text-xs">Shows total scores, who's been the favorite, who delivered, who choked, and who stole questions.</span>
                   </div>
                   <div className="bg-dark-700 rounded-lg p-2.5 flex gap-3">
                     <span className="text-gray-400 font-bold text-xs shrink-0 w-28">Judgment Day</span>
