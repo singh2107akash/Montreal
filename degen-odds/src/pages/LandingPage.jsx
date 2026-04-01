@@ -177,127 +177,318 @@ export default function LandingPage() {
           </button>
 
           {showRules && (
-            <div className="bg-dark-800 border border-dark-600 rounded-xl p-5 text-left space-y-5 animate-fade-in-up">
+            <div className="bg-dark-800 border border-dark-600 rounded-xl p-5 text-left space-y-6 animate-fade-in-up">
 
-              {/* The Game */}
-              <div>
-                <h3 className="text-gold-400 font-bold text-sm mb-2 uppercase tracking-wider">The Game</h3>
+              {/* TL;DR */}
+              <div className="bg-gold-500/10 border border-gold-500/30 rounded-lg p-4">
+                <h3 className="text-gold-400 font-bold text-sm mb-2">TL;DR — How This Works</h3>
                 <p className="text-gray-300 text-sm leading-relaxed">
-                  Sacré Bets is a pre-trip betting game. There are {questions.length} questions, all in the format
-                  "Who is most likely to..." — you bet on which player you think will actually do each thing during the Montreal trip.
+                  Before the trip, everyone bets on <span className="text-gold-400 font-bold">who will do what</span> in Montreal.
+                  You get <span className="text-gold-400 font-bold">{config.totalBudget} points</span> to spread across {questions.length} questions.
+                  During the trip, the admin resolves what actually happened.
+                  You earn points from <span className="text-gold-400 font-bold">correct bets</span> and from
+                  <span className="text-accent-purple font-bold"> being the underdog who actually does it</span>.
+                  Most points at the end wins. Two ways to win: bet smart, or go full chaos mode and steal the spotlight.
                 </p>
               </div>
 
-              {/* Before the Trip */}
+              {/* Step 1: Placing Bets */}
               <div>
-                <h3 className="text-gold-400 font-bold text-sm mb-2 uppercase tracking-wider">Before the Trip — Place Your Bets</h3>
-                <ul className="text-gray-300 text-sm leading-relaxed space-y-1.5">
+                <h3 className="text-gold-400 font-bold text-sm mb-2 uppercase tracking-wider">Step 1 — Place Your Bets (Before the Trip)</h3>
+                <ul className="text-gray-300 text-sm leading-relaxed space-y-2">
                   <li className="flex gap-2">
-                    <span className="text-gold-500 shrink-0">1.</span>
-                    You get <span className="text-gold-400 font-bold">{config.totalBudget} points</span> to spread across all {questions.length} questions.
+                    <span className="text-gold-500 shrink-0 font-bold">1.</span>
+                    <span>There are <span className="text-gold-400 font-bold">{questions.length} questions</span>, all in the format "Who is most likely to..." — e.g., "Who is most likely to get lost?" or "Who is most likely to miss the flight?"</span>
                   </li>
                   <li className="flex gap-2">
-                    <span className="text-gold-500 shrink-0">2.</span>
-                    For each question, pick which player you think will do it and bet points on it.
+                    <span className="text-gold-500 shrink-0 font-bold">2.</span>
+                    <span>For <span className="font-semibold text-gray-200">each question</span>, you pick one player you think will actually do that thing during the trip, then bet points on it. You <span className="font-semibold text-gray-200">must answer all {questions.length}</span>.</span>
                   </li>
                   <li className="flex gap-2">
-                    <span className="text-gold-500 shrink-0">3.</span>
-                    Minimum bet is <span className="text-gold-400 font-bold">{config.minBetPerQuestion} pts</span> per question. You must answer all {questions.length}.
+                    <span className="text-gold-500 shrink-0 font-bold">3.</span>
+                    <span>You have a total budget of <span className="text-gold-400 font-bold">{config.totalBudget} pts</span> to split across all questions. Minimum <span className="text-gold-400 font-bold">{config.minBetPerQuestion} pts</span> per question. Bet more on ones you feel confident about.</span>
                   </li>
                   <li className="flex gap-2">
-                    <span className="text-gold-500 shrink-0">4.</span>
-                    Bet more on questions you feel confident about. Strategy matters!
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-gold-500 shrink-0">5.</span>
-                    Once you lock in, your bets are final. No changes.
+                    <span className="text-gold-500 shrink-0 font-bold">4.</span>
+                    <span>Once you <span className="text-accent-red font-bold">lock in</span>, your bets are <span className="font-semibold text-gray-200">final</span>. No edits unless the admin unlocks everyone. Think before you commit.</span>
                   </li>
                 </ul>
               </div>
 
-              {/* The Favorite */}
+              {/* Step 2: Key Terms */}
               <div>
-                <h3 className="text-gold-400 font-bold text-sm mb-2 uppercase tracking-wider">The Favorite</h3>
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  After everyone locks in, the player with the <span className="text-gold-400 font-bold">most total points</span> bet
-                  on them for a question becomes the <span className="text-gold-400 font-bold">Favorite</span>.
-                  The total points on the favorite is called the <span className="text-gold-400 font-bold">Pot</span>.
-                  Half the pot is the <span className="text-accent-red font-bold">Challenge Value</span> — this
-                  is the personal stake for the favorite.
-                </p>
-              </div>
-
-              {/* During the Trip */}
-              <div>
-                <h3 className="text-gold-400 font-bold text-sm mb-2 uppercase tracking-wider">During the Trip — Resolution</h3>
-                <p className="text-gray-300 text-sm leading-relaxed mb-2">
-                  As things happen on the trip, the admin resolves each question with one of three outcomes:
-                </p>
+                <h3 className="text-gold-400 font-bold text-sm mb-2 uppercase tracking-wider">Step 2 — Understanding the Key Terms</h3>
                 <div className="space-y-3">
                   <div className="bg-dark-700 rounded-lg p-3">
-                    <div className="text-accent-green font-bold text-xs mb-1">FAVORITE DID IT</div>
-                    <ul className="text-gray-400 text-xs space-y-1">
-                      <li>Everyone who bet on the favorite <span className="text-accent-green font-semibold">wins 1.5x</span> their bet amount</li>
-                      <li>The favorite <span className="text-accent-green font-semibold">wins</span> 50% of the pot as a personal bonus</li>
-                    </ul>
-                  </div>
-                  <div className="bg-dark-700 rounded-lg p-3 border border-accent-purple/30">
-                    <div className="text-accent-purple font-bold text-xs mb-1">THE UNDERDOG STEALS IT</div>
-                    <ul className="text-gray-400 text-xs space-y-1">
-                      <li>Everyone who bet on the favorite <span className="text-accent-red font-semibold">loses</span> their bet amount</li>
-                      <li>Everyone who correctly bet on the underdog <span className="text-accent-green font-semibold">wins 2.5x</span> their bet amount — massive reward for believing in the underdog</li>
-                      <li>The favorite <span className="text-accent-red font-semibold">loses</span> 50% of the pot</li>
-                      <li>The underdog <span className="text-accent-green font-semibold">wins 75% of the pot</span> — the biggest single payout in the game</li>
-                    </ul>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-gold-400 font-bold text-xs">THE FAVORITE</span>
+                    </div>
+                    <p className="text-gray-400 text-xs leading-relaxed">
+                      For each question, after everyone locks in, the player with the <span className="text-gold-400 font-semibold">most total points</span> bet
+                      on them becomes the <span className="text-gold-400 font-semibold">Favorite</span>. The group basically said: "This person is MOST likely to do this."
+                      Being the favorite is both a blessing and a curse — deliver and you win big, choke and you get punished.
+                    </p>
                   </div>
                   <div className="bg-dark-700 rounded-lg p-3">
-                    <div className="text-yellow-400 font-bold text-xs mb-1">NOBODY DID IT</div>
-                    <ul className="text-gray-400 text-xs space-y-1">
-                      <li>Everyone who bet on the favorite <span className="text-accent-red font-semibold">loses</span> their bet amount</li>
-                      <li>The favorite <span className="text-accent-red font-semibold">loses</span> the challenge value (pot/2)</li>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-gold-400 font-bold text-xs">THE POT</span>
+                    </div>
+                    <p className="text-gray-400 text-xs leading-relaxed">
+                      The Pot = total points bet on the favorite for that question. If 8 people bet on Rahul for a question and those bets total 60 pts, the Pot is 60.
+                    </p>
+                  </div>
+                  <div className="bg-dark-700 rounded-lg p-3">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-accent-red font-bold text-xs">CHALLENGE VALUE</span>
+                    </div>
+                    <p className="text-gray-400 text-xs leading-relaxed">
+                      Challenge Value = <span className="font-semibold">half the Pot</span>. This is the favorite's personal stake — what they win if they deliver, or lose if they don't.
+                      If the pot is 60, the challenge value is 30.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Step 3: Three Outcomes */}
+              <div>
+                <h3 className="text-gold-400 font-bold text-sm mb-2 uppercase tracking-wider">Step 3 — The Three Outcomes (During the Trip)</h3>
+                <p className="text-gray-400 text-xs mb-3">
+                  As things happen on the trip, the admin resolves each question. There are only 3 possible outcomes:
+                </p>
+                <div className="space-y-3">
+                  {/* Outcome 1 */}
+                  <div className="bg-dark-700 rounded-lg p-3">
+                    <div className="text-accent-green font-bold text-xs mb-2">OUTCOME 1: FAVORITE DELIVERS</div>
+                    <p className="text-gray-400 text-xs mb-2">The person the group expected to do it actually did it. Predictable. Safe bettors get paid.</p>
+                    <ul className="text-gray-400 text-xs space-y-1.5">
+                      <li className="flex gap-1.5">
+                        <span className="text-accent-green shrink-0">+</span>
+                        <span>Everyone who bet on the favorite <span className="text-accent-green font-semibold">wins 1.5x their bet</span>. Bet 10? You get 15.</span>
+                      </li>
+                      <li className="flex gap-1.5">
+                        <span className="text-accent-green shrink-0">+</span>
+                        <span>The favorite themselves <span className="text-accent-green font-semibold">wins 50% of the pot</span> as a personal bonus for delivering.</span>
+                      </li>
+                      <li className="flex gap-1.5">
+                        <span className="text-gray-600 shrink-0">·</span>
+                        <span>Everyone who bet on someone else? Nothing happens to them. No win, no loss.</span>
+                      </li>
+                    </ul>
+                    <div className="bg-dark-800 rounded-md p-2 mt-2">
+                      <div className="text-[10px] text-gray-500 font-semibold mb-1">EXAMPLE: Pot = 60, Challenge = 30</div>
+                      <div className="text-[10px] text-gray-500">You bet 10 on the favorite → <span className="text-accent-green">you win 15 pts</span></div>
+                      <div className="text-[10px] text-gray-500">The favorite → <span className="text-accent-green">wins 30 pts</span> bonus for delivering</div>
+                    </div>
+                  </div>
+
+                  {/* Outcome 2 */}
+                  <div className="bg-dark-700 rounded-lg p-3 border-2 border-accent-purple/40">
+                    <div className="text-accent-purple font-bold text-xs mb-2">OUTCOME 2: SOMEONE ELSE STEALS IT (UNDERDOG)</div>
+                    <p className="text-gray-400 text-xs mb-2">
+                      Plot twist. The favorite DIDN'T do it — someone unexpected stepped up. This is where the game gets wild.
+                    </p>
+                    <ul className="text-gray-400 text-xs space-y-1.5">
+                      <li className="flex gap-1.5">
+                        <span className="text-accent-red shrink-0">−</span>
+                        <span>Everyone who bet on the favorite <span className="text-accent-red font-semibold">loses their entire bet</span>. You backed the wrong horse.</span>
+                      </li>
+                      <li className="flex gap-1.5">
+                        <span className="text-accent-green shrink-0">+</span>
+                        <span>If you correctly bet on the person who actually did it, you <span className="text-accent-green font-semibold">win 2.5x your bet</span>. Bet 10 on the right underdog? That's 25 pts.</span>
+                      </li>
+                      <li className="flex gap-1.5">
+                        <span className="text-accent-red shrink-0">−</span>
+                        <span>The favorite <span className="text-accent-red font-semibold">loses 50% of the pot</span>. They got humbled.</span>
+                      </li>
+                      <li className="flex gap-1.5">
+                        <span className="text-accent-purple shrink-0 font-bold">!</span>
+                        <span>The underdog who actually did it <span className="text-accent-purple font-bold">wins 75% of the pot</span> — the single biggest payout in the entire game.</span>
+                      </li>
+                    </ul>
+                    <div className="bg-dark-800 rounded-md p-2 mt-2">
+                      <div className="text-[10px] text-gray-500 font-semibold mb-1">EXAMPLE: Pot = 60, Challenge = 30</div>
+                      <div className="text-[10px] text-gray-500">You bet 10 on the favorite → <span className="text-accent-red">you lose 10 pts</span></div>
+                      <div className="text-[10px] text-gray-500">You bet 10 on the underdog who did it → <span className="text-accent-green">you win 25 pts</span></div>
+                      <div className="text-[10px] text-gray-500">The favorite → <span className="text-accent-red">loses 30 pts</span></div>
+                      <div className="text-[10px] text-accent-purple font-semibold">The underdog who did it → <span>wins 45 pts</span> (75% of pot) + any bet winnings</div>
+                    </div>
+                  </div>
+
+                  {/* Outcome 3 */}
+                  <div className="bg-dark-700 rounded-lg p-3">
+                    <div className="text-yellow-400 font-bold text-xs mb-2">OUTCOME 3: NOBODY DID IT</div>
+                    <p className="text-gray-400 text-xs mb-2">Nobody had the guts. The question goes undelivered. Favorite takes the fall.</p>
+                    <ul className="text-gray-400 text-xs space-y-1.5">
+                      <li className="flex gap-1.5">
+                        <span className="text-accent-red shrink-0">−</span>
+                        <span>Everyone who bet on the favorite <span className="text-accent-red font-semibold">loses their entire bet</span>.</span>
+                      </li>
+                      <li className="flex gap-1.5">
+                        <span className="text-accent-red shrink-0">−</span>
+                        <span>The favorite <span className="text-accent-red font-semibold">loses the challenge value</span> (pot/2). They were supposed to do it and didn't.</span>
+                      </li>
+                      <li className="flex gap-1.5">
+                        <span className="text-gray-600 shrink-0">·</span>
+                        <span>Everyone who bet on someone else? No effect. Your bet just didn't hit.</span>
+                      </li>
                     </ul>
                   </div>
                 </div>
               </div>
 
-              {/* Winning */}
+              {/* Two Ways to Score */}
+              <div>
+                <h3 className="text-gold-400 font-bold text-sm mb-2 uppercase tracking-wider">Two Ways to Score Points</h3>
+                <p className="text-gray-400 text-xs mb-3">You earn points from two completely separate sources. Understanding this is the key to winning.</p>
+                <div className="grid grid-cols-1 gap-3">
+                  <div className="bg-gold-500/10 border border-gold-500/30 rounded-lg p-3">
+                    <div className="text-gold-400 font-bold text-xs mb-1">1. YOUR BETS (Everyone earns from this)</div>
+                    <p className="text-gray-400 text-xs leading-relaxed">
+                      Every correct bet earns you points. Bet on the favorite and they deliver? <span className="text-gold-400 font-semibold">1.5x payout</span>.
+                      Bet on an underdog and they steal it? <span className="text-gold-400 font-semibold">2.5x payout</span>.
+                      This is the safe, consistent way to build points — predict correctly and get rewarded.
+                    </p>
+                  </div>
+                  <div className="bg-accent-purple/10 border border-accent-purple/30 rounded-lg p-3">
+                    <div className="text-accent-purple font-bold text-xs mb-1">2. YOUR ACTIONS ON THE TRIP (Personal bonuses)</div>
+                    <p className="text-gray-400 text-xs leading-relaxed">
+                      This is separate from betting. On the trip, if YOU are the one who actually does the thing:
+                    </p>
+                    <ul className="text-gray-400 text-xs mt-1.5 space-y-1">
+                      <li>• If you're the <span className="text-gold-400 font-semibold">Favorite</span> and deliver → <span className="text-accent-green font-semibold">+50% of the pot</span></li>
+                      <li>• If you're the <span className="text-accent-purple font-semibold">Underdog</span> and steal it → <span className="text-accent-purple font-bold">+75% of the pot</span> (the biggest single payout)</li>
+                      <li>• If you're the Favorite and choke → <span className="text-accent-red font-semibold">−50% of the pot</span></li>
+                    </ul>
+                    <p className="text-gray-500 text-[10px] mt-1.5 italic">
+                      This means you can earn HUGE points just from what you do on the trip — even if your bets were garbage.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Winning the Game */}
               <div>
                 <h3 className="text-gold-400 font-bold text-sm mb-2 uppercase tracking-wider">Winning the Game</h3>
                 <p className="text-gray-300 text-sm leading-relaxed">
                   After all {questions.length} questions are resolved, the player with the
                   <span className="text-gold-400 font-bold"> highest total score</span> wins.
-                  Correct bets pay <span className="text-gold-400 font-bold">1.5x</span> your wager. Favorites who deliver get 50% of the pot.
-                  But the real chaos move? <span className="text-accent-purple font-bold">Be the underdog.</span> If someone else steals it from the favorite, they take home <span className="text-accent-purple font-bold">75% of the pot</span> — the single biggest payout in the game. High risk, massive reward.
+                  Your score = points from correct bets + personal bonuses from being the favorite or underdog − penalties from wrong bets and choking as favorite.
                 </p>
               </div>
 
-              {/* Tips */}
+              {/* Strategy Guide */}
+              <div>
+                <h3 className="text-gold-400 font-bold text-sm mb-2 uppercase tracking-wider">Strategy Guide — How to Actually Win</h3>
+                <div className="space-y-3">
+
+                  <div className="bg-dark-700 rounded-lg p-3">
+                    <div className="text-gold-400 font-bold text-xs mb-1.5">STRATEGY 1: THE SAFE PLAY — BET ON FAVORITES</div>
+                    <p className="text-gray-400 text-xs leading-relaxed mb-1.5">
+                      Pick whoever the group is obviously going to bet on. If 10 people bet on Rahul for "most likely to get lost,"
+                      and Rahul actually gets lost, you earn <span className="text-accent-green font-semibold">1.5x your bet</span>. Safe, consistent, boring — but it stacks up.
+                    </p>
+                    <p className="text-gray-500 text-[10px] italic">
+                      Risk: If someone else steals it, you <span className="text-accent-red font-semibold">lose your entire bet</span>. No partial refunds.
+                    </p>
+                  </div>
+
+                  <div className="bg-dark-700 rounded-lg p-3 border border-accent-purple/30">
+                    <div className="text-accent-purple font-bold text-xs mb-1.5">STRATEGY 2: THE CHAOS PLAY — BET ON UNDERDOGS</div>
+                    <p className="text-gray-400 text-xs leading-relaxed mb-1.5">
+                      Pick someone unexpected. If they actually do it, your bet pays <span className="text-accent-green font-semibold">2.5x</span> instead of 1.5x.
+                      Higher payout because it's riskier. Even better: <span className="text-accent-purple font-bold">bet on yourself</span>. If you're right and you actually do it,
+                      you get 2.5x your bet PLUS 75% of the pot for being the underdog. That's a massive swing.
+                    </p>
+                    <p className="text-gray-500 text-[10px] italic">
+                      Risk: If the favorite delivers instead, your bet just doesn't pay out (no loss, but no gain either).
+                    </p>
+                  </div>
+
+                  <div className="bg-dark-700 rounded-lg p-3">
+                    <div className="text-gold-400 font-bold text-xs mb-1.5">STRATEGY 3: THE TRIP PLAY — BE THE UNDERDOG</div>
+                    <p className="text-gray-400 text-xs leading-relaxed mb-1.5">
+                      Forget betting for a second. On the actual trip, if you do something unexpected — something the group bet
+                      someone ELSE would do — <span className="text-accent-purple font-bold">you get 75% of the pot</span> just for doing it. That can be 30-50+ points from a single question.
+                      Stack 3-4 underdog steals and you can win the entire game regardless of how you bet.
+                    </p>
+                    <p className="text-gray-500 text-[10px] italic">
+                      This is why it pays to read the Odds Board. See where big pots are stacking up on someone else and ask yourself: "Can I steal this?"
+                    </p>
+                  </div>
+
+                  <div className="bg-dark-700 rounded-lg p-3">
+                    <div className="text-gold-400 font-bold text-xs mb-1.5">STRATEGY 4: BUDGET MANAGEMENT</div>
+                    <ul className="text-gray-400 text-xs leading-relaxed space-y-1.5">
+                      <li className="flex gap-1.5">
+                        <span className="text-gold-500 shrink-0">•</span>
+                        <span><span className="font-semibold text-gray-300">Don't spread evenly.</span> Put {config.minBetPerQuestion} on questions you're unsure about and load up on ones you're confident in. A 20-pt bet at 1.5x = 30 pts. A {config.minBetPerQuestion}-pt bet = only {Math.floor(config.minBetPerQuestion * 1.5)}.</span>
+                      </li>
+                      <li className="flex gap-1.5">
+                        <span className="text-gold-500 shrink-0">•</span>
+                        <span><span className="font-semibold text-gray-300">Bet big on underdogs you believe in.</span> 2.5x on a 15-pt underdog bet = 37 pts. That's better than three safe bets hitting.</span>
+                      </li>
+                      <li className="flex gap-1.5">
+                        <span className="text-gold-500 shrink-0">•</span>
+                        <span><span className="font-semibold text-gray-300">Mix safe and risky.</span> Go heavy favorite on 12-15 questions, go underdog on 5-8 where you see opportunity. You need both consistency and big swings.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Pro Tips */}
               <div>
                 <h3 className="text-gold-400 font-bold text-sm mb-2 uppercase tracking-wider">Pro Tips</h3>
                 <ul className="text-gray-300 text-sm leading-relaxed space-y-2.5">
                   <li className="flex gap-2">
                     <span className="text-gold-500 shrink-0">&bull;</span>
-                    <span>If you're the <span className="text-gold-400 font-bold">Favorite</span>, you better deliver. The group put their money on you for a reason — don't choke. Show up or get humbled.</span>
+                    <span><span className="text-gold-400 font-bold">Peer pressure is a strategy.</span> If you bet on someone, make sure they deliver. Push them into it. Remind them what's at stake. You invested in them — manage your asset.</span>
                   </li>
                   <li className="flex gap-2">
                     <span className="text-gold-500 shrink-0">&bull;</span>
-                    <span>If you bet on the favorite, don't just sit there — <span className="text-gold-400 font-bold">make your favorite deliver</span>. Peer pressure is a valid strategy. You invested in them, now manage your asset.</span>
+                    <span><span className="text-gold-400 font-bold">Check "What's At Stake" page.</span> It shows every scenario for every bet you placed — exactly how much you win or lose in each outcome. Use it to understand your exposure.</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-gold-500 shrink-0">&bull;</span>
+                    <span><span className="text-gold-400 font-bold">Watch the Odds Board.</span> See where money is piling up. Big pots = big opportunity for whoever steals it. If 80 pts are on someone for a question, the underdog who steals it gets 60 pts.</span>
                   </li>
                   <li className="bg-accent-purple/10 border border-accent-purple/30 rounded-lg p-3 -mx-1">
                     <div className="flex gap-2">
                       <span className="text-accent-purple shrink-0 font-bold text-lg">!</span>
-                      <span><span className="text-accent-purple font-bold">THE UNDERDOG PATH:</span> Not the favorite? <span className="text-accent-purple font-bold">GOOD.</span> That's where the real money is. If you steal it from the favorite, you take <span className="text-accent-purple font-bold">75% of the pot</span> — the biggest payout in the game. Nobody sees you coming. Nobody expects it. Then you deliver and kick every doubter right in the Sacré Bleu Balls. The favorite gets humbled, you walk away loaded. This is the chaos play. This is how legends are made in Montreal.</span>
+                      <span><span className="text-accent-purple font-bold">THE ULTIMATE PLAY:</span> Bet on yourself as the underdog, then actually do the thing on the trip.
+                        You get <span className="text-accent-purple font-bold">2.5x your bet</span> (correct underdog bet) <span className="text-accent-purple font-bold">+ 75% of the pot</span> (underdog bonus).
+                        If you do this on a question with a fat pot, that single move can be worth 50-80+ points.
+                        Nobody sees you coming. Nobody expects it. That's the degen dream right there.
+                      </span>
                     </div>
                   </li>
                   <li className="flex gap-2">
                     <span className="text-gold-500 shrink-0">&bull;</span>
-                    <span>Spread your points — don't dump everything on one question like a degenerate. Unless you ARE that degenerate. Then go all in, we respect it.</span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-gold-500 shrink-0">&bull;</span>
-                    <span>Check the <span className="text-gold-400 font-bold">Market page</span> to see who the favorites are, where the money is going, and who the group thinks is absolutely going to embarrass themselves.</span>
+                    <span><span className="text-gold-400 font-bold">If you're the Favorite</span>, you have pressure on you. You win 50% of the pot if you deliver — but lose 50% if you don't. The group is watching. Don't choke.</span>
                   </li>
                 </ul>
+              </div>
+
+              {/* Quick Reference */}
+              <div className="bg-dark-700 rounded-lg p-3">
+                <div className="text-gold-400 font-bold text-xs mb-2">QUICK REFERENCE — PAYOUT CHEAT SHEET</div>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[11px]">
+                  <div className="text-gray-500">Correct bet on favorite</div>
+                  <div className="text-accent-green font-bold">+1.5x your bet</div>
+                  <div className="text-gray-500">Correct bet on underdog</div>
+                  <div className="text-accent-green font-bold">+2.5x your bet</div>
+                  <div className="text-gray-500">Wrong bet on favorite (upset)</div>
+                  <div className="text-accent-red font-bold">−your full bet</div>
+                  <div className="text-gray-500">Wrong bet on underdog</div>
+                  <div className="text-gray-500 font-bold">no effect</div>
+                  <div className="col-span-2 border-t border-dark-600 my-1"></div>
+                  <div className="text-gray-500">You deliver as favorite</div>
+                  <div className="text-accent-green font-bold">+50% of pot</div>
+                  <div className="text-gray-500">You choke as favorite</div>
+                  <div className="text-accent-red font-bold">−50% of pot</div>
+                  <div className="text-gray-500">You steal it as underdog</div>
+                  <div className="text-accent-purple font-bold">+75% of pot</div>
+                </div>
               </div>
             </div>
           )}
