@@ -140,11 +140,11 @@ export default function ResultsPage() {
                 <div className="flex flex-wrap gap-3 text-[11px] text-gray-500 mt-0.5">
                   <span className="flex items-center gap-0.5">
                     <Crown className="w-3 h-3 text-accent-green" />
-                    Target {entry.timesFavorite}x
+                    Favorite {entry.timesFavorite}x
                   </span>
                   <span className="flex items-center gap-0.5">
                     <Check className="w-3 h-3 text-accent-green" />
-                    Clutch {entry.deliveredAsFavorite}x
+                    Delivered {entry.deliveredAsFavorite}x
                   </span>
                   <span className="flex items-center gap-0.5">
                     <X className="w-3 h-3 text-accent-red" />
@@ -152,7 +152,7 @@ export default function ResultsPage() {
                   </span>
                   <span className="flex items-center gap-0.5">
                     <Flame className="w-3 h-3 text-accent-purple" />
-                    Hijacked {entry.stolenCategories}x
+                    Stole {entry.stolenCategories}x
                   </span>
                 </div>
               </div>
@@ -241,9 +241,9 @@ export default function ResultsPage() {
                       ? 'text-accent-purple'
                       : 'text-yellow-400'
                   }`}>
-                    {qr.resolution.outcomeType === 'favorite' && `${qr.favorite} stepped up!`}
-                    {qr.resolution.outcomeType === 'someone_else' && `${qr.resolution.actualPerson} hijacked it!`}
-                    {qr.resolution.outcomeType === 'nobody' && 'All talk, nobody delivered'}
+                    {qr.resolution.outcomeType === 'favorite' && `${qr.favorite} delivered!`}
+                    {qr.resolution.outcomeType === 'someone_else' && `${qr.resolution.actualPerson} stole it!`}
+                    {qr.resolution.outcomeType === 'nobody' && 'Nobody delivered'}
                   </div>
                 ) : (
                   <div className="text-xs text-gray-600">Waiting for chaos...</div>

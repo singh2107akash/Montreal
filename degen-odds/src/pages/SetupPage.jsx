@@ -337,7 +337,7 @@ export default function SetupPage() {
             onClick={() => navigate('/results')}
             className="flex-1 bg-dark-700 hover:bg-dark-600 text-gray-300 font-medium py-3 px-4 rounded-xl text-sm transition-colors cursor-pointer"
           >
-            Who's Winning
+            Leaderboard
           </button>
         </div>
       </div>
