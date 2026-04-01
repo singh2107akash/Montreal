@@ -167,7 +167,7 @@ export default function ResultsPage() {
                   </span>
                   <span className="text-accent-red flex items-center gap-0.5">
                     <TrendingDown className="w-2.5 h-2.5" />
-                    {entry.totalLosses}
+                    {Math.abs(entry.totalLosses)}
                   </span>
                 </div>
               </div>
