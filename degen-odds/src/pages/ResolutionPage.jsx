@@ -146,9 +146,9 @@ function ResolutionCard({ data, players, bets, onResolve, onUnresolve }) {
         {/* Info row */}
         <div className="flex flex-wrap gap-4 text-sm mb-4">
           <div className="flex items-center gap-1.5">
-            <Crown className="w-3.5 h-3.5 text-gold-400" />
+            <Crown className="w-3.5 h-3.5 text-accent-green" />
             <span className="text-gray-400">Favorite:</span>
-            <span className="font-semibold text-gold-400">{favorite || 'N/A'}</span>
+            <span className="font-semibold text-accent-green">{favorite || 'N/A'}</span>
           </div>
           <div>
             <span className="text-gray-500">Pot:</span>{' '}

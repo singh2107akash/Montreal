@@ -258,9 +258,9 @@ export default function MyOddsPage() {
 
       {/* Bet Profile */}
       <div className="flex gap-3 mb-6 text-xs">
-        <div className="bg-gold-500/10 border border-gold-500/20 rounded-lg px-3 py-2 flex items-center gap-1.5">
-          <Crown className="w-3.5 h-3.5 text-gold-400" />
-          <span className="text-gold-400 font-bold">{betOnFavoriteCount}</span>
+        <div className="bg-accent-green/10 border border-accent-green/20 rounded-lg px-3 py-2 flex items-center gap-1.5">
+          <Crown className="w-3.5 h-3.5 text-accent-green" />
+          <span className="text-accent-green font-bold">{betOnFavoriteCount}</span>
           <span className="text-gray-400">safe bets</span>
         </div>
         <div className="bg-accent-purple/10 border border-accent-purple/20 rounded-lg px-3 py-2 flex items-center gap-1.5">
@@ -269,9 +269,9 @@ export default function MyOddsPage() {
           <span className="text-gray-400">underdog bets</span>
         </div>
         {favoriteCount > 0 && (
-          <div className="bg-gold-500/10 border border-gold-500/20 rounded-lg px-3 py-2 flex items-center gap-1.5">
-            <Target className="w-3.5 h-3.5 text-gold-400" />
-            <span className="text-gold-400 font-bold">{favoriteCount}</span>
+          <div className="bg-accent-green/10 border border-accent-green/20 rounded-lg px-3 py-2 flex items-center gap-1.5">
+            <Target className="w-3.5 h-3.5 text-accent-green" />
+            <span className="text-accent-green font-bold">{favoriteCount}</span>
             <span className="text-gray-400">times favorite</span>
           </div>
         )}
@@ -300,10 +300,10 @@ export default function MyOddsPage() {
 
               {/* === YOUR ROLE: Favorite or Underdog === */}
               {a.favoriteStakes && (
-                <div className="bg-gradient-to-r from-gold-500/10 to-gold-600/5 border border-gold-500/40 rounded-xl p-3 mb-3">
+                <div className="bg-gradient-to-r from-accent-green/10 to-green-900/5 border border-accent-green/40 rounded-xl p-3 mb-3">
                   <div className="flex items-center gap-2 mb-2">
-                    <Crown className="w-4 h-4 text-gold-400" />
-                    <span className="text-xs font-black text-gold-400 uppercase tracking-wider">You're the Favorite — Deliver or Get Humbled</span>
+                    <Crown className="w-4 h-4 text-accent-green" />
+                    <span className="text-xs font-black text-accent-green uppercase tracking-wider">You're the Favorite — Deliver or Get Humbled</span>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <div className="bg-dark-800/60 rounded-lg p-2.5 text-center">
@@ -317,8 +317,8 @@ export default function MyOddsPage() {
                       <div className="text-[10px] text-gray-600">pot penalty</div>
                     </div>
                   </div>
-                  <div className="mt-2 text-[10px] text-gold-400/70 text-center font-medium">
-                    The group bet <span className="text-gold-400 font-bold">{a.pot} pts</span> on you. Pot is yours to win or lose.
+                  <div className="mt-2 text-[10px] text-accent-green/70 text-center font-medium">
+                    The group bet <span className="text-accent-green font-bold">{a.pot} pts</span> on you. Pot is yours to win or lose.
                   </div>
                 </div>
               )}
@@ -356,11 +356,11 @@ export default function MyOddsPage() {
                     <div className="flex items-center gap-1.5 text-sm">
                       <Target className="w-3.5 h-3.5 text-gray-500" />
                       <span className="text-gray-500">Your pick:</span>
-                      <span className={`font-bold ${a.betOnFavorite ? 'text-gold-400' : 'text-accent-purple'}`}>
+                      <span className={`font-bold ${a.betOnFavorite ? 'text-accent-green' : 'text-accent-purple'}`}>
                         {displayName(a.pick)}
                       </span>
                       {a.betOnFavorite && (
-                        <span className="text-[10px] bg-gold-500/20 text-gold-400 px-1.5 py-0.5 rounded font-bold">FAV</span>
+                        <span className="text-[10px] bg-accent-green/20 text-accent-green px-1.5 py-0.5 rounded font-bold">FAV</span>
                       )}
                       {!a.betOnFavorite && (
                         <span className="text-[10px] bg-accent-purple/20 text-accent-purple px-1.5 py-0.5 rounded font-bold">UNDERDOG</span>
@@ -376,10 +376,10 @@ export default function MyOddsPage() {
                   <div className="text-[10px] text-gray-600 font-semibold uppercase tracking-wider mb-2">Betting Scenarios</div>
                   <div className="grid grid-cols-1 gap-2">
                     {/* Favorite delivers */}
-                    <div className={`border rounded-lg p-3 ${a.isResolved && a.actualResult === a.favoriteDelivers ? 'ring-2 ring-gold-400' : ''} ${netBg(a.favoriteDelivers.type)}`}>
+                    <div className={`border rounded-lg p-3 ${a.isResolved && a.actualResult === a.favoriteDelivers ? 'ring-2 ring-accent-green' : ''} ${netBg(a.favoriteDelivers.type)}`}>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <Crown className="w-3.5 h-3.5 text-gold-400" />
+                          <Crown className="w-3.5 h-3.5 text-accent-green" />
                           <div>
                             <div className="text-xs font-bold text-gray-300">Favorite Delivers</div>
                             <div className="text-[10px] text-gray-500">{a.favorite ? displayName(a.favorite) : '—'} comes through</div>

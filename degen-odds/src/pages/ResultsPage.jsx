@@ -139,7 +139,7 @@ export default function ResultsPage() {
                 <div className="font-medium text-gray-200 text-sm truncate">{displayName(entry.name)}</div>
                 <div className="flex flex-wrap gap-3 text-[11px] text-gray-500 mt-0.5">
                   <span className="flex items-center gap-0.5">
-                    <Crown className="w-3 h-3 text-gold-500" />
+                    <Crown className="w-3 h-3 text-accent-green" />
                     Target {entry.timesFavorite}x
                   </span>
                   <span className="flex items-center gap-0.5">
@@ -251,7 +251,7 @@ export default function ResultsPage() {
               </div>
               <div className="text-right shrink-0">
                 <div className="text-[10px] text-gray-600">Fav</div>
-                <div className="text-xs font-bold text-gold-400">{qr.favorite || '—'}</div>
+                <div className="text-xs font-bold text-accent-green">{qr.favorite || '—'}</div>
               </div>
             </div>
           ))}

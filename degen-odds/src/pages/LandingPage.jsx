@@ -227,7 +227,7 @@ export default function LandingPage() {
                 <p className="text-gray-400 text-xs mb-3">For each question, once everyone locks in:</p>
                 <div className="space-y-3">
                   <div className="bg-dark-700 rounded-lg p-3">
-                    <span className="text-gold-400 font-bold text-xs">THE FAVORITE</span>
+                    <span className="text-accent-green font-bold text-xs">THE FAVORITE</span>
                     <p className="text-gray-400 text-xs mt-1 leading-relaxed">
                       The player with the most total points bet on them. The group said: "This person is most likely to do it."
                       Being the favorite has personal stakes — you earn a bonus if you deliver, and lose points if you don't.
@@ -252,7 +252,7 @@ export default function LandingPage() {
                 <div className="bg-dark-800 border border-dark-600 rounded-md p-2.5 mt-3">
                   <div className="text-[10px] text-gray-500 font-semibold mb-1">EXAMPLE</div>
                   <div className="text-[10px] text-gray-500">Rahul gets the most bets totaling 60 pts →
-                    <span className="text-gold-400"> Favorite = Rahul</span>,
+                    <span className="text-accent-green"> Favorite = Rahul</span>,
                     <span className="text-gold-400"> Pot = 60</span>,
                     <span className="text-accent-red"> Challenge = 30</span>
                   </div>
@@ -382,6 +382,33 @@ export default function LandingPage() {
                   your personal bonuses, and your personal penalties.
                   The player with the <span className="text-gold-400 font-bold">highest total score</span> wins.
                 </p>
+              </div>
+
+              {/* Pages Guide */}
+              <div>
+                <h3 className="text-gold-400 font-bold text-sm mb-2 uppercase tracking-wider">Pages in the App</h3>
+                <div className="space-y-2">
+                  <div className="bg-dark-700 rounded-lg p-2.5 flex gap-3">
+                    <span className="text-gold-400 font-bold text-xs shrink-0 w-28">Place Bets</span>
+                    <span className="text-gray-400 text-xs">Where you pick a player and bet points for each question. This is the only page where you make choices.</span>
+                  </div>
+                  <div className="bg-dark-700 rounded-lg p-2.5 flex gap-3">
+                    <span className="text-gold-400 font-bold text-xs shrink-0 w-28">The Odds Board</span>
+                    <span className="text-gray-400 text-xs">See every question's favorite, pot size, and who the group is betting on. Use this to spot big pots you might steal.</span>
+                  </div>
+                  <div className="bg-dark-700 rounded-lg p-2.5 flex gap-3">
+                    <span className="text-accent-purple font-bold text-xs shrink-0 w-28">What's At Stake</span>
+                    <span className="text-gray-400 text-xs">Your personal breakdown — for each question, see exactly how much you win or lose under every possible outcome. Also shows if you're the favorite or have an underdog opportunity.</span>
+                  </div>
+                  <div className="bg-dark-700 rounded-lg p-2.5 flex gap-3">
+                    <span className="text-gold-400 font-bold text-xs shrink-0 w-28">Who's Winning</span>
+                    <span className="text-gray-400 text-xs">The leaderboard. Shows total scores, who's been the favorite, who delivered, who choked, and who hijacked questions.</span>
+                  </div>
+                  <div className="bg-dark-700 rounded-lg p-2.5 flex gap-3">
+                    <span className="text-gray-400 font-bold text-xs shrink-0 w-28">Judgment Day</span>
+                    <span className="text-gray-400 text-xs">(Admin only) Where the admin resolves each question during the trip — did the favorite do it, did someone else, or nobody?</span>
+                  </div>
+                </div>
               </div>
 
               {/* Quick Reference */}
