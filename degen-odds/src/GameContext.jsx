@@ -133,8 +133,9 @@ export function GameProvider({ children }) {
 
   const placeBet = useCallback((player, questionIndex, pick, amount) => {
     const current = stateRef.current;
-    // Block bets if betting is closed or question is already resolved
+    // Block bets if betting is closed, player is locked, or question is already resolved
     if (current.bettingClosed) return;
+    if (current.lockedPlayers.includes(player)) return;
     if (current.resolutions[questionIndex]?.resolved) return;
     const playerBets = { ...(current.bets[player] || {}) };
     playerBets[questionIndex] = { pick, amount: Number(amount) };
@@ -205,6 +206,11 @@ export function GameProvider({ children }) {
     save({ ...stateRef.current, bettingClosed: false, lockedPlayers: [] });
   }, [save]);
 
+  const unlockAllPlayers = useCallback(() => {
+    // Unlock all players but preserve their bets — gives them the option to edit
+    save({ ...stateRef.current, lockedPlayers: [] });
+  }, [save]);
+
   const resetGame = useCallback(() => {
     save({ ...defaultState });
   }, [save]);
@@ -226,6 +232,7 @@ export function GameProvider({ children }) {
     setGamePhase,
     closeBetting,
     reopenBetting,
+    unlockAllPlayers,
     resetGame,
   };
 

@@ -7,7 +7,7 @@ import { Trophy, Target, Users, Zap, LogOut, Shield, Loader2, BookOpen, ChevronD
 export default function LandingPage() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-  const { players, lockedPlayers, questions, resolutions, config, saving, error, bettingClosed, closeBetting, reopenBetting } = useGame();
+  const { players, lockedPlayers, questions, resolutions, config, saving, error, bettingClosed, closeBetting, reopenBetting, unlockAllPlayers } = useGame();
   const [showRules, setShowRules] = useState(false);
 
   const isAdmin = user?.isAdmin;
@@ -136,22 +136,30 @@ export default function LandingPage() {
           <span><span className="text-gold-400 font-bold">{resolvedCount}</span>/{questions.length} sealed</span>
         </div>
 
-        {/* Admin: End/Reopen Betting */}
+        {/* Admin: Betting Controls */}
         {isAdmin && (
-          <div className="mb-4">
+          <div className="mb-4 flex flex-wrap justify-center gap-4">
             {!bettingClosed ? (
               <button
                 onClick={closeBetting}
-                className="flex items-center gap-2 mx-auto text-sm text-accent-red hover:text-red-400 transition-colors cursor-pointer font-medium"
+                className="flex items-center gap-2 text-sm text-accent-red hover:text-red-400 transition-colors cursor-pointer font-medium"
               >
                 <Lock className="w-4 h-4" /> End Betting (Lock Everyone)
               </button>
             ) : (
               <button
                 onClick={reopenBetting}
-                className="flex items-center gap-2 mx-auto text-sm text-accent-green hover:text-green-400 transition-colors cursor-pointer font-medium"
+                className="flex items-center gap-2 text-sm text-accent-green hover:text-green-400 transition-colors cursor-pointer font-medium"
               >
                 <Unlock className="w-4 h-4" /> Reopen Betting
+              </button>
+            )}
+            {lockedPlayers.length > 0 && !bettingClosed && (
+              <button
+                onClick={unlockAllPlayers}
+                className="flex items-center gap-2 text-sm text-yellow-400 hover:text-yellow-300 transition-colors cursor-pointer font-medium"
+              >
+                <Unlock className="w-4 h-4" /> Unlock All ({lockedPlayers.length}) — Let Them Edit
               </button>
             )}
           </div>
