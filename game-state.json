@@ -16,11 +16,130 @@
     "Goldy"
   ],
   "nicknames": {},
-  "bets": {},
+  "bets": {
+    "Akash": {
+      "0": {
+        "pick": "Aman",
+        "amount": 25
+      },
+      "1": {
+        "pick": "Matab",
+        "amount": 5
+      },
+      "2": {
+        "pick": "Aman",
+        "amount": 5
+      },
+      "3": {
+        "pick": "Goldy",
+        "amount": 25
+      },
+      "4": {
+        "pick": "Aman",
+        "amount": 5
+      },
+      "5": {
+        "pick": "Pardeep",
+        "amount": 5
+      },
+      "6": {
+        "pick": "Goldy",
+        "amount": 5
+      },
+      "7": {
+        "pick": "Akash",
+        "amount": 5
+      },
+      "8": {
+        "pick": "Harman",
+        "amount": 5
+      },
+      "9": {
+        "pick": "Harman",
+        "amount": 5
+      },
+      "10": {
+        "pick": "Harman",
+        "amount": 5
+      },
+      "11": {
+        "pick": "Gagan",
+        "amount": 5
+      },
+      "12": {
+        "pick": "Dilaver",
+        "amount": 5
+      },
+      "13": {
+        "pick": "Hinda",
+        "amount": 5
+      },
+      "14": {
+        "pick": "Akash",
+        "amount": 5
+      },
+      "15": {
+        "pick": "Harman",
+        "amount": 25
+      },
+      "16": {
+        "pick": "Harman",
+        "amount": 25
+      },
+      "17": {
+        "pick": "Matab",
+        "amount": 5
+      },
+      "18": {
+        "pick": "Harjit",
+        "amount": 5
+      },
+      "19": {
+        "pick": "Harjit",
+        "amount": 25
+      },
+      "20": {
+        "pick": "Goldy",
+        "amount": 5
+      },
+      "21": {
+        "pick": "Randy",
+        "amount": 5
+      },
+      "22": {
+        "pick": "Robby",
+        "amount": 5
+      },
+      "23": {
+        "pick": "Surkh",
+        "amount": 5
+      },
+      "24": {
+        "pick": "Matab",
+        "amount": 5
+      },
+      "25": {
+        "pick": "Dilaver",
+        "amount": 25
+      }
+    },
+    "Aman": {
+      "0": {
+        "pick": "Aman",
+        "amount": 25
+      },
+      "1": {
+        "pick": "Harjit",
+        "amount": 5
+      }
+    }
+  },
   "lockedPlayers": [],
   "resolutions": {},
   "favoriteOverrides": {},
-  "playerPasswords": {},
+  "playerPasswords": {
+    "Akash": "Rav"
+  },
   "questions": [
     "Who is most likely to be the first person to complain about the car, the temperature, the drive, or say that you all should have just flown?",
     "Who is most likely to be the reason you're late to literally everything?",
