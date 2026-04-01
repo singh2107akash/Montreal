@@ -296,7 +296,7 @@ export default function LandingPage() {
                   </div>
 
                   {/* Outcome B */}
-                  <div className="bg-dark-700 rounded-lg p-3 border-2 border-accent-purple/40">
+                  <div className="bg-dark-700 rounded-lg p-3">
                     <div className="text-accent-purple font-bold text-xs mb-2">B. SOMEONE ELSE DOES IT (UNDERDOG STEALS IT)</div>
                     <ul className="text-gray-400 text-xs space-y-1.5">
                       <li className="flex gap-1.5">
