@@ -55,7 +55,12 @@ export default function BettingPage() {
     }
   });
 
-  const pickablePlayers = players;
+  const selfBetCount = Object.entries(playerBets)
+    .filter(([k, b]) => Number(k) !== currentQ && b?.pick === activePlayer)
+    .length;
+  const currentIsSelf = localPick === activePlayer;
+  const selfBetsAtMax = selfBetCount >= config.maxSelfBets && !currentIsSelf;
+
   const displayName = (p) => nicknames[p] ? `${p} (${nicknames[p]})` : p;
 
   const spentOnOthers = Object.entries(playerBets)
@@ -76,6 +81,15 @@ export default function BettingPage() {
     if (amount > maxForThis) {
       setError(`Over budget! Max ${maxForThis} pts for this question`);
       return false;
+    }
+    if (localPick === activePlayer) {
+      const otherSelfBets = Object.entries(playerBets)
+        .filter(([k, b]) => Number(k) !== currentQ && b?.pick === activePlayer)
+        .length;
+      if (otherSelfBets >= config.maxSelfBets) {
+        setError(`Max ${config.maxSelfBets} self-bets allowed. Pick someone else.`);
+        return false;
+      }
     }
     setError('');
     placeBet(activePlayer, currentQ, localPick, amount);
@@ -124,6 +138,11 @@ export default function BettingPage() {
     });
     if (!allAnswered) {
       setError('Finish all questions before you lock in, coward');
+      return;
+    }
+    const totalSelfBets = Object.values(playerBets).filter((b) => b?.pick === activePlayer).length;
+    if (totalSelfBets > config.maxSelfBets) {
+      setError(`Max ${config.maxSelfBets} self-bets allowed. You have ${totalSelfBets}.`);
       return;
     }
     const total = Object.values(playerBets).reduce((s, b) => s + (b?.amount || 0), 0);
@@ -297,6 +316,12 @@ export default function BettingPage() {
             <span>{totalSpent} spent</span>
             <span>{config.totalBudget}</span>
           </div>
+          <div className="flex items-center justify-between mt-3 pt-3 border-t border-dark-600">
+            <span className="text-xs text-gray-500">Self-bets used</span>
+            <span className={`text-xs font-bold ${selfBetCount + (currentIsSelf ? 1 : 0) >= config.maxSelfBets ? 'text-accent-red' : 'text-gray-400'}`}>
+              {selfBetCount + (currentIsSelf ? 1 : 0)}/{config.maxSelfBets}
+            </span>
+          </div>
         </div>
       )}
 
@@ -354,28 +379,33 @@ export default function BettingPage() {
             {/* Pick a player */}
             <label className="block text-xs text-gray-500 mb-2 font-medium">Who's catching this one?</label>
             <div className="grid grid-cols-2 gap-2 mb-5">
-              {pickablePlayers.map((p) => {
+              {players.map((p) => {
                 const isSelf = p === activePlayer;
                 const isSelected = localPick === p;
+                const selfDisabled = isSelf && selfBetsAtMax;
                 return (
                   <button
                     key={p}
+                    disabled={selfDisabled}
                     onClick={() => {
+                      if (selfDisabled) return;
                       setLocalPick(p);
                       if (!localAmount) setLocalAmount(String(config.minBetPerQuestion));
                       setError('');
                     }}
-                    className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer border ${
-                      isSelected
-                        ? isSelf
-                          ? 'bg-accent-purple/20 border-accent-purple text-accent-purple'
-                          : 'bg-gold-500/20 border-gold-500 text-gold-400'
-                        : isSelf
-                          ? 'bg-dark-700 border-accent-purple/30 text-accent-purple/70 hover:border-accent-purple/60'
-                          : 'bg-dark-700 border-dark-600 text-gray-300 hover:border-gray-500'
+                    className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-all border ${
+                      selfDisabled
+                        ? 'bg-dark-700 border-dark-700 text-gray-600 cursor-not-allowed opacity-40'
+                        : isSelected
+                          ? isSelf
+                            ? 'bg-accent-purple/20 border-accent-purple text-accent-purple cursor-pointer'
+                            : 'bg-gold-500/20 border-gold-500 text-gold-400 cursor-pointer'
+                          : isSelf
+                            ? 'bg-dark-700 border-accent-purple/30 text-accent-purple/70 hover:border-accent-purple/60 cursor-pointer'
+                            : 'bg-dark-700 border-dark-600 text-gray-300 hover:border-gray-500 cursor-pointer'
                     }`}
                   >
-                    {displayName(p)}{isSelf ? ' (You)' : ''}
+                    {displayName(p)}{isSelf ? ` (You${selfDisabled ? ' · max reached' : ''})` : ''}
                   </button>
                 );
               })}

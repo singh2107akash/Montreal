@@ -48,4 +48,5 @@ export const GAME_CONFIG = {
   totalBudget: 250,
   minBetPerQuestion: 5,
   questionCount: 26,
+  maxSelfBets: 3,
 };
