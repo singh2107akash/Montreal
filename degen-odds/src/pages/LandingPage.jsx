@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { useGame } from '../GameContext';
-import { Trophy, Target, Users, Zap, LogOut, Shield, Loader2, BookOpen, ChevronDown, ChevronUp, Lock, Unlock, TrendingUp } from 'lucide-react';
+import { Trophy, Target, Users, Zap, LogOut, Shield, Loader2, BookOpen, ChevronDown, ChevronUp, Lock, Unlock, TrendingUp, BarChart3 } from 'lucide-react';
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -96,6 +96,15 @@ export default function LandingPage() {
               <div className="text-[11px] text-gray-500">{resolvedCount}/{questions.length} sealed</div>
             </button>
           )}
+
+          <button
+            onClick={() => navigate('/my-odds')}
+            className="bg-dark-800 border border-accent-purple/30 hover:border-accent-purple/60 rounded-xl px-4 py-5 flex flex-col items-center gap-2 transition-all cursor-pointer"
+          >
+            <BarChart3 className="w-6 h-6 text-accent-purple" />
+            <div className="text-sm font-bold text-gray-200">What's At Stake</div>
+            <div className="text-[11px] text-gray-500">Your scenarios</div>
+          </button>
 
           <button
             onClick={() => navigate('/results')}

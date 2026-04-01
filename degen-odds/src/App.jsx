@@ -8,6 +8,7 @@ import BettingPage from './pages/BettingPage';
 import MarketPage from './pages/MarketPage';
 import ResolutionPage from './pages/ResolutionPage';
 import ResultsPage from './pages/ResultsPage';
+import MyOddsPage from './pages/MyOddsPage';
 
 function AuthGate() {
   const { user, gameCodeReady } = useAuth();
@@ -23,6 +24,7 @@ function AuthGate() {
         <Route path="/setup" element={user.isAdmin ? <SetupPage /> : <Navigate to="/" replace />} />
         <Route path="/betting" element={<BettingPage />} />
         <Route path="/market" element={<MarketPage />} />
+        <Route path="/my-odds" element={<MyOddsPage />} />
         <Route path="/resolve" element={user.isAdmin ? <ResolutionPage /> : <Navigate to="/market" replace />} />
         <Route path="/results" element={<ResultsPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />

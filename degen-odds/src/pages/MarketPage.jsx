@@ -49,6 +49,12 @@ export default function MarketPage() {
           &larr; Home
         </button>
         <div className="flex gap-3">
+          <button
+            onClick={() => navigate('/my-odds')}
+            className="text-accent-purple hover:text-purple-400 text-sm font-medium transition-colors flex items-center gap-1 cursor-pointer"
+          >
+            My Stake <ChevronRight className="w-4 h-4" />
+          </button>
           {isAdmin && (
             <button
               onClick={() => navigate('/resolve')}
