@@ -238,8 +238,8 @@ export default function ResultsPage() {
                     qr.resolution.outcomeType === 'favorite'
                       ? 'text-accent-green'
                       : qr.resolution.outcomeType === 'someone_else'
-                      ? 'text-accent-blue'
-                      : 'text-accent-red'
+                      ? 'text-accent-purple'
+                      : 'text-yellow-400'
                   }`}>
                     {qr.resolution.outcomeType === 'favorite' && `${qr.favorite} stepped up!`}
                     {qr.resolution.outcomeType === 'someone_else' && `${qr.resolution.actualPerson} hijacked it!`}

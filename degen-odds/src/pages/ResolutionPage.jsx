@@ -165,8 +165,8 @@ function ResolutionCard({ data, players, bets, onResolve, onUnresolve }) {
             resolution.outcomeType === 'favorite'
               ? 'bg-accent-green/10 text-accent-green'
               : resolution.outcomeType === 'someone_else'
-              ? 'bg-accent-blue/10 text-accent-blue'
-              : 'bg-accent-red/10 text-accent-red'
+              ? 'bg-accent-purple/10 text-accent-purple'
+              : 'bg-yellow-400/10 text-yellow-400'
           }`}>
             {resolution.outcomeType === 'favorite' && (
               <div className="flex items-center gap-2">
@@ -206,7 +206,7 @@ function ResolutionCard({ data, players, bets, onResolve, onUnresolve }) {
                 onClick={() => { setSelectedOutcome('someone_else'); setShowPreview(true); }}
                 className={`px-3 py-2.5 rounded-lg text-sm font-medium border transition-all cursor-pointer ${
                   selectedOutcome === 'someone_else'
-                    ? 'bg-accent-blue/20 border-accent-blue/50 text-accent-blue'
+                    ? 'bg-accent-purple/20 border-accent-purple/50 text-accent-purple'
                     : 'bg-dark-700 border-dark-600 text-gray-400 hover:border-gray-500'
                 }`}
               >
@@ -217,7 +217,7 @@ function ResolutionCard({ data, players, bets, onResolve, onUnresolve }) {
                 onClick={() => { setSelectedOutcome('nobody'); setSelectedPerson(''); setShowPreview(true); }}
                 className={`px-3 py-2.5 rounded-lg text-sm font-medium border transition-all cursor-pointer ${
                   selectedOutcome === 'nobody'
-                    ? 'bg-accent-red/20 border-accent-red/50 text-accent-red'
+                    ? 'bg-yellow-400/20 border-yellow-400/50 text-yellow-400'
                     : 'bg-dark-700 border-dark-600 text-gray-400 hover:border-gray-500'
                 }`}
               >
