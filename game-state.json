@@ -20,70 +20,70 @@
     "Akash": {
       "0": {
         "pick": "Surkh",
-        "amount": 17
+        "amount": 5
       },
       "1": {
-        "pick": "Harjit",
-        "amount": 5
+        "pick": "Robby",
+        "amount": 17
       },
       "2": {
         "pick": "Harjit",
-        "amount": 39
+        "amount": 49
       },
       "3": {
-        "pick": "Aman",
-        "amount": 5
+        "pick": "Akash",
+        "amount": 16
       },
       "4": {
-        "pick": "Jodha",
-        "amount": 14
+        "pick": "Pardeep",
+        "amount": 42
       },
       "5": {
-        "pick": "Pardeep",
-        "amount": 5
+        "pick": "Robby",
+        "amount": 9
       },
       "6": {
-        "pick": "Pardeep",
-        "amount": 13
+        "pick": "Akash",
+        "amount": 9
       },
       "7": {
-        "pick": "Akash",
-        "amount": 5
-      },
-      "8": {
-        "pick": "Robby",
-        "amount": 5
-      },
-      "9": {
-        "pick": "Akash",
+        "pick": "Hinda",
         "amount": 12
       },
+      "8": {
+        "pick": "Akash",
+        "amount": 6
+      },
+      "9": {
+        "pick": "Gagan",
+        "amount": 5
+      },
       "10": {
-        "pick": "Harman",
-        "amount": 5
-      },
-      "11": {
-        "pick": "Goldy",
-        "amount": 5
-      },
-      "12": {
-        "pick": "Jodha",
-        "amount": 5
-      },
-      "13": {
-        "pick": "Hinda",
-        "amount": 24
-      },
-      "14": {
         "pick": "Harjit",
         "amount": 5
       },
+      "11": {
+        "pick": "Pardeep",
+        "amount": 5
+      },
+      "12": {
+        "pick": "Aman",
+        "amount": 5
+      },
+      "13": {
+        "pick": "Goldy",
+        "amount": 5
+      },
+      "14": {
+        "pick": "Hinda",
+        "amount": 5
+      },
       "15": {
-        "pick": "Matab",
+        "pick": "Hinda",
         "amount": 5
       },
       "16": {
-        "pick": "Harman",
+        "pick": "Dilaver",
         "amount": 5
       },
       "17": {
@@ -91,443 +91,443 @@
         "amount": 5
       },
       "18": {
-        "pick": "Dilaver",
+        "pick": "Randy",
         "amount": 5
       },
       "19": {
-        "pick": "Robby",
-        "amount": 13
+        "pick": "Aman",
+        "amount": 5
       },
       "20": {
-        "pick": "Goldy",
+        "pick": "Robby",
         "amount": 5
       },
       "21": {
-        "pick": "Harman",
-        "amount": 5
-      },
-      "22": {
         "pick": "Dilaver",
         "amount": 5
       },
+      "22": {
+        "pick": "Aman",
+        "amount": 5
+      },
       "23": {
-        "pick": "Akash",
-        "amount": 16
+        "pick": "Harman",
+        "amount": 5
       },
       "24": {
-        "pick": "Harjit",
+        "pick": "Goldy",
         "amount": 5
       },
       "25": {
-        "pick": "Gagan",
-        "amount": 17
+        "pick": "Pardeep",
+        "amount": 5
       }
     },
     "Aman": {
       "0": {
-        "pick": "Aman",
-        "amount": 5
+        "pick": "Harman",
+        "amount": 37
       },
       "1": {
-        "pick": "Aman",
-        "amount": 5
+        "pick": "Randy",
+        "amount": 50
       },
       "2": {
-        "pick": "Akash",
-        "amount": 24
+        "pick": "Surkh",
+        "amount": 22
       },
       "3": {
-        "pick": "Aman",
-        "amount": 5
+        "pick": "Hinda",
+        "amount": 9
       },
       "4": {
-        "pick": "Harman",
-        "amount": 31
+        "pick": "Aman",
+        "amount": 7
       },
       "5": {
-        "pick": "Pardeep",
-        "amount": 10
+        "pick": "Dilaver",
+        "amount": 7
       },
       "6": {
-        "pick": "Robby",
-        "amount": 5
+        "pick": "Harjit",
+        "amount": 9
       },
       "7": {
-        "pick": "Harjit",
-        "amount": 5
+        "pick": "Dilaver",
+        "amount": 6
       },
       "8": {
-        "pick": "Harjit",
-        "amount": 5
+        "pick": "Randy",
+        "amount": 15
       },
       "9": {
-        "pick": "Aman",
-        "amount": 5
+        "pick": "Pardeep",
+        "amount": 8
       },
       "10": {
-        "pick": "Harman",
+        "pick": "Goldy",
         "amount": 5
       },
       "11": {
-        "pick": "Matab",
-        "amount": 45
+        "pick": "Jodha",
+        "amount": 5
       },
       "12": {
-        "pick": "Surkh",
+        "pick": "Hinda",
         "amount": 5
       },
       "13": {
-        "pick": "Robby",
+        "pick": "Dilaver",
         "amount": 5
       },
       "14": {
-        "pick": "Randy",
+        "pick": "Harman",
         "amount": 5
       },
       "15": {
-        "pick": "Matab",
+        "pick": "Aman",
         "amount": 5
       },
       "16": {
-        "pick": "Pardeep",
+        "pick": "Akash",
         "amount": 5
       },
       "17": {
         "pick": "Pardeep",
-        "amount": 15
+        "amount": 5
       },
       "18": {
-        "pick": "Jodha",
+        "pick": "Aman",
         "amount": 5
       },
       "19": {
-        "pick": "Pardeep",
-        "amount": 5
-      },
-      "20": {
-        "pick": "Goldy",
-        "amount": 5
-      },
-      "21": {
         "pick": "Matab",
         "amount": 5
       },
-      "22": {
-        "pick": "Hinda",
+      "20": {
+        "pick": "Matab",
         "amount": 5
       },
-      "23": {
-        "pick": "Jodha",
-        "amount": 5
-      },
-      "24": {
+      "21": {
         "pick": "Surkh",
         "amount": 5
       },
+      "22": {
+        "pick": "Akash",
+        "amount": 5
+      },
+      "23": {
+        "pick": "Hinda",
+        "amount": 5
+      },
+      "24": {
+        "pick": "Gagan",
+        "amount": 5
+      },
       "25": {
-        "pick": "Harjit",
-        "amount": 25
+        "pick": "Pardeep",
+        "amount": 5
       }
     },
     "Gagan": {
       "0": {
-        "pick": "Aman",
-        "amount": 5
+        "pick": "Pardeep",
+        "amount": 10
       },
       "1": {
-        "pick": "Harjit",
-        "amount": 17
+        "pick": "Dilaver",
+        "amount": 8
       },
       "2": {
-        "pick": "Akash",
-        "amount": 5
-      },
-      "3": {
-        "pick": "Pardeep",
+        "pick": "Dilaver",
         "amount": 16
       },
+      "3": {
+        "pick": "Matab",
+        "amount": 33
+      },
       "4": {
-        "pick": "Hinda",
-        "amount": 5
+        "pick": "Randy",
+        "amount": 50
       },
       "5": {
-        "pick": "Pardeep",
-        "amount": 5
+        "pick": "Aman",
+        "amount": 19
       },
       "6": {
-        "pick": "Aman",
+        "pick": "Matab",
         "amount": 10
       },
       "7": {
-        "pick": "Dilaver",
-        "amount": 26
+        "pick": "Surkh",
+        "amount": 6
       },
       "8": {
-        "pick": "Aman",
-        "amount": 16
+        "pick": "Harjit",
+        "amount": 10
       },
       "9": {
-        "pick": "Hinda",
-        "amount": 5
+        "pick": "Pardeep",
+        "amount": 6
       },
       "10": {
         "pick": "Dilaver",
-        "amount": 5
+        "amount": 6
       },
       "11": {
-        "pick": "Aman",
-        "amount": 29
-      },
-      "12": {
-        "pick": "Harman",
+        "pick": "Gagan",
         "amount": 5
       },
+      "12": {
+        "pick": "Akash",
+        "amount": 6
+      },
       "13": {
-        "pick": "Matab",
+        "pick": "Robby",
         "amount": 5
       },
       "14": {
-        "pick": "Robby",
-        "amount": 19
-      },
-      "15": {
-        "pick": "Matab",
-        "amount": 5
-      },
-      "16": {
-        "pick": "Matab",
-        "amount": 5
-      },
-      "17": {
-        "pick": "Harman",
-        "amount": 5
-      },
-      "18": {
-        "pick": "Gagan",
-        "amount": 15
-      },
-      "19": {
-        "pick": "Robby",
-        "amount": 5
-      },
-      "20": {
         "pick": "Goldy",
         "amount": 5
       },
-      "21": {
-        "pick": "Gagan",
-        "amount": 17
-      },
-      "22": {
-        "pick": "Randy",
-        "amount": 5
-      },
-      "23": {
+      "15": {
         "pick": "Harjit",
         "amount": 5
       },
-      "24": {
+      "16": {
+        "pick": "Hinda",
+        "amount": 5
+      },
+      "17": {
+        "pick": "Randy",
+        "amount": 5
+      },
+      "18": {
+        "pick": "Aman",
+        "amount": 5
+      },
+      "19": {
+        "pick": "Goldy",
+        "amount": 5
+      },
+      "20": {
+        "pick": "Akash",
+        "amount": 5
+      },
+      "21": {
+        "pick": "Harjit",
+        "amount": 5
+      },
+      "22": {
+        "pick": "Matab",
+        "amount": 5
+      },
+      "23": {
         "pick": "Surkh",
         "amount": 5
       },
+      "24": {
+        "pick": "Harman",
+        "amount": 5
+      },
       "25": {
-        "pick": "Aman",
+        "pick": "Randy",
         "amount": 5
       }
     },
     "Robby": {
       "0": {
-        "pick": "Aman",
-        "amount": 5
+        "pick": "Pardeep",
+        "amount": 48
       },
       "1": {
-        "pick": "Harjit",
-        "amount": 5
+        "pick": "Aman",
+        "amount": 8
       },
       "2": {
-        "pick": "Hinda",
-        "amount": 20
+        "pick": "Dilaver",
+        "amount": 31
       },
       "3": {
-        "pick": "Robby",
-        "amount": 5
-      },
-      "4": {
-        "pick": "Harjit",
-        "amount": 9
-      },
-      "5": {
-        "pick": "Gagan",
-        "amount": 5
-      },
-      "6": {
-        "pick": "Jodha",
-        "amount": 5
-      },
-      "7": {
         "pick": "Hinda",
         "amount": 22
       },
+      "4": {
+        "pick": "Harjit",
+        "amount": 20
+      },
+      "5": {
+        "pick": "Randy",
+        "amount": 5
+      },
+      "6": {
+        "pick": "Gagan",
+        "amount": 7
+      },
+      "7": {
+        "pick": "Surkh",
+        "amount": 5
+      },
       "8": {
-        "pick": "Goldy",
-        "amount": 15
+        "pick": "Akash",
+        "amount": 19
       },
       "9": {
-        "pick": "Matab",
-        "amount": 26
+        "pick": "Harjit",
+        "amount": 5
       },
       "10": {
-        "pick": "Harman",
-        "amount": 21
+        "pick": "Hinda",
+        "amount": 5
       },
       "11": {
-        "pick": "Randy",
+        "pick": "Harman",
         "amount": 5
       },
       "12": {
-        "pick": "Jodha",
-        "amount": 15
+        "pick": "Matab",
+        "amount": 5
       },
       "13": {
-        "pick": "Aman",
+        "pick": "Robby",
         "amount": 5
       },
       "14": {
-        "pick": "Randy",
+        "pick": "Jodha",
         "amount": 5
       },
       "15": {
-        "pick": "Matab",
-        "amount": 17
-      },
-      "16": {
         "pick": "Goldy",
         "amount": 5
       },
+      "16": {
+        "pick": "Jodha",
+        "amount": 5
+      },
       "17": {
-        "pick": "Aman",
+        "pick": "Robby",
         "amount": 5
       },
       "18": {
-        "pick": "Dilaver",
+        "pick": "Pardeep",
         "amount": 5
       },
       "19": {
-        "pick": "Akash",
+        "pick": "Harman",
         "amount": 5
       },
       "20": {
-        "pick": "Harjit",
+        "pick": "Robby",
         "amount": 5
       },
       "21": {
-        "pick": "Gagan",
+        "pick": "Hinda",
         "amount": 5
       },
       "22": {
-        "pick": "Harjit",
+        "pick": "Pardeep",
         "amount": 5
       },
       "23": {
-        "pick": "Gagan",
+        "pick": "Pardeep",
         "amount": 5
       },
       "24": {
-        "pick": "Hinda",
-        "amount": 20
+        "pick": "Goldy",
+        "amount": 5
       },
       "25": {
-        "pick": "Robby",
+        "pick": "Pardeep",
         "amount": 5
       }
     },
     "Matab": {
       "0": {
-        "pick": "Aman",
-        "amount": 5
+        "pick": "Hinda",
+        "amount": 20
       },
       "1": {
         "pick": "Akash",
-        "amount": 5
+        "amount": 22
       },
       "2": {
-        "pick": "Harman",
-        "amount": 5
+        "pick": "Jodha",
+        "amount": 47
       },
       "3": {
-        "pick": "Randy",
-        "amount": 5
+        "pick": "Aman",
+        "amount": 39
       },
       "4": {
-        "pick": "Gagan",
-        "amount": 5
+        "pick": "Matab",
+        "amount": 11
       },
       "5": {
         "pick": "Pardeep",
-        "amount": 32
+        "amount": 7
       },
       "6": {
-        "pick": "Gagan",
-        "amount": 5
+        "pick": "Robby",
+        "amount": 8
       },
       "7": {
-        "pick": "Akash",
-        "amount": 5
-      },
-      "8": {
-        "pick": "Pardeep",
-        "amount": 15
-      },
-      "9": {
-        "pick": "Surkh",
-        "amount": 5
-      },
-      "10": {
-        "pick": "Goldy",
-        "amount": 5
-      },
-      "11": {
-        "pick": "Harjit",
-        "amount": 25
-      },
-      "12": {
-        "pick": "Akash",
-        "amount": 11
-      },
-      "13": {
         "pick": "Randy",
         "amount": 5
       },
-      "14": {
-        "pick": "Dilaver",
-        "amount": 19
+      "8": {
+        "pick": "Hinda",
+        "amount": 5
       },
-      "15": {
+      "9": {
+        "pick": "Randy",
+        "amount": 5
+      },
+      "10": {
+        "pick": "Robby",
+        "amount": 5
+      },
+      "11": {
+        "pick": "Matab",
+        "amount": 6
+      },
+      "12": {
+        "pick": "Aman",
+        "amount": 5
+      },
+      "13": {
         "pick": "Pardeep",
         "amount": 5
       },
+      "14": {
+        "pick": "Matab",
+        "amount": 5
+      },
+      "15": {
+        "pick": "Robby",
+        "amount": 5
+      },
       "16": {
-        "pick": "Dilaver",
+        "pick": "Hinda",
         "amount": 5
       },
       "17": {
-        "pick": "Dilaver",
+        "pick": "Akash",
         "amount": 5
       },
       "18": {
-        "pick": "Hinda",
+        "pick": "Dilaver",
         "amount": 5
       },
       "19": {
-        "pick": "Hinda",
-        "amount": 23
+        "pick": "Gagan",
+        "amount": 5
       },
       "20": {
-        "pick": "Goldy",
+        "pick": "Akash",
         "amount": 5
       },
       "21": {
-        "pick": "Harjit",
+        "pick": "Randy",
         "amount": 5
       },
       "22": {
@@ -539,8 +539,8 @@
         "amount": 5
       },
       "24": {
-        "pick": "Robby",
-        "amount": 30
+        "pick": "Jodha",
+        "amount": 5
       },
       "25": {
         "pick": "Harman",
@@ -549,63 +549,63 @@
     },
     "Dilaver": {
       "0": {
-        "pick": "Aman",
-        "amount": 22
+        "pick": "Goldy",
+        "amount": 28
       },
       "1": {
-        "pick": "Harjit",
-        "amount": 5
+        "pick": "Robby",
+        "amount": 18
       },
       "2": {
+        "pick": "Gagan",
+        "amount": 29
+      },
+      "3": {
+        "pick": "Harman",
+        "amount": 23
+      },
+      "4": {
+        "pick": "Matab",
+        "amount": 16
+      },
+      "5": {
+        "pick": "Matab",
+        "amount": 20
+      },
+      "6": {
+        "pick": "Jodha",
+        "amount": 17
+      },
+      "7": {
+        "pick": "Matab",
+        "amount": 7
+      },
+      "8": {
         "pick": "Surkh",
         "amount": 5
       },
-      "3": {
-        "pick": "Hinda",
-        "amount": 5
-      },
-      "4": {
-        "pick": "Goldy",
-        "amount": 5
-      },
-      "5": {
-        "pick": "Pardeep",
-        "amount": 5
-      },
-      "6": {
-        "pick": "Aman",
-        "amount": 5
-      },
-      "7": {
-        "pick": "Pardeep",
-        "amount": 5
-      },
-      "8": {
-        "pick": "Goldy",
-        "amount": 23
-      },
       "9": {
-        "pick": "Goldy",
-        "amount": 5
+        "pick": "Randy",
+        "amount": 7
       },
       "10": {
-        "pick": "Harman",
-        "amount": 18
+        "pick": "Dilaver",
+        "amount": 5
       },
       "11": {
-        "pick": "Matab",
+        "pick": "Gagan",
         "amount": 5
       },
       "12": {
-        "pick": "Goldy",
-        "amount": 36
+        "pick": "Pardeep",
+        "amount": 5
       },
       "13": {
-        "pick": "Hinda",
+        "pick": "Dilaver",
         "amount": 5
       },
       "14": {
-        "pick": "Dilaver",
+        "pick": "Surkh",
         "amount": 5
       },
       "15": {
@@ -613,23 +613,23 @@
         "amount": 5
       },
       "16": {
-        "pick": "Akash",
-        "amount": 23
+        "pick": "Randy",
+        "amount": 5
       },
       "17": {
-        "pick": "Goldy",
-        "amount": 17
+        "pick": "Randy",
+        "amount": 5
       },
       "18": {
-        "pick": "Harman",
+        "pick": "Hinda",
         "amount": 5
       },
       "19": {
-        "pick": "Jodha",
+        "pick": "Goldy",
         "amount": 5
       },
       "20": {
-        "pick": "Goldy",
+        "pick": "Matab",
         "amount": 5
       },
       "21": {
@@ -637,411 +637,411 @@
         "amount": 5
       },
       "22": {
-        "pick": "Gagan",
+        "pick": "Matab",
         "amount": 5
       },
       "23": {
-        "pick": "Pardeep",
+        "pick": "Matab",
         "amount": 5
       },
       "24": {
-        "pick": "Akash",
+        "pick": "Randy",
         "amount": 5
       },
       "25": {
-        "pick": "Matab",
-        "amount": 16
+        "pick": "Robby",
+        "amount": 5
       }
     },
     "Pardeep": {
       "0": {
-        "pick": "Dilaver",
-        "amount": 5
+        "pick": "Akash",
+        "amount": 33
       },
       "1": {
-        "pick": "Harjit",
-        "amount": 5
+        "pick": "Jodha",
+        "amount": 23
       },
       "2": {
-        "pick": "Harjit",
-        "amount": 5
+        "pick": "Matab",
+        "amount": 32
       },
       "3": {
         "pick": "Dilaver",
-        "amount": 10
+        "amount": 49
       },
       "4": {
-        "pick": "Dilaver",
-        "amount": 5
+        "pick": "Pardeep",
+        "amount": 6
       },
       "5": {
-        "pick": "Goldy",
-        "amount": 19
-      },
-      "6": {
-        "pick": "Akash",
-        "amount": 51
-      },
-      "7": {
-        "pick": "Aman",
-        "amount": 5
-      },
-      "8": {
-        "pick": "Robby",
-        "amount": 5
-      },
-      "9": {
-        "pick": "Randy",
-        "amount": 5
-      },
-      "10": {
-        "pick": "Harman",
-        "amount": 5
-      },
-      "11": {
-        "pick": "Harjit",
-        "amount": 5
-      },
-      "12": {
-        "pick": "Akash",
-        "amount": 22
-      },
-      "13": {
         "pick": "Hinda",
         "amount": 5
       },
-      "14": {
+      "6": {
+        "pick": "Akash",
+        "amount": 7
+      },
+      "7": {
+        "pick": "Robby",
+        "amount": 5
+      },
+      "8": {
         "pick": "Dilaver",
+        "amount": 5
+      },
+      "9": {
+        "pick": "Akash",
+        "amount": 5
+      },
+      "10": {
+        "pick": "Jodha",
+        "amount": 5
+      },
+      "11": {
+        "pick": "Akash",
+        "amount": 5
+      },
+      "12": {
+        "pick": "Harjit",
+        "amount": 5
+      },
+      "13": {
+        "pick": "Jodha",
+        "amount": 5
+      },
+      "14": {
+        "pick": "Harjit",
         "amount": 5
       },
       "15": {
-        "pick": "Aman",
+        "pick": "Akash",
         "amount": 5
       },
       "16": {
-        "pick": "Gagan",
+        "pick": "Jodha",
         "amount": 5
       },
       "17": {
-        "pick": "Dilaver",
+        "pick": "Hinda",
         "amount": 5
       },
       "18": {
-        "pick": "Akash",
+        "pick": "Robby",
         "amount": 5
       },
       "19": {
-        "pick": "Robby",
-        "amount": 20
+        "pick": "Goldy",
+        "amount": 5
       },
       "20": {
-        "pick": "Randy",
-        "amount": 19
+        "pick": "Jodha",
+        "amount": 5
       },
       "21": {
-        "pick": "Gagan",
-        "amount": 14
+        "pick": "Goldy",
+        "amount": 5
       },
       "22": {
-        "pick": "Akash",
+        "pick": "Gagan",
         "amount": 5
       },
       "23": {
-        "pick": "Randy",
+        "pick": "Jodha",
         "amount": 5
       },
       "24": {
-        "pick": "Surkh",
+        "pick": "Pardeep",
         "amount": 5
       },
       "25": {
-        "pick": "Aman",
+        "pick": "Jodha",
         "amount": 5
       }
     },
     "Harjit": {
       "0": {
-        "pick": "Aman",
-        "amount": 5
-      },
-      "1": {
         "pick": "Surkh",
-        "amount": 5
-      },
-      "2": {
-        "pick": "Jodha",
-        "amount": 5
-      },
-      "3": {
-        "pick": "Pardeep",
-        "amount": 5
-      },
-      "4": {
-        "pick": "Pardeep",
-        "amount": 5
-      },
-      "5": {
-        "pick": "Pardeep",
         "amount": 16
       },
+      "1": {
+        "pick": "Pardeep",
+        "amount": 19
+      },
+      "2": {
+        "pick": "Goldy",
+        "amount": 9
+      },
+      "3": {
+        "pick": "Randy",
+        "amount": 26
+      },
+      "4": {
+        "pick": "Randy",
+        "amount": 41
+      },
+      "5": {
+        "pick": "Dilaver",
+        "amount": 15
+      },
       "6": {
-        "pick": "Gagan",
-        "amount": 5
+        "pick": "Dilaver",
+        "amount": 27
       },
       "7": {
-        "pick": "Pardeep",
-        "amount": 20
+        "pick": "Goldy",
+        "amount": 7
       },
       "8": {
-        "pick": "Surkh",
+        "pick": "Akash",
         "amount": 5
       },
       "9": {
-        "pick": "Goldy",
-        "amount": 17
+        "pick": "Jodha",
+        "amount": 5
       },
       "10": {
-        "pick": "Harman",
+        "pick": "Harjit",
         "amount": 5
       },
       "11": {
-        "pick": "Harman",
-        "amount": 5
-      },
-      "12": {
-        "pick": "Harjit",
-        "amount": 5
-      },
-      "13": {
-        "pick": "Akash",
-        "amount": 42
-      },
-      "14": {
         "pick": "Goldy",
         "amount": 5
       },
+      "12": {
+        "pick": "Robby",
+        "amount": 5
+      },
+      "13": {
+        "pick": "Dilaver",
+        "amount": 5
+      },
+      "14": {
+        "pick": "Akash",
+        "amount": 5
+      },
       "15": {
-        "pick": "Harjit",
-        "amount": 19
+        "pick": "Surkh",
+        "amount": 5
       },
       "16": {
         "pick": "Gagan",
         "amount": 5
       },
       "17": {
-        "pick": "Surkh",
-        "amount": 5
-      },
-      "18": {
-        "pick": "Dilaver",
-        "amount": 14
-      },
-      "19": {
         "pick": "Pardeep",
         "amount": 5
       },
-      "20": {
-        "pick": "Goldy",
+      "18": {
+        "pick": "Gagan",
         "amount": 5
       },
-      "21": {
-        "pick": "Aman",
-        "amount": 5
-      },
-      "22": {
-        "pick": "Matab",
-        "amount": 18
-      },
-      "23": {
-        "pick": "Jodha",
-        "amount": 5
-      },
-      "24": {
+      "19": {
         "pick": "Surkh",
         "amount": 5
       },
+      "20": {
+        "pick": "Pardeep",
+        "amount": 5
+      },
+      "21": {
+        "pick": "Goldy",
+        "amount": 5
+      },
+      "22": {
+        "pick": "Jodha",
+        "amount": 5
+      },
+      "23": {
+        "pick": "Matab",
+        "amount": 5
+      },
+      "24": {
+        "pick": "Gagan",
+        "amount": 5
+      },
       "25": {
-        "pick": "Randy",
-        "amount": 14
+        "pick": "Aman",
+        "amount": 5
       }
     },
     "Harman": {
       "0": {
-        "pick": "Aman",
-        "amount": 5
+        "pick": "Harman",
+        "amount": 45
       },
       "1": {
-        "pick": "Harjit",
-        "amount": 5
+        "pick": "Hinda",
+        "amount": 27
       },
       "2": {
+        "pick": "Aman",
+        "amount": 12
+      },
+      "3": {
+        "pick": "Aman",
+        "amount": 36
+      },
+      "4": {
+        "pick": "Jodha",
+        "amount": 10
+      },
+      "5": {
+        "pick": "Harman",
+        "amount": 6
+      },
+      "6": {
+        "pick": "Hinda",
+        "amount": 11
+      },
+      "7": {
+        "pick": "Aman",
+        "amount": 8
+      },
+      "8": {
+        "pick": "Jodha",
+        "amount": 6
+      },
+      "9": {
+        "pick": "Randy",
+        "amount": 9
+      },
+      "10": {
         "pick": "Gagan",
         "amount": 5
       },
-      "3": {
-        "pick": "Matab",
-        "amount": 5
-      },
-      "4": {
-        "pick": "Randy",
-        "amount": 12
-      },
-      "5": {
-        "pick": "Hinda",
-        "amount": 5
-      },
-      "6": {
-        "pick": "Harman",
-        "amount": 5
-      },
-      "7": {
-        "pick": "Surkh",
-        "amount": 5
-      },
-      "8": {
-        "pick": "Robby",
-        "amount": 13
-      },
-      "9": {
-        "pick": "Harman",
-        "amount": 5
-      },
-      "10": {
-        "pick": "Harman",
-        "amount": 5
-      },
       "11": {
-        "pick": "Akash",
+        "pick": "Harjit",
         "amount": 5
       },
       "12": {
-        "pick": "Dilaver",
-        "amount": 18
+        "pick": "Randy",
+        "amount": 5
       },
       "13": {
-        "pick": "Dilaver",
+        "pick": "Hinda",
         "amount": 5
       },
       "14": {
         "pick": "Jodha",
-        "amount": 21
+        "amount": 5
       },
       "15": {
-        "pick": "Matab",
-        "amount": 5
-      },
-      "16": {
-        "pick": "Robby",
-        "amount": 13
-      },
-      "17": {
-        "pick": "Matab",
-        "amount": 5
-      },
-      "18": {
-        "pick": "Goldy",
-        "amount": 15
-      },
-      "19": {
-        "pick": "Surkh",
-        "amount": 19
-      },
-      "20": {
-        "pick": "Dilaver",
-        "amount": 10
-      },
-      "21": {
-        "pick": "Pardeep",
-        "amount": 15
-      },
-      "22": {
-        "pick": "Aman",
-        "amount": 24
-      },
-      "23": {
-        "pick": "Akash",
-        "amount": 15
-      },
-      "24": {
         "pick": "Gagan",
         "amount": 5
       },
-      "25": {
+      "16": {
+        "pick": "Akash",
+        "amount": 5
+      },
+      "17": {
+        "pick": "Surkh",
+        "amount": 5
+      },
+      "18": {
         "pick": "Hinda",
+        "amount": 5
+      },
+      "19": {
+        "pick": "Jodha",
+        "amount": 5
+      },
+      "20": {
+        "pick": "Matab",
+        "amount": 5
+      },
+      "21": {
+        "pick": "Akash",
+        "amount": 5
+      },
+      "22": {
+        "pick": "Goldy",
+        "amount": 5
+      },
+      "23": {
+        "pick": "Jodha",
+        "amount": 5
+      },
+      "24": {
+        "pick": "Surkh",
+        "amount": 5
+      },
+      "25": {
+        "pick": "Aman",
         "amount": 5
       }
     },
     "Randy": {
       "0": {
-        "pick": "Aman",
-        "amount": 10
+        "pick": "Harjit",
+        "amount": 48
       },
       "1": {
-        "pick": "Hinda",
-        "amount": 5
+        "pick": "Aman",
+        "amount": 38
       },
       "2": {
-        "pick": "Harjit",
-        "amount": 5
+        "pick": "Jodha",
+        "amount": 15
       },
       "3": {
-        "pick": "Matab",
-        "amount": 5
+        "pick": "Randy",
+        "amount": 28
       },
       "4": {
-        "pick": "Robby",
+        "pick": "Surkh",
         "amount": 5
       },
       "5": {
-        "pick": "Pardeep",
-        "amount": 18
+        "pick": "Surkh",
+        "amount": 5
       },
       "6": {
-        "pick": "Goldy",
-        "amount": 5
+        "pick": "Surkh",
+        "amount": 10
       },
       "7": {
-        "pick": "Gagan",
-        "amount": 5
+        "pick": "Akash",
+        "amount": 8
       },
       "8": {
-        "pick": "Jodha",
-        "amount": 5
+        "pick": "Harjit",
+        "amount": 8
       },
       "9": {
-        "pick": "Jodha",
+        "pick": "Matab",
         "amount": 5
       },
       "10": {
-        "pick": "Harjit",
-        "amount": 16
+        "pick": "Goldy",
+        "amount": 5
       },
       "11": {
-        "pick": "Hinda",
+        "pick": "Pardeep",
         "amount": 5
       },
       "12": {
-        "pick": "Gagan",
-        "amount": 12
+        "pick": "Harman",
+        "amount": 5
       },
       "13": {
-        "pick": "Randy",
-        "amount": 17
+        "pick": "Harjit",
+        "amount": 5
       },
       "14": {
-        "pick": "Robby",
+        "pick": "Randy",
         "amount": 5
       },
       "15": {
-        "pick": "Matab",
-        "amount": 23
+        "pick": "Randy",
+        "amount": 5
       },
       "16": {
-        "pick": "Gagan",
+        "pick": "Robby",
         "amount": 5
       },
       "17": {
-        "pick": "Goldy",
+        "pick": "Jodha",
         "amount": 5
       },
       "18": {
@@ -1049,97 +1049,97 @@
         "amount": 5
       },
       "19": {
-        "pick": "Goldy",
-        "amount": 14
+        "pick": "Jodha",
+        "amount": 5
       },
       "20": {
-        "pick": "Jodha",
-        "amount": 11
+        "pick": "Robby",
+        "amount": 5
       },
       "21": {
         "pick": "Hinda",
         "amount": 5
       },
       "22": {
-        "pick": "Surkh",
-        "amount": 36
+        "pick": "Hinda",
+        "amount": 5
       },
       "23": {
-        "pick": "Goldy",
+        "pick": "Aman",
         "amount": 5
       },
       "24": {
-        "pick": "Robby",
-        "amount": 13
+        "pick": "Matab",
+        "amount": 5
       },
       "25": {
-        "pick": "Dilaver",
+        "pick": "Matab",
         "amount": 5
       }
     },
     "Surkh": {
       "0": {
-        "pick": "Aman",
+        "pick": "Surkh",
         "amount": 5
       },
       "1": {
-        "pick": "Matab",
-        "amount": 5
+        "pick": "Akash",
+        "amount": 7
       },
       "2": {
-        "pick": "Harman",
-        "amount": 14
+        "pick": "Surkh",
+        "amount": 41
       },
       "3": {
-        "pick": "Dilaver",
-        "amount": 5
+        "pick": "Matab",
+        "amount": 38
       },
       "4": {
-        "pick": "Jodha",
-        "amount": 12
+        "pick": "Matab",
+        "amount": 9
       },
       "5": {
         "pick": "Pardeep",
-        "amount": 49
+        "amount": 12
       },
       "6": {
         "pick": "Pardeep",
-        "amount": 15
+        "amount": 23
       },
       "7": {
-        "pick": "Hinda",
-        "amount": 5
+        "pick": "Aman",
+        "amount": 6
       },
       "8": {
         "pick": "Dilaver",
-        "amount": 5
+        "amount": 18
       },
       "9": {
-        "pick": "Goldy",
-        "amount": 5
+        "pick": "Robby",
+        "amount": 8
       },
       "10": {
-        "pick": "Robby",
-        "amount": 5
+        "pick": "Surkh",
+        "amount": 6
       },
       "11": {
-        "pick": "Randy",
-        "amount": 5
+        "pick": "Aman",
+        "amount": 6
       },
       "12": {
-        "pick": "Akash",
-        "amount": 23
+        "pick": "Dilaver",
+        "amount": 6
       },
       "13": {
-        "pick": "Hinda",
+        "pick": "Dilaver",
         "amount": 5
       },
       "14": {
-        "pick": "Robby",
+        "pick": "Harjit",
         "amount": 5
       },
       "15": {
-        "pick": "Jodha",
+        "pick": "Dilaver",
         "amount": 5
       },
       "16": {
@@ -1147,358 +1147,358 @@
         "amount": 5
       },
       "17": {
-        "pick": "Aman",
+        "pick": "Jodha",
         "amount": 5
       },
       "18": {
-        "pick": "Dilaver",
+        "pick": "Harman",
         "amount": 5
       },
       "19": {
-        "pick": "Surkh",
-        "amount": 20
+        "pick": "Aman",
+        "amount": 5
       },
       "20": {
-        "pick": "Goldy",
-        "amount": 10
+        "pick": "Akash",
+        "amount": 5
       },
       "21": {
-        "pick": "Matab",
-        "amount": 5
-      },
-      "22": {
-        "pick": "Hinda",
-        "amount": 5
-      },
-      "23": {
-        "pick": "Robby",
-        "amount": 5
-      },
-      "24": {
         "pick": "Harjit",
         "amount": 5
       },
+      "22": {
+        "pick": "Gagan",
+        "amount": 5
+      },
+      "23": {
+        "pick": "Harjit",
+        "amount": 5
+      },
+      "24": {
+        "pick": "Randy",
+        "amount": 5
+      },
       "25": {
-        "pick": "Hinda",
-        "amount": 17
+        "pick": "Akash",
+        "amount": 5
       }
     },
     "Hinda": {
       "0": {
-        "pick": "Hinda",
-        "amount": 5
+        "pick": "Pardeep",
+        "amount": 18
       },
       "1": {
-        "pick": "Harjit",
-        "amount": 5
+        "pick": "Pardeep",
+        "amount": 28
       },
       "2": {
-        "pick": "Goldy",
-        "amount": 20
+        "pick": "Pardeep",
+        "amount": 13
       },
       "3": {
-        "pick": "Robby",
-        "amount": 5
+        "pick": "Surkh",
+        "amount": 26
       },
       "4": {
-        "pick": "Harman",
-        "amount": 5
+        "pick": "Matab",
+        "amount": 15
       },
       "5": {
-        "pick": "Hinda",
-        "amount": 5
+        "pick": "Pardeep",
+        "amount": 8
       },
       "6": {
-        "pick": "Aman",
-        "amount": 5
+        "pick": "Matab",
+        "amount": 39
       },
       "7": {
-        "pick": "Dilaver",
-        "amount": 5
+        "pick": "Surkh",
+        "amount": 10
       },
       "8": {
+        "pick": "Dilaver",
+        "amount": 8
+      },
+      "9": {
+        "pick": "Goldy",
+        "amount": 5
+      },
+      "10": {
         "pick": "Matab",
         "amount": 5
       },
-      "9": {
-        "pick": "Robby",
-        "amount": 11
-      },
-      "10": {
-        "pick": "Harman",
-        "amount": 21
-      },
       "11": {
-        "pick": "Gagan",
+        "pick": "Pardeep",
         "amount": 5
       },
       "12": {
-        "pick": "Randy",
+        "pick": "Harman",
         "amount": 5
       },
       "13": {
-        "pick": "Aman",
-        "amount": 20
+        "pick": "Gagan",
+        "amount": 5
       },
       "14": {
-        "pick": "Jodha",
+        "pick": "Randy",
         "amount": 5
       },
       "15": {
-        "pick": "Aman",
-        "amount": 10
+        "pick": "Harman",
+        "amount": 5
       },
       "16": {
-        "pick": "Pardeep",
-        "amount": 41
+        "pick": "Matab",
+        "amount": 5
       },
       "17": {
-        "pick": "Randy",
+        "pick": "Hinda",
         "amount": 5
       },
       "18": {
-        "pick": "Hinda",
-        "amount": 13
+        "pick": "Matab",
+        "amount": 5
       },
       "19": {
         "pick": "Gagan",
-        "amount": 16
+        "amount": 5
       },
       "20": {
-        "pick": "Goldy",
-        "amount": 5
-      },
-      "21": {
-        "pick": "Aman",
-        "amount": 5
-      },
-      "22": {
-        "pick": "Randy",
-        "amount": 5
-      },
-      "23": {
         "pick": "Gagan",
         "amount": 5
       },
-      "24": {
+      "21": {
+        "pick": "Hinda",
+        "amount": 5
+      },
+      "22": {
         "pick": "Aman",
-        "amount": 13
+        "amount": 5
+      },
+      "23": {
+        "pick": "Pardeep",
+        "amount": 5
+      },
+      "24": {
+        "pick": "Harman",
+        "amount": 5
       },
       "25": {
-        "pick": "Robby",
+        "pick": "Hinda",
         "amount": 5
       }
     },
     "Jodha": {
       "0": {
-        "pick": "Randy",
-        "amount": 5
+        "pick": "Harman",
+        "amount": 45
       },
       "1": {
-        "pick": "Harman",
-        "amount": 11
+        "pick": "Dilaver",
+        "amount": 35
       },
       "2": {
-        "pick": "Robby",
-        "amount": 5
+        "pick": "Akash",
+        "amount": 39
       },
       "3": {
-        "pick": "Dilaver",
-        "amount": 5
-      },
-      "4": {
-        "pick": "Randy",
-        "amount": 27
-      },
-      "5": {
-        "pick": "Pardeep",
-        "amount": 5
-      },
-      "6": {
-        "pick": "Harjit",
-        "amount": 23
-      },
-      "7": {
-        "pick": "Hinda",
-        "amount": 5
-      },
-      "8": {
-        "pick": "Randy",
-        "amount": 5
-      },
-      "9": {
-        "pick": "Harjit",
-        "amount": 5
-      },
-      "10": {
         "pick": "Jodha",
-        "amount": 14
-      },
-      "11": {
-        "pick": "Surkh",
-        "amount": 21
-      },
-      "12": {
-        "pick": "Pardeep",
         "amount": 19
       },
-      "13": {
-        "pick": "Robby",
+      "4": {
+        "pick": "Jodha",
         "amount": 5
       },
-      "14": {
-        "pick": "Harman",
-        "amount": 5
-      },
-      "15": {
-        "pick": "Matab",
-        "amount": 5
-      },
-      "16": {
-        "pick": "Akash",
-        "amount": 12
-      },
-      "17": {
-        "pick": "Robby",
-        "amount": 5
-      },
-      "18": {
-        "pick": "Harman",
-        "amount": 5
-      },
-      "19": {
-        "pick": "Surkh",
-        "amount": 5
-      },
-      "20": {
-        "pick": "Dilaver",
-        "amount": 16
-      },
-      "21": {
-        "pick": "Randy",
-        "amount": 5
-      },
-      "22": {
-        "pick": "Surkh",
-        "amount": 22
-      },
-      "23": {
+      "5": {
         "pick": "Goldy",
         "amount": 5
       },
-      "24": {
+      "6": {
+        "pick": "Dilaver",
+        "amount": 6
+      },
+      "7": {
+        "pick": "Gagan",
+        "amount": 6
+      },
+      "8": {
+        "pick": "Akash",
+        "amount": 5
+      },
+      "9": {
+        "pick": "Matab",
+        "amount": 5
+      },
+      "10": {
+        "pick": "Aman",
+        "amount": 5
+      },
+      "11": {
+        "pick": "Aman",
+        "amount": 5
+      },
+      "12": {
+        "pick": "Surkh",
+        "amount": 5
+      },
+      "13": {
         "pick": "Jodha",
         "amount": 5
       },
+      "14": {
+        "pick": "Akash",
+        "amount": 5
+      },
+      "15": {
+        "pick": "Dilaver",
+        "amount": 5
+      },
+      "16": {
+        "pick": "Robby",
+        "amount": 5
+      },
+      "17": {
+        "pick": "Pardeep",
+        "amount": 5
+      },
+      "18": {
+        "pick": "Gagan",
+        "amount": 5
+      },
+      "19": {
+        "pick": "Akash",
+        "amount": 5
+      },
+      "20": {
+        "pick": "Akash",
+        "amount": 5
+      },
+      "21": {
+        "pick": "Aman",
+        "amount": 5
+      },
+      "22": {
+        "pick": "Matab",
+        "amount": 5
+      },
+      "23": {
+        "pick": "Harman",
+        "amount": 5
+      },
+      "24": {
+        "pick": "Matab",
+        "amount": 5
+      },
       "25": {
-        "pick": "Jodha",
+        "pick": "Randy",
         "amount": 5
       }
     },
     "Goldy": {
       "0": {
-        "pick": "Pardeep",
-        "amount": 5
+        "pick": "Surkh",
+        "amount": 23
       },
       "1": {
-        "pick": "Harjit",
-        "amount": 5
+        "pick": "Goldy",
+        "amount": 12
       },
       "2": {
-        "pick": "Surkh",
-        "amount": 22
+        "pick": "Akash",
+        "amount": 30
       },
       "3": {
-        "pick": "Pardeep",
-        "amount": 5
+        "pick": "Goldy",
+        "amount": 21
       },
       "4": {
-        "pick": "Aman",
-        "amount": 10
+        "pick": "Goldy",
+        "amount": 11
       },
       "5": {
-        "pick": "Robby",
-        "amount": 5
+        "pick": "Akash",
+        "amount": 16
       },
       "6": {
-        "pick": "Jodha",
-        "amount": 5
+        "pick": "Gagan",
+        "amount": 38
       },
       "7": {
-        "pick": "Jodha",
+        "pick": "Robby",
         "amount": 5
       },
       "8": {
-        "pick": "Randy",
-        "amount": 20
+        "pick": "Harman",
+        "amount": 6
       },
       "9": {
-        "pick": "Aman",
+        "pick": "Randy",
         "amount": 5
       },
       "10": {
-        "pick": "Harman",
-        "amount": 5
+        "pick": "Aman",
+        "amount": 6
       },
       "11": {
-        "pick": "Robby",
-        "amount": 21
+        "pick": "Akash",
+        "amount": 5
       },
       "12": {
-        "pick": "Surkh",
+        "pick": "Harman",
         "amount": 5
       },
       "13": {
-        "pick": "Akash",
+        "pick": "Robby",
         "amount": 5
       },
       "14": {
-        "pick": "Randy",
-        "amount": 22
+        "pick": "Harjit",
+        "amount": 7
       },
       "15": {
-        "pick": "Matab",
+        "pick": "Jodha",
         "amount": 5
       },
       "16": {
-        "pick": "Pardeep",
-        "amount": 22
+        "pick": "Dilaver",
+        "amount": 5
       },
       "17": {
-        "pick": "Harjit",
-        "amount": 16
+        "pick": "Aman",
+        "amount": 5
       },
       "18": {
-        "pick": "Surkh",
+        "pick": "Pardeep",
         "amount": 5
       },
       "19": {
-        "pick": "Pardeep",
-        "amount": 18
+        "pick": "Gagan",
+        "amount": 5
       },
       "20": {
-        "pick": "Harman",
+        "pick": "Randy",
         "amount": 5
       },
       "21": {
-        "pick": "Akash",
-        "amount": 5
-      },
-      "22": {
-        "pick": "Hinda",
-        "amount": 5
-      },
-      "23": {
-        "pick": "Goldy",
-        "amount": 5
-      },
-      "24": {
         "pick": "Harman",
         "amount": 5
       },
+      "22": {
+        "pick": "Aman",
+        "amount": 5
+      },
+      "23": {
+        "pick": "Surkh",
+        "amount": 5
+      },
+      "24": {
+        "pick": "Randy",
+        "amount": 5
+      },
       "25": {
-        "pick": "Goldy",
-        "amount": 14
+        "pick": "Robby",
+        "amount": 5
       }
     }
   },
@@ -1524,154 +1524,77 @@
       "outcomeType": "favorite",
       "actualPerson": null,
       "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T02:52:37.431Z"
+      "resolvedAt": "2026-04-01T18:33:39.213Z"
+    },
+    "1": {
+      "resolved": true,
+      "outcomeType": "favorite",
+      "actualPerson": null,
+      "favoriteOverride": null,
+      "resolvedAt": "2026-04-01T18:33:39.213Z"
+    },
+    "2": {
+      "resolved": true,
+      "outcomeType": "favorite",
+      "actualPerson": null,
+      "favoriteOverride": null,
+      "resolvedAt": "2026-04-01T18:33:39.213Z"
+    },
+    "3": {
+      "resolved": true,
+      "outcomeType": "someone_else",
+      "actualPerson": "Dilaver",
+      "favoriteOverride": null,
+      "resolvedAt": "2026-04-01T18:33:39.213Z"
     },
     "4": {
       "resolved": true,
-      "outcomeType": "someone_else",
-      "actualPerson": "Aman",
+      "outcomeType": "nobody",
+      "actualPerson": null,
       "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T03:37:56.485Z"
+      "resolvedAt": "2026-04-01T18:33:39.213Z"
     },
     "5": {
       "resolved": true,
       "outcomeType": "favorite",
       "actualPerson": null,
       "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T02:52:37.432Z"
+      "resolvedAt": "2026-04-01T18:33:39.213Z"
     },
     "6": {
       "resolved": true,
-      "outcomeType": "nobody",
-      "actualPerson": null,
+      "outcomeType": "someone_else",
+      "actualPerson": "Harman",
       "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T03:42:28.794Z"
+      "resolvedAt": "2026-04-01T18:33:39.213Z"
     },
     "7": {
-      "resolved": true,
-      "outcomeType": "someone_else",
-      "actualPerson": "Akash",
-      "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T03:38:12.303Z"
-    },
-    "8": {
       "resolved": true,
       "outcomeType": "favorite",
       "actualPerson": null,
       "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T03:38:27.079Z"
+      "resolvedAt": "2026-04-01T18:33:39.213Z"
+    },
+    "8": {
+      "resolved": true,
+      "outcomeType": "nobody",
+      "actualPerson": null,
+      "favoriteOverride": null,
+      "resolvedAt": "2026-04-01T18:33:39.213Z"
     },
     "9": {
       "resolved": true,
       "outcomeType": "favorite",
       "actualPerson": null,
       "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T03:38:18.178Z"
+      "resolvedAt": "2026-04-01T18:33:39.213Z"
     },
     "10": {
       "resolved": true,
       "outcomeType": "someone_else",
-      "actualPerson": "Surkh",
-      "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T02:52:37.432Z"
-    },
-    "11": {
-      "resolved": true,
-      "outcomeType": "favorite",
-      "actualPerson": null,
-      "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T03:38:34.630Z"
-    },
-    "12": {
-      "resolved": true,
-      "outcomeType": "favorite",
-      "actualPerson": null,
-      "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T03:38:38.788Z"
-    },
-    "14": {
-      "resolved": true,
-      "outcomeType": "someone_else",
       "actualPerson": "Akash",
       "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T03:38:47.359Z"
-    },
-    "15": {
-      "resolved": true,
-      "outcomeType": "someone_else",
-      "actualPerson": "Akash",
-      "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T03:38:55.322Z"
-    },
-    "16": {
-      "resolved": true,
-      "outcomeType": "favorite",
-      "actualPerson": null,
-      "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T03:38:59.491Z"
-    },
-    "17": {
-      "resolved": true,
-      "outcomeType": "favorite",
-      "actualPerson": null,
-      "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T03:39:44.326Z"
-    },
-    "18": {
-      "resolved": true,
-      "outcomeType": "favorite",
-      "actualPerson": null,
-      "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T03:39:04.894Z"
-    },
-    "19": {
-      "resolved": true,
-      "outcomeType": "favorite",
-      "actualPerson": null,
-      "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T03:39:08.345Z"
-    },
-    "20": {
-      "resolved": true,
-      "outcomeType": "someone_else",
-      "actualPerson": "Aman",
-      "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T03:39:16.675Z"
-    },
-    "21": {
-      "resolved": true,
-      "outcomeType": "favorite",
-      "actualPerson": null,
-      "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T03:39:40.252Z"
-    },
-    "22": {
-      "resolved": true,
-      "outcomeType": "someone_else",
-      "actualPerson": "Aman",
-      "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T03:39:25.170Z"
-    },
-    "23": {
-      "resolved": true,
-      "outcomeType": "favorite",
-      "actualPerson": null,
-      "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T03:39:28.908Z"
-    },
-    "24": {
-      "resolved": true,
-      "outcomeType": "favorite",
-      "actualPerson": null,
-      "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T03:39:36.202Z"
-    },
-    "25": {
-      "resolved": true,
-      "outcomeType": "favorite",
-      "actualPerson": null,
-      "favoriteOverride": null,
-      "resolvedAt": "2026-04-01T03:39:33.347Z"
+      "resolvedAt": "2026-04-01T18:33:39.213Z"
     }
   },
   "favoriteOverrides": {},
@@ -1711,7 +1634,8 @@
   "config": {
     "totalBudget": 250,
     "minBetPerQuestion": 5,
-    "questionCount": 26
+    "questionCount": 26,
+    "maxSelfBets": 3
   },
   "bettingClosed": false
 }
