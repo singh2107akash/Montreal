@@ -131,6 +131,10 @@ export default function BettingPage() {
       setError('You\'re broke! Over budget!');
       return;
     }
+    if (total < config.totalBudget) {
+      setError(`You still have ${config.totalBudget - total} pts left. Spend all ${config.totalBudget} — no saving allowed!`);
+      return;
+    }
     lockPlayer(activePlayer);
     if (isAdmin) {
       const next = players.find((p) => !lockedPlayers.includes(p) && p !== activePlayer);
