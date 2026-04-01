@@ -134,5 +134,6 @@
     "totalBudget": 150,
     "minBetPerQuestion": 5,
     "questionCount": 20
-  }
+  },
+  "bettingClosed": false
 }
