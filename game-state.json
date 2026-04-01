@@ -21,6 +21,10 @@
       "0": {
         "pick": "Aman",
         "amount": 5
+      },
+      "1": {
+        "pick": "Matab",
+        "amount": 5
       }
     }
   },
