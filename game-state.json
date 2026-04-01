@@ -122,6 +122,12 @@
         "pick": "Matab",
         "amount": 25
       }
+    },
+    "Aman": {
+      "0": {
+        "pick": "Aman",
+        "amount": 25
+      }
     }
   },
   "lockedPlayers": [],
