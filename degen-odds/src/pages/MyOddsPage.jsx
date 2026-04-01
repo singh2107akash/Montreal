@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { useGame } from '../GameContext';
 import { calculateFavorite } from '../utils/scoring';
-import { Crown, ChevronRight, TrendingUp, TrendingDown, Minus, Zap, Target, AlertTriangle, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { Crown, ChevronRight, TrendingUp, TrendingDown, Minus, Zap, Target, AlertTriangle, ArrowUpRight, ArrowDownRight, Flame, Swords } from 'lucide-react';
 
 export default function MyOddsPage() {
   const navigate = useNavigate();
@@ -28,58 +28,94 @@ export default function MyOddsPage() {
       const isResolved = resolutions[qi]?.resolved;
       const resolution = resolutions[qi];
 
+      const iAmFavorite = playerName === favorite;
+      const iAmNotFavorite = favorite && playerName !== favorite;
+      const underdogPotBonus = Math.floor(pot * 0.75);
+
+      // === YOUR ROLE STAKES (independent of betting) ===
+      // As favorite: you win challengeValue if you deliver, lose it if you don't
+      let favoriteStakes = null;
+      if (iAmFavorite && favorite) {
+        favoriteStakes = {
+          deliver: challengeValue,
+          choke: -challengeValue,
+        };
+      }
+
+      // As potential underdog: if YOU steal it, you get 75% pot
+      let underdogStakes = null;
+      if (iAmNotFavorite && pot > 0) {
+        underdogStakes = {
+          stealBonus: underdogPotBonus,
+          favPenalty: challengeValue, // what the favorite loses
+        };
+      }
+
       if (!bet || !bet.pick || !bet.amount) {
-        return { question: q, index: qi, hasBet: false, isResolved };
+        return {
+          question: q, index: qi, hasBet: false, isResolved,
+          favorite, pot, challengeValue, iAmFavorite, iAmNotFavorite,
+          favoriteStakes, underdogStakes,
+        };
       }
 
       const pick = bet.pick;
       const amount = bet.amount;
       const betOnFavorite = pick === favorite;
-      const iAmFavorite = playerName === favorite;
-      const iAmPick = playerName === pick; // they bet on themselves
+
+      // === BETTING SCENARIOS (what happens to your wager) ===
 
       // Scenario 1: Favorite delivers
       let favoriteDelivers;
       if (betOnFavorite) {
-        // Win 1.5x bet
         let total = Math.floor(amount * 1.5);
-        // If I AM the favorite, also get 50% pot
         if (iAmFavorite) total += challengeValue;
         favoriteDelivers = { net: total, label: 'You bet right', type: 'win' };
       } else {
-        // Bet doesn't pay out, no loss either (only favorite bettors win)
         let total = 0;
-        // If I AM the favorite, I get 50% pot
         if (iAmFavorite) total += challengeValue;
-        favoriteDelivers = { net: total, label: iAmFavorite ? 'You deliver as favorite' : 'No effect on you', type: total > 0 ? 'win' : 'neutral' };
+        favoriteDelivers = { net: total, label: iAmFavorite ? 'You deliver as favorite' : 'No effect on your bet', type: total > 0 ? 'win' : 'neutral' };
       }
 
       // Scenario 2: My pick delivers (underdog steals it) — only if pick ≠ favorite
       let myPickDelivers = null;
       if (!betOnFavorite) {
-        let total = Math.floor(amount * 2.5); // win 2.5x for correct underdog bet
-        // If my pick is ME (I'm the underdog who did it), I also get 75% pot
+        let total = Math.floor(amount * 2.5);
         if (pick === playerName) {
-          total += Math.floor(pot * 0.75);
+          total += underdogPotBonus;
         }
         myPickDelivers = { net: total, label: pick === playerName ? 'You steal it + 75% pot' : `${pick} steals it`, type: 'win' };
       }
 
-      // Scenario 3: Someone else steals it (not favorite, not my pick)
+      // Scenario 3: I steal it myself (regardless of who I bet on) — only if I'm not the favorite
+      let iStealIt = null;
+      if (iAmNotFavorite) {
+        let total = underdogPotBonus; // 75% pot for being the underdog who did it
+        // Also factor in bet outcome: if I bet on favorite, I lose it (favorite got upset)
+        if (betOnFavorite) {
+          total -= amount;
+        }
+        // If I bet on myself, I also get 2.5x bet
+        if (pick === playerName) {
+          total += Math.floor(amount * 2.5);
+        }
+        // If I bet on someone else (not favorite, not me), bet has no effect
+        iStealIt = { net: total, type: 'win' };
+      }
+
+      // Scenario 4: Someone else steals it (not favorite, not my pick, not me)
       let someoneElseDelivers;
       if (betOnFavorite) {
-        // I lose my bet amount
         let total = -amount;
-        // If I AM the favorite, I also lose challenge value
         if (iAmFavorite) total -= challengeValue;
         someoneElseDelivers = { net: total, label: iAmFavorite ? 'You get upset + lose bet' : 'Your pick gets upset', type: 'loss' };
       } else {
-        // My bet didn't hit either (wrong underdog)
         let total = 0;
-        someoneElseDelivers = { net: total, label: 'Wrong underdog pick', type: 'neutral' };
+        if (iAmFavorite) total -= challengeValue;
+        someoneElseDelivers = { net: total, label: iAmFavorite ? 'You get upset as favorite' : 'Wrong underdog pick', type: iAmFavorite ? 'loss' : 'neutral' };
       }
 
-      // Scenario 4: Nobody does it
+      // Scenario 5: Nobody does it
       let nobodyDoesIt;
       if (betOnFavorite) {
         let total = -amount;
@@ -87,16 +123,8 @@ export default function MyOddsPage() {
         nobodyDoesIt = { net: total, label: iAmFavorite ? 'You choke + lose bet' : 'Favorite chokes, you lose bet', type: 'loss' };
       } else {
         let total = 0;
-        nobodyDoesIt = { net: total, label: 'No impact', type: 'neutral' };
-      }
-
-      // If I'm the favorite but bet on someone else — extra dimension
-      let asFavoriteExposure = null;
-      if (iAmFavorite && !betOnFavorite) {
-        asFavoriteExposure = {
-          deliver: challengeValue,
-          choke: -challengeValue,
-        };
+        if (iAmFavorite) total -= challengeValue;
+        nobodyDoesIt = { net: total, label: iAmFavorite ? 'You choke as favorite' : 'No impact on bet', type: iAmFavorite ? 'loss' : 'neutral' };
       }
 
       // Actual result if resolved
@@ -106,10 +134,10 @@ export default function MyOddsPage() {
         if (oc === 'favorite') {
           actualResult = favoriteDelivers;
         } else if (oc === 'someone_else') {
-          if (resolution.actualPerson === pick && !betOnFavorite) {
+          if (resolution.actualPerson === playerName && iAmNotFavorite) {
+            actualResult = iStealIt;
+          } else if (resolution.actualPerson === pick && !betOnFavorite) {
             actualResult = myPickDelivers;
-          } else if (betOnFavorite) {
-            actualResult = someoneElseDelivers;
           } else {
             actualResult = someoneElseDelivers;
           }
@@ -118,8 +146,8 @@ export default function MyOddsPage() {
         }
       }
 
-      // Best and worst case
-      const allScenarios = [favoriteDelivers, myPickDelivers, someoneElseDelivers, nobodyDoesIt].filter(Boolean);
+      // Best and worst case (include iStealIt in calculations)
+      const allScenarios = [favoriteDelivers, myPickDelivers, iStealIt, someoneElseDelivers, nobodyDoesIt].filter(Boolean);
       const bestCase = Math.max(...allScenarios.map(s => s.net));
       const worstCase = Math.min(...allScenarios.map(s => s.net));
 
@@ -134,12 +162,15 @@ export default function MyOddsPage() {
         challengeValue,
         betOnFavorite,
         iAmFavorite,
+        iAmNotFavorite,
         isResolved,
+        favoriteStakes,
+        underdogStakes,
+        iStealIt,
         favoriteDelivers,
         myPickDelivers,
         someoneElseDelivers,
         nobodyDoesIt,
-        asFavoriteExposure,
         actualResult,
         bestCase,
         worstCase,
@@ -267,8 +298,57 @@ export default function MyOddsPage() {
                 )}
               </div>
 
+              {/* === YOUR ROLE: Favorite or Underdog === */}
+              {a.favoriteStakes && (
+                <div className="bg-gradient-to-r from-gold-500/10 to-gold-600/5 border border-gold-500/40 rounded-xl p-3 mb-3">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Crown className="w-4 h-4 text-gold-400" />
+                    <span className="text-xs font-black text-gold-400 uppercase tracking-wider">You're the Favorite — Deliver or Get Humbled</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="bg-dark-800/60 rounded-lg p-2.5 text-center">
+                      <div className="text-[10px] text-gray-500 mb-0.5">You deliver</div>
+                      <div className="text-lg font-black text-accent-green">+{a.favoriteStakes.deliver}</div>
+                      <div className="text-[10px] text-gray-600">50% pot bonus</div>
+                    </div>
+                    <div className="bg-dark-800/60 rounded-lg p-2.5 text-center">
+                      <div className="text-[10px] text-gray-500 mb-0.5">You choke</div>
+                      <div className="text-lg font-black text-accent-red">{a.favoriteStakes.choke}</div>
+                      <div className="text-[10px] text-gray-600">pot penalty</div>
+                    </div>
+                  </div>
+                  <div className="mt-2 text-[10px] text-gold-400/70 text-center font-medium">
+                    The group bet <span className="text-gold-400 font-bold">{a.pot} pts</span> on you. Pot is yours to win or lose.
+                  </div>
+                </div>
+              )}
+
+              {a.underdogStakes && a.favorite && (
+                <div className="bg-gradient-to-r from-accent-purple/10 to-purple-900/5 border border-accent-purple/40 rounded-xl p-3 mb-3">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Swords className="w-4 h-4 text-accent-purple" />
+                    <span className="text-xs font-black text-accent-purple uppercase tracking-wider">Underdog Opportunity — Steal It</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="bg-dark-800/60 rounded-lg p-2.5 text-center">
+                      <div className="text-[10px] text-gray-500 mb-0.5">You steal it</div>
+                      <div className="text-lg font-black text-accent-green">+{a.underdogStakes.stealBonus}</div>
+                      <div className="text-[10px] text-gray-600">75% of pot</div>
+                    </div>
+                    <div className="bg-dark-800/60 rounded-lg p-2.5 text-center">
+                      <div className="text-[10px] text-gray-500 mb-0.5">{displayName(a.favorite)} loses</div>
+                      <div className="text-lg font-black text-accent-red">−{a.underdogStakes.favPenalty}</div>
+                      <div className="text-[10px] text-gray-600">their penalty</div>
+                    </div>
+                  </div>
+                  <div className="mt-2 text-[10px] text-accent-purple/70 text-center font-medium">
+                    If you do this instead of <span className="text-accent-purple font-bold">{displayName(a.favorite)}</span>, you pocket <span className="text-accent-purple font-bold">{a.underdogStakes.stealBonus} pts</span> and they lose {a.underdogStakes.favPenalty}.
+                  </div>
+                </div>
+              )}
+
               {!a.hasBet ? (
-                <div className="text-xs text-gray-600 italic">No bet placed yet</div>
+                <div className="text-xs text-gray-600 italic">No bet placed yet — role stakes above still apply during the trip</div>
               ) : (
                 <>
                   {/* Bet info bar */}
@@ -290,14 +370,10 @@ export default function MyOddsPage() {
                       <span className="text-gray-500">Bet:</span>
                       <span className="text-gold-400 font-bold">{a.amount} pts</span>
                     </div>
-                    {a.iAmFavorite && (
-                      <span className="text-[10px] bg-gold-500/20 text-gold-400 px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
-                        <Crown className="w-3 h-3" /> YOU'RE THE FAVORITE
-                      </span>
-                    )}
                   </div>
 
                   {/* Scenario grid */}
+                  <div className="text-[10px] text-gray-600 font-semibold uppercase tracking-wider mb-2">Betting Scenarios</div>
                   <div className="grid grid-cols-1 gap-2">
                     {/* Favorite delivers */}
                     <div className={`border rounded-lg p-3 ${a.isResolved && a.actualResult === a.favoriteDelivers ? 'ring-2 ring-gold-400' : ''} ${netBg(a.favoriteDelivers.type)}`}>
@@ -326,13 +402,52 @@ export default function MyOddsPage() {
                       {a.iAmFavorite && !a.betOnFavorite && (
                         <div className="mt-2 text-[10px] text-gray-500 flex items-center gap-1">
                           <ArrowUpRight className="w-3 h-3 text-accent-green" />
-                          +{a.challengeValue} pot bonus (you're the favorite)
+                          +{a.challengeValue} pot bonus (you deliver as favorite)
                         </div>
                       )}
                     </div>
 
-                    {/* My pick steals it (only if underdog bet) */}
-                    {a.myPickDelivers && (
+                    {/* YOU steal it (only if not the favorite) */}
+                    {a.iStealIt && (
+                      <div className={`border-2 border-accent-purple/50 rounded-lg p-3 bg-accent-purple/5 ${a.isResolved && a.actualResult === a.iStealIt ? 'ring-2 ring-accent-purple' : ''}`}>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Swords className="w-3.5 h-3.5 text-accent-purple" />
+                            <div>
+                              <div className="text-xs font-bold text-accent-purple">YOU Steal It</div>
+                              <div className="text-[10px] text-gray-500">You upset {a.favorite ? displayName(a.favorite) : 'the favorite'}</div>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className={`text-lg font-black ${netColor(a.iStealIt.net)}`}>
+                              {formatNet(a.iStealIt.net)}
+                            </div>
+                            <div className="text-[10px] text-accent-purple/70">total if you do it</div>
+                          </div>
+                        </div>
+                        <div className="mt-2 text-[10px] text-gray-500 space-y-0.5">
+                          <div className="flex items-center gap-1">
+                            <ArrowUpRight className="w-3 h-3 text-accent-purple" />
+                            +{Math.floor(a.pot * 0.75)} underdog pot bonus (75%)
+                          </div>
+                          {a.pick === playerName && (
+                            <div className="flex items-center gap-1">
+                              <ArrowUpRight className="w-3 h-3 text-accent-green" />
+                              +{Math.floor(a.amount * 2.5)} bet payout ({a.amount} × 2.5) — you bet on yourself
+                            </div>
+                          )}
+                          {a.betOnFavorite && (
+                            <div className="flex items-center gap-1">
+                              <ArrowDownRight className="w-3 h-3 text-accent-red" />
+                              −{a.amount} lost bet (you bet on the favorite)
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* My pick steals it (only if underdog bet AND pick isn't me) */}
+                    {a.myPickDelivers && a.pick !== playerName && (
                       <div className={`border rounded-lg p-3 ${a.isResolved && a.actualResult === a.myPickDelivers ? 'ring-2 ring-accent-purple' : ''} ${netBg(a.myPickDelivers.type)}`}>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
@@ -352,22 +467,21 @@ export default function MyOddsPage() {
                         <div className="mt-2 text-[10px] text-gray-500 flex items-center gap-1">
                           <ArrowUpRight className="w-3 h-3 text-accent-purple" />
                           {a.amount} × 2.5 = {Math.floor(a.amount * 2.5)} pts
-                          {a.pick === playerName && <span className="ml-1">+ {Math.floor(a.pot * 0.75)} underdog pot bonus (75%)</span>}
                         </div>
                       </div>
                     )}
 
-                    {/* Someone else steals it (not your pick) */}
-                    <div className={`border rounded-lg p-3 ${a.isResolved && a.actualResult === a.someoneElseDelivers && (!a.myPickDelivers || a.actualResult !== a.myPickDelivers) ? 'ring-2 ring-accent-red' : ''} ${netBg(a.someoneElseDelivers.type)}`}>
+                    {/* Someone else steals it (not favorite, not my pick, not me) */}
+                    <div className={`border rounded-lg p-3 ${a.isResolved && a.actualResult === a.someoneElseDelivers ? 'ring-2 ring-accent-red' : ''} ${netBg(a.someoneElseDelivers.type)}`}>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <AlertTriangle className="w-3.5 h-3.5 text-yellow-400" />
                           <div>
                             <div className="text-xs font-bold text-gray-300">
-                              {a.betOnFavorite ? 'Upset — Someone Else Steals It' : 'Wrong Underdog Wins'}
+                              {a.betOnFavorite ? 'Someone Else Steals It' : 'Wrong Underdog Wins'}
                             </div>
                             <div className="text-[10px] text-gray-500">
-                              {a.betOnFavorite ? 'Neither favorite nor you called it' : 'A different underdog delivers'}
+                              Someone unexpected delivers
                             </div>
                           </div>
                         </div>
@@ -382,7 +496,12 @@ export default function MyOddsPage() {
                         <div className="mt-2 text-[10px] text-gray-500 flex items-center gap-1">
                           <ArrowDownRight className="w-3 h-3 text-accent-red" />
                           −{a.amount} pts (bet on favorite who got upset)
-                          {a.iAmFavorite && <span className="ml-1">− {a.challengeValue} pot penalty</span>}
+                        </div>
+                      )}
+                      {a.iAmFavorite && (
+                        <div className="mt-2 text-[10px] text-gray-500 flex items-center gap-1">
+                          <ArrowDownRight className="w-3 h-3 text-accent-red" />
+                          −{a.challengeValue} pot penalty (you got upset as favorite)
                         </div>
                       )}
                     </div>
@@ -408,7 +527,12 @@ export default function MyOddsPage() {
                         <div className="mt-2 text-[10px] text-gray-500 flex items-center gap-1">
                           <ArrowDownRight className="w-3 h-3 text-accent-red" />
                           −{a.amount} pts
-                          {a.iAmFavorite && <span className="ml-1">− {a.challengeValue} pot penalty</span>}
+                        </div>
+                      )}
+                      {a.iAmFavorite && (
+                        <div className="mt-2 text-[10px] text-gray-500 flex items-center gap-1">
+                          <ArrowDownRight className="w-3 h-3 text-accent-red" />
+                          −{a.challengeValue} pot penalty (you choked)
                         </div>
                       )}
                     </div>
@@ -418,7 +542,6 @@ export default function MyOddsPage() {
                   <div className="mt-3 flex items-center gap-2 text-[11px]">
                     <span className="text-accent-red font-bold">{formatNet(a.worstCase)}</span>
                     <div className="flex-1 h-2 bg-dark-700 rounded-full overflow-hidden relative">
-                      {/* Zero marker */}
                       {a.worstCase < 0 && a.bestCase > 0 && (
                         <div
                           className="absolute top-0 bottom-0 w-px bg-gray-500"
