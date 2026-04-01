@@ -1,11 +1,11 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { useGame } from '../GameContext';
 import { calculateFavorite } from '../utils/scoring';
 import {
-  Crown, ChevronRight, ChevronDown, TrendingUp, TrendingDown,
-  Zap, Target, Swords, Check, Minus, AlertTriangle,
+  Crown, ChevronRight, TrendingUp, TrendingDown,
+  Zap, Target, Swords, Check, X, Minus, Shield, Flame,
 } from 'lucide-react';
 
 export default function MyOddsPage() {
@@ -18,9 +18,6 @@ export default function MyOddsPage() {
 
   const playerName = user?.name;
   const playerBets = bets[playerName] || {};
-  const [expandedQ, setExpandedQ] = useState(null);
-
-  const toggleQ = (qi) => setExpandedQ(expandedQ === qi ? null : qi);
 
   const analysis = useMemo(() => {
     return questions.map((q, qi) => {
@@ -32,65 +29,51 @@ export default function MyOddsPage() {
       const challengeValue = Math.floor(pot / 2);
       const isResolved = resolutions[qi]?.resolved;
       const resolution = resolutions[qi];
+      const underdogPotBonus = Math.floor(pot * 0.75);
 
       const iAmFavorite = playerName === favorite;
       const iAmNotFavorite = favorite && playerName !== favorite;
-      const underdogPotBonus = Math.floor(pot * 0.75);
 
-      if (!bet || !bet.pick || !bet.amount) {
-        return {
-          question: q, index: qi, hasBet: false, isResolved, resolution,
-          favorite, pot, challengeValue, iAmFavorite, iAmNotFavorite,
-          underdogPotBonus,
-        };
-      }
-
-      const pick = bet.pick;
-      const amount = bet.amount;
+      const pick = bet?.pick;
+      const amount = bet?.amount || 0;
+      const hasBet = !!(pick && amount);
       const betOnFavorite = pick === favorite;
 
-      // === SCENARIOS ===
+      // Net calculations per outcome
+      let favNet = 0, myPickNet = null, iStealNet = null, elseNet = 0, nobodyNet = 0;
 
-      // 1. Favorite delivers
-      let favNet = betOnFavorite ? Math.floor(amount * 1.5) : 0;
-      if (iAmFavorite) favNet += challengeValue;
+      if (hasBet) {
+        favNet = betOnFavorite ? Math.floor(amount * 1.5) : 0;
+        if (iAmFavorite) favNet += challengeValue;
 
-      // 2. My pick delivers (underdog) — only if pick ≠ favorite
-      let myPickNet = null;
-      if (!betOnFavorite) {
-        myPickNet = Math.floor(amount * 2.5);
-        if (pick === playerName) myPickNet += underdogPotBonus;
+        if (!betOnFavorite) {
+          myPickNet = Math.floor(amount * 2.5);
+          if (pick === playerName) myPickNet += underdogPotBonus;
+        }
+
+        if (iAmNotFavorite) {
+          iStealNet = underdogPotBonus;
+          if (betOnFavorite) iStealNet -= amount;
+          if (pick === playerName) iStealNet += Math.floor(amount * 2.5);
+        }
+
+        elseNet = betOnFavorite ? -amount : 0;
+        if (iAmFavorite) elseNet -= challengeValue;
+
+        nobodyNet = betOnFavorite ? -amount : 0;
+        if (iAmFavorite) nobodyNet -= challengeValue;
+      } else {
+        if (iAmFavorite) { favNet = challengeValue; elseNet = -challengeValue; nobodyNet = -challengeValue; }
+        if (iAmNotFavorite) iStealNet = underdogPotBonus;
       }
-
-      // 3. I steal it (only if not favorite)
-      let iStealNet = null;
-      if (iAmNotFavorite) {
-        iStealNet = underdogPotBonus;
-        if (betOnFavorite) iStealNet -= amount;
-        if (pick === playerName) iStealNet += Math.floor(amount * 2.5);
-      }
-
-      // 4. Someone else steals (not fav, not pick, not me)
-      let elseNet = betOnFavorite ? -amount : 0;
-      if (iAmFavorite) elseNet -= challengeValue;
-
-      // 5. Nobody does it
-      let nobodyNet = betOnFavorite ? -amount : 0;
-      if (iAmFavorite) nobodyNet -= challengeValue;
-
-      // Best / worst
-      const allNets = [favNet, myPickNet, iStealNet, elseNet, nobodyNet].filter(v => v !== null);
-      const bestCase = Math.max(...allNets);
-      const worstCase = Math.min(...allNets);
 
       // Actual result
-      let actualNet = null;
-      let actualLabel = null;
+      let actualNet = null, actualLabel = null;
       if (isResolved && resolution) {
         const oc = resolution.outcomeType;
         if (oc === 'favorite') {
           actualNet = favNet;
-          actualLabel = `${favorite || 'Favorite'} delivered`;
+          actualLabel = `${favorite} delivered`;
         } else if (oc === 'someone_else') {
           const ap = resolution.actualPerson;
           if (ap === playerName && iAmNotFavorite) {
@@ -110,39 +93,38 @@ export default function MyOddsPage() {
       }
 
       return {
-        question: q, index: qi, hasBet: true,
-        pick, amount, favorite, pot, challengeValue,
-        betOnFavorite, iAmFavorite, iAmNotFavorite,
-        isResolved, resolution, underdogPotBonus,
+        question: q, index: qi, hasBet, pick, amount,
+        favorite, pot, challengeValue, betOnFavorite,
+        iAmFavorite, iAmNotFavorite, underdogPotBonus,
+        isResolved, resolution, actualNet, actualLabel,
         favNet, myPickNet, iStealNet, elseNet, nobodyNet,
-        bestCase, worstCase, actualNet, actualLabel,
       };
     });
   }, [questions, playerBets, bets, players, favoriteOverrides, resolutions, playerName, config]);
 
-  const displayName = (p) => (nicknames[p] ? `${p} (${nicknames[p]})` : p);
+  const dn = (p) => (nicknames[p] ? `${p} (${nicknames[p]})` : p);
+  const fmt = (v) => (v > 0 ? `+${v}` : `${v}`);
+  const clr = (v) => (v > 0 ? 'text-accent-green' : v < 0 ? 'text-accent-red' : 'text-gray-500');
 
-  const fmt = (val) => (val > 0 ? `+${val}` : `${val}`);
-  const clr = (val) => (val > 0 ? 'text-accent-green' : val < 0 ? 'text-accent-red' : 'text-gray-500');
-
-  // Summary stats
+  // Derived data
   const withBets = analysis.filter(a => a.hasBet);
-  const totalBet = withBets.reduce((s, a) => s + (a.amount || 0), 0);
-  const maxUpside = withBets.reduce((s, a) => s + (a.bestCase || 0), 0);
-  const maxDownside = withBets.reduce((s, a) => s + (a.worstCase || 0), 0);
-  const favoriteCount = analysis.filter(a => a.iAmFavorite).length;
-  const betOnFavCount = withBets.filter(a => a.betOnFavorite).length;
-  const underdogCount = withBets.filter(a => !a.betOnFavorite).length;
-  const resolvedWithBets = withBets.filter(a => a.isResolved && a.actualNet !== null);
-  const earnedSoFar = resolvedWithBets.reduce((s, a) => s + a.actualNet, 0);
+  const totalBet = withBets.reduce((s, a) => s + a.amount, 0);
+  const resolved = analysis.filter(a => a.isResolved && a.actualNet !== null);
+  const earnedSoFar = resolved.reduce((s, a) => s + a.actualNet, 0);
+
+  const missions = analysis.filter(a => a.iAmFavorite && !a.isResolved);
+  const stealOpps = analysis.filter(a => a.iAmNotFavorite && a.underdogPotBonus > 0 && !a.isResolved)
+    .sort((a, b) => b.underdogPotBonus - a.underdogPotBonus);
+
+  const deliveredMissions = analysis.filter(a => a.iAmFavorite && a.isResolved && a.resolution?.outcomeType === 'favorite');
+  const chokedMissions = analysis.filter(a => a.iAmFavorite && a.isResolved && a.resolution?.outcomeType !== 'favorite');
+  const stolenQuestions = analysis.filter(a => a.isResolved && a.resolution?.outcomeType === 'someone_else' && a.resolution?.actualPerson === playerName);
 
   return (
     <div className="min-h-screen px-4 py-8 max-w-3xl mx-auto">
       {/* Nav */}
       <div className="flex items-center justify-between mb-6">
-        <button onClick={() => navigate('/')} className="text-gray-500 hover:text-gold-400 text-sm transition-colors cursor-pointer">
-          &larr; Home
-        </button>
+        <button onClick={() => navigate('/')} className="text-gray-500 hover:text-gold-400 text-sm transition-colors cursor-pointer">&larr; Home</button>
         <div className="flex gap-3">
           <button onClick={() => navigate('/market')} className="text-gold-400 hover:text-gold-500 text-sm font-medium transition-colors flex items-center gap-1 cursor-pointer">
             Odds Board <ChevronRight className="w-4 h-4" />
@@ -156,264 +138,250 @@ export default function MyOddsPage() {
       <h1 className="text-3xl font-black mb-1 bg-gradient-to-r from-gold-400 to-gold-500 bg-clip-text text-transparent">
         What's At Stake
       </h1>
-      <p className="text-gray-500 text-sm mb-6">
-        Tap any question to see every way it can play out.
-      </p>
+      <p className="text-gray-500 text-sm mb-6">Your personal game plan — what to deliver, where to steal, and what's on the line.</p>
 
-      {/* Summary Cards */}
-      <div className="grid grid-cols-2 gap-3 mb-4">
+      {/* ==================== SECTION 1: OVERALL SUMMARY ==================== */}
+      <div className="grid grid-cols-3 gap-3 mb-6">
         <div className="bg-dark-800 border border-dark-600 rounded-xl p-3 text-center">
           <div className="text-[10px] text-gray-500 mb-0.5">Wagered</div>
-          <div className="text-xl font-black text-gold-400">{totalBet}<span className="text-sm text-gray-600">/{config.totalBudget}</span></div>
+          <div className="text-lg font-black text-gold-400">{totalBet}</div>
+          <div className="text-[10px] text-gray-600">of {config.totalBudget}</div>
         </div>
-        {resolvedWithBets.length > 0 ? (
-          <div className={`bg-dark-800 border rounded-xl p-3 text-center ${earnedSoFar >= 0 ? 'border-accent-green/30' : 'border-accent-red/30'}`}>
-            <div className="text-[10px] text-gray-500 mb-0.5">Earned So Far</div>
-            <div className={`text-xl font-black ${clr(earnedSoFar)}`}>{fmt(earnedSoFar)}</div>
+        <div className={`bg-dark-800 border rounded-xl p-3 text-center ${resolved.length > 0 ? (earnedSoFar >= 0 ? 'border-accent-green/30' : 'border-accent-red/30') : 'border-dark-600'}`}>
+          <div className="text-[10px] text-gray-500 mb-0.5">{resolved.length > 0 ? 'Earned So Far' : 'Questions'}</div>
+          {resolved.length > 0 ? (
+            <div className={`text-lg font-black ${clr(earnedSoFar)}`}>{fmt(earnedSoFar)}</div>
+          ) : (
+            <div className="text-lg font-black text-gray-300">{withBets.length}<span className="text-gray-600 text-sm">/{questions.length}</span></div>
+          )}
+          <div className="text-[10px] text-gray-600">{resolved.length > 0 ? `${resolved.length} resolved` : 'bets placed'}</div>
+        </div>
+        <div className="bg-dark-800 border border-dark-600 rounded-xl p-3 text-center">
+          <div className="text-[10px] text-gray-500 mb-0.5">Your Roles</div>
+          <div className="flex items-center justify-center gap-2">
+            {missions.length + deliveredMissions.length + chokedMissions.length > 0 && (
+              <span className="text-accent-green font-black text-sm flex items-center gap-0.5">
+                <Crown className="w-3 h-3" />{missions.length + deliveredMissions.length + chokedMissions.length}
+              </span>
+            )}
+            <span className="text-accent-purple font-black text-sm flex items-center gap-0.5">
+              <Swords className="w-3 h-3" />{stealOpps.length + stolenQuestions.length}
+            </span>
           </div>
-        ) : (
-          <div className="bg-dark-800 border border-dark-600 rounded-xl p-3 text-center">
-            <div className="text-[10px] text-gray-500 mb-0.5">Potential Range</div>
-            <div className="flex items-center justify-center gap-1">
-              <span className="text-sm font-black text-accent-red">{maxDownside}</span>
-              <span className="text-gray-600 text-xs">to</span>
-              <span className="text-sm font-black text-accent-green">+{maxUpside}</span>
-            </div>
-          </div>
-        )}
+          <div className="text-[10px] text-gray-600">fav / steal opps</div>
+        </div>
       </div>
 
-      {/* Bet profile pills */}
-      <div className="flex flex-wrap gap-2 mb-6 text-xs">
-        <span className="bg-accent-green/10 border border-accent-green/20 rounded-full px-3 py-1 text-accent-green flex items-center gap-1">
-          <Crown className="w-3 h-3" /> {betOnFavCount} safe
-        </span>
-        <span className="bg-accent-purple/10 border border-accent-purple/20 rounded-full px-3 py-1 text-accent-purple flex items-center gap-1">
-          <Zap className="w-3 h-3" /> {underdogCount} underdog
-        </span>
-        {favoriteCount > 0 && (
-          <span className="bg-accent-green/10 border border-accent-green/20 rounded-full px-3 py-1 text-accent-green flex items-center gap-1">
-            <Target className="w-3 h-3" /> Favorite {favoriteCount}x
-          </span>
-        )}
-      </div>
+      {/* ==================== SECTION 2: MISSIONS TO DELIVER ==================== */}
+      {(missions.length > 0 || deliveredMissions.length > 0 || chokedMissions.length > 0) && (
+        <div className="mb-6">
+          <div className="flex items-center gap-2 mb-3">
+            <Crown className="w-5 h-5 text-accent-green" />
+            <h2 className="text-sm font-black text-accent-green uppercase tracking-wider">Your Missions — Deliver or Get Humbled</h2>
+          </div>
+          <p className="text-xs text-gray-500 mb-3">The group picked you as most likely. Deliver and earn the pot bonus. Choke and lose it.</p>
 
-      {/* Question List */}
-      <div className="space-y-2">
-        {analysis.map((a) => {
-          const isOpen = expandedQ === a.index;
-          const hasResult = a.isResolved && a.actualNet !== null;
+          <div className="space-y-2">
+            {/* Pending missions */}
+            {missions.map(a => (
+              <div key={a.index} className="bg-dark-800 border border-accent-green/30 rounded-xl px-4 py-3">
+                <div className="flex items-start gap-3">
+                  <span className="text-xs font-bold text-gold-500 mt-0.5 shrink-0">Q{a.index + 1}</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs text-gray-400 leading-relaxed">{a.question}</p>
+                    <div className="flex items-center gap-3 mt-2 text-[11px]">
+                      <span className="text-gray-500">Pot: <span className="text-gold-400 font-bold">{a.pot}</span></span>
+                    </div>
+                  </div>
+                  <div className="shrink-0 text-right">
+                    <div className="flex flex-col items-end gap-1">
+                      <div className="flex items-center gap-1">
+                        <TrendingUp className="w-3 h-3 text-accent-green" />
+                        <span className="text-accent-green font-black text-sm">+{a.challengeValue}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <TrendingDown className="w-3 h-3 text-accent-red" />
+                        <span className="text-accent-red font-black text-sm">−{a.challengeValue}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
 
-          return (
-            <div
-              key={a.index}
-              className={`bg-dark-800 border rounded-xl overflow-hidden transition-colors ${
-                hasResult ? 'border-accent-green/30' : 'border-dark-600'
-              }`}
-            >
-              {/* Collapsed row — always visible */}
-              <button
-                onClick={() => toggleQ(a.index)}
-                className="w-full px-4 py-3 flex items-center gap-3 text-left cursor-pointer hover:bg-dark-700/30 transition-colors"
-              >
-                {/* Q number */}
-                <span className={`text-xs font-bold shrink-0 w-7 h-7 rounded-full flex items-center justify-center ${
-                  hasResult ? 'bg-accent-green/20 text-accent-green' : 'bg-dark-700 text-gray-500'
-                }`}>
-                  {hasResult ? <Check className="w-3.5 h-3.5" /> : a.index + 1}
-                </span>
-
-                {/* Main info */}
+            {/* Delivered missions */}
+            {deliveredMissions.map(a => (
+              <div key={a.index} className="bg-accent-green/10 border border-accent-green/20 rounded-xl px-4 py-3 flex items-center gap-3">
+                <Check className="w-5 h-5 text-accent-green shrink-0" />
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs text-gray-400 truncate">{a.question}</p>
-                  {a.hasBet ? (
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className={`text-xs font-bold ${a.betOnFavorite ? 'text-accent-green' : 'text-accent-purple'}`}>
-                        {a.pick}
-                      </span>
-                      <span className="text-[10px] text-gold-400 font-bold">{a.amount}pts</span>
-                      {a.iAmFavorite && (
-                        <span className="text-[9px] bg-accent-green/20 text-accent-green px-1.5 py-0.5 rounded font-bold">FAV</span>
-                      )}
-                      {a.iAmNotFavorite && a.underdogPotBonus > 0 && (
-                        <span className="text-[9px] bg-accent-purple/15 text-accent-purple/80 px-1.5 py-0.5 rounded font-medium">
-                          steal +{a.underdogPotBonus}
+                  <span className="text-xs text-gray-500">Q{a.index + 1}</span>
+                  <span className="text-xs text-accent-green font-bold ml-2">Delivered!</span>
+                </div>
+                <span className="text-accent-green font-black text-sm">+{a.challengeValue}</span>
+              </div>
+            ))}
+
+            {/* Choked missions */}
+            {chokedMissions.map(a => (
+              <div key={a.index} className="bg-accent-red/10 border border-accent-red/20 rounded-xl px-4 py-3 flex items-center gap-3">
+                <X className="w-5 h-5 text-accent-red shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <span className="text-xs text-gray-500">Q{a.index + 1}</span>
+                  <span className="text-xs text-accent-red font-bold ml-2">
+                    {a.resolution?.outcomeType === 'someone_else'
+                      ? `Got upset by ${a.resolution.actualPerson}`
+                      : 'Nobody did it — you choked'}
+                  </span>
+                </div>
+                <span className="text-accent-red font-black text-sm">−{a.challengeValue}</span>
+              </div>
+            ))}
+          </div>
+
+          {missions.length > 0 && (
+            <div className="mt-3 bg-dark-700 rounded-lg px-3 py-2 text-center">
+              <span className="text-[11px] text-gray-400">
+                Total at stake as favorite: <span className="text-accent-green font-bold">+{missions.reduce((s, a) => s + a.challengeValue, 0)}</span> if you deliver all,{' '}
+                <span className="text-accent-red font-bold">−{missions.reduce((s, a) => s + a.challengeValue, 0)}</span> if you choke all
+              </span>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ==================== SECTION 3: STEAL OPPORTUNITIES ==================== */}
+      {(stealOpps.length > 0 || stolenQuestions.length > 0) && (
+        <div className="mb-6">
+          <div className="flex items-center gap-2 mb-3">
+            <Swords className="w-5 h-5 text-accent-purple" />
+            <h2 className="text-sm font-black text-accent-purple uppercase tracking-wider">Steal Opportunities — Be the Underdog</h2>
+          </div>
+          <p className="text-xs text-gray-500 mb-3">You're not the favorite here — but if YOU end up doing it, you pocket 75% of the pot. Ranked by biggest payoff.</p>
+
+          <div className="space-y-2">
+            {stealOpps.map(a => (
+              <div key={a.index} className="bg-dark-800 border border-accent-purple/20 rounded-xl px-4 py-3">
+                <div className="flex items-start gap-3">
+                  <span className="text-xs font-bold text-gold-500 mt-0.5 shrink-0">Q{a.index + 1}</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs text-gray-400 leading-relaxed">{a.question}</p>
+                    <div className="flex items-center gap-3 mt-2 text-[11px]">
+                      <span className="text-gray-500">Favorite: <span className="text-accent-green font-bold">{dn(a.favorite)}</span></span>
+                      <span className="text-gray-500">Pot: <span className="text-gold-400 font-bold">{a.pot}</span></span>
+                    </div>
+                  </div>
+                  <div className="shrink-0">
+                    <div className="bg-accent-purple/15 rounded-lg px-2.5 py-1.5 text-center">
+                      <div className="text-accent-purple font-black text-sm">+{a.underdogPotBonus}</div>
+                      <div className="text-[9px] text-accent-purple/60">if you steal</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {stolenQuestions.map(a => (
+              <div key={a.index} className="bg-accent-purple/10 border border-accent-purple/20 rounded-xl px-4 py-3 flex items-center gap-3">
+                <Flame className="w-5 h-5 text-accent-purple shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <span className="text-xs text-gray-500">Q{a.index + 1}</span>
+                  <span className="text-xs text-accent-purple font-bold ml-2">You stole it from {dn(a.favorite)}!</span>
+                </div>
+                <span className="text-accent-purple font-black text-sm">+{a.underdogPotBonus}</span>
+              </div>
+            ))}
+          </div>
+
+          {stealOpps.length > 0 && (
+            <div className="mt-3 bg-dark-700 rounded-lg px-3 py-2 text-center">
+              <span className="text-[11px] text-gray-400">
+                Max steal potential: <span className="text-accent-purple font-bold">+{stealOpps.reduce((s, a) => s + a.underdogPotBonus, 0)}</span> if you steal them all
+              </span>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ==================== SECTION 4: QUESTION BY QUESTION ==================== */}
+      <div className="mb-6">
+        <div className="flex items-center gap-2 mb-3">
+          <Target className="w-5 h-5 text-gold-400" />
+          <h2 className="text-sm font-black text-gray-200 uppercase tracking-wider">All Bets — Question by Question</h2>
+        </div>
+
+        <div className="rounded-xl border border-dark-600 overflow-hidden divide-y divide-dark-700">
+          {analysis.map((a) => {
+            const hasResult = a.isResolved && a.actualNet !== null;
+
+            return (
+              <div key={a.index} className={`${hasResult ? 'bg-dark-800/80' : 'bg-dark-800'}`}>
+                {/* Main row */}
+                <div className="px-4 py-3 flex items-center gap-3">
+                  {/* Q number */}
+                  <span className={`text-[10px] font-bold shrink-0 w-6 h-6 rounded-full flex items-center justify-center ${
+                    hasResult
+                      ? a.actualNet > 0 ? 'bg-accent-green/20 text-accent-green' : a.actualNet < 0 ? 'bg-accent-red/20 text-accent-red' : 'bg-dark-700 text-gray-500'
+                      : 'bg-dark-700 text-gray-500'
+                  }`}>
+                    {hasResult ? <Check className="w-3 h-3" /> : a.index + 1}
+                  </span>
+
+                  {/* Bet details */}
+                  <div className="flex-1 min-w-0">
+                    {a.hasBet ? (
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className={`text-xs font-bold ${a.betOnFavorite ? 'text-accent-green' : 'text-accent-purple'}`}>
+                          {a.pick}
                         </span>
-                      )}
-                    </div>
-                  ) : (
-                    <div className="text-[10px] text-gray-600 mt-0.5 italic">No bet placed</div>
-                  )}
-                </div>
-
-                {/* Right side: result or range */}
-                <div className="shrink-0 text-right">
-                  {hasResult ? (
-                    <div className={`text-lg font-black ${clr(a.actualNet)}`}>{fmt(a.actualNet)}</div>
-                  ) : a.hasBet ? (
-                    <div className="flex flex-col items-end">
-                      <div className="flex items-center gap-1.5 text-[11px]">
-                        <span className="text-accent-red font-bold">{a.worstCase}</span>
-                        <div className="w-10 h-1.5 bg-dark-600 rounded-full overflow-hidden">
-                          <div className="h-full bg-gradient-to-r from-accent-red to-accent-green rounded-full" style={{ width: '100%' }} />
-                        </div>
-                        <span className="text-accent-green font-bold">+{a.bestCase}</span>
+                        <span className="text-[10px] text-gold-400 font-bold">{a.amount}pts</span>
+                        {a.betOnFavorite ? (
+                          <span className="text-[9px] bg-accent-green/15 text-accent-green px-1.5 py-0.5 rounded font-bold">SAFE</span>
+                        ) : (
+                          <span className="text-[9px] bg-accent-purple/15 text-accent-purple px-1.5 py-0.5 rounded font-bold">UNDERDOG</span>
+                        )}
+                        {a.iAmFavorite && <Crown className="w-3 h-3 text-accent-green" />}
                       </div>
-                    </div>
-                  ) : null}
-                </div>
+                    ) : (
+                      <span className="text-[10px] text-gray-600 italic">No bet</span>
+                    )}
+                    {hasResult && (
+                      <div className="text-[10px] text-gray-500 mt-0.5">{a.actualLabel}</div>
+                    )}
+                  </div>
 
-                <ChevronDown className={`w-4 h-4 text-gray-600 shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
-              </button>
-
-              {/* Expanded detail */}
-              {isOpen && (
-                <div className="px-4 pb-4 border-t border-dark-700">
-                  {/* Full question text */}
-                  <p className="text-sm text-gray-300 py-3 leading-relaxed">{a.question}</p>
-
-                  {/* Role badges */}
-                  {a.iAmFavorite && (
-                    <div className="flex items-center gap-2 bg-accent-green/10 border border-accent-green/30 rounded-lg px-3 py-2 mb-3">
-                      <Crown className="w-4 h-4 text-accent-green shrink-0" />
-                      <div className="flex-1">
-                        <span className="text-xs font-bold text-accent-green">You're the Favorite</span>
-                        <span className="text-[10px] text-gray-500 ml-2">Pot: {a.pot}pts</span>
+                  {/* Outcome: resolved or potential */}
+                  <div className="shrink-0 text-right">
+                    {hasResult ? (
+                      <span className={`text-sm font-black ${clr(a.actualNet)}`}>{fmt(a.actualNet)}</span>
+                    ) : a.hasBet ? (
+                      <div className="flex items-center gap-2 text-[11px]">
+                        {a.betOnFavorite ? (
+                          <>
+                            <span className="text-accent-green font-bold">{fmt(a.favNet)}</span>
+                            <span className="text-gray-600">/</span>
+                            <span className="text-accent-red font-bold">{a.nobodyNet}</span>
+                          </>
+                        ) : (
+                          <>
+                            <span className="text-accent-green font-bold">{fmt(a.myPickNet !== null ? a.myPickNet : 0)}</span>
+                            <span className="text-gray-600">/</span>
+                            <span className="text-gray-500">0</span>
+                          </>
+                        )}
                       </div>
-                      <div className="text-right text-[11px]">
+                    ) : a.iAmFavorite ? (
+                      <div className="flex items-center gap-1 text-[11px]">
                         <span className="text-accent-green font-bold">+{a.challengeValue}</span>
-                        <span className="text-gray-600 mx-1">/</span>
+                        <span className="text-gray-600">/</span>
                         <span className="text-accent-red font-bold">−{a.challengeValue}</span>
                       </div>
-                    </div>
-                  )}
-
-                  {a.iAmNotFavorite && a.pot > 0 && (
-                    <div className="flex items-center gap-2 bg-accent-purple/10 border border-accent-purple/30 rounded-lg px-3 py-2 mb-3">
-                      <Swords className="w-4 h-4 text-accent-purple shrink-0" />
-                      <div className="flex-1">
-                        <span className="text-xs font-bold text-accent-purple">Steal Opportunity</span>
-                        <span className="text-[10px] text-gray-500 ml-2">vs {a.favorite}</span>
-                      </div>
-                      <span className="text-accent-purple font-bold text-sm">+{a.underdogPotBonus}</span>
-                    </div>
-                  )}
-
-                  {/* Actual result banner */}
-                  {hasResult && (
-                    <div className={`rounded-lg px-3 py-2.5 mb-3 flex items-center justify-between ${
-                      a.actualNet > 0 ? 'bg-accent-green/15 border border-accent-green/30' :
-                      a.actualNet < 0 ? 'bg-accent-red/15 border border-accent-red/30' :
-                      'bg-dark-700 border border-dark-600'
-                    }`}>
-                      <div className="flex items-center gap-2">
-                        <Check className={`w-4 h-4 ${a.actualNet >= 0 ? 'text-accent-green' : 'text-accent-red'}`} />
-                        <span className="text-xs text-gray-300 font-medium">{a.actualLabel}</span>
-                      </div>
-                      <span className={`text-lg font-black ${clr(a.actualNet)}`}>{fmt(a.actualNet)}</span>
-                    </div>
-                  )}
-
-                  {a.hasBet ? (
-                    <>
-                      {/* Bet info */}
-                      <div className="flex items-center gap-3 mb-3 text-sm">
-                        <span className="text-gray-500">Your pick:</span>
-                        <span className={`font-bold ${a.betOnFavorite ? 'text-accent-green' : 'text-accent-purple'}`}>
-                          {displayName(a.pick)}
-                        </span>
-                        <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold ${
-                          a.betOnFavorite ? 'bg-accent-green/20 text-accent-green' : 'bg-accent-purple/20 text-accent-purple'
-                        }`}>
-                          {a.betOnFavorite ? 'FAV' : 'UNDERDOG'}
-                        </span>
-                        <span className="text-gold-400 font-bold ml-auto">{a.amount} pts</span>
-                      </div>
-
-                      {/* Scenario table */}
-                      <div className="text-[10px] text-gray-600 font-semibold uppercase tracking-wider mb-1.5">What could happen</div>
-                      <div className="rounded-lg border border-dark-600 overflow-hidden divide-y divide-dark-700">
-                        {/* Row: Favorite delivers */}
-                        <ScenarioRow
-                          icon={<Crown className="w-3.5 h-3.5 text-accent-green" />}
-                          label={`${a.favorite || '—'} delivers`}
-                          sublabel={a.betOnFavorite ? `${a.amount} × 1.5${a.iAmFavorite ? ' + pot bonus' : ''}` : a.iAmFavorite ? 'pot bonus' : null}
-                          net={a.favNet}
-                          isActual={hasResult && a.actualNet === a.favNet && a.resolution?.outcomeType === 'favorite'}
-                          fmt={fmt} clr={clr}
-                        />
-
-                        {/* Row: You steal it */}
-                        {a.iStealNet !== null && (
-                          <ScenarioRow
-                            icon={<Swords className="w-3.5 h-3.5 text-accent-purple" />}
-                            label="YOU steal it"
-                            sublabel={`75% pot${a.pick === playerName ? ' + 2.5× bet' : ''}${a.betOnFavorite ? ' − lost bet' : ''}`}
-                            net={a.iStealNet}
-                            highlight="purple"
-                            isActual={hasResult && a.actualLabel === 'You stole it!'}
-                            fmt={fmt} clr={clr}
-                          />
-                        )}
-
-                        {/* Row: Your pick steals it (if underdog and not self) */}
-                        {a.myPickNet !== null && a.pick !== playerName && (
-                          <ScenarioRow
-                            icon={<Zap className="w-3.5 h-3.5 text-accent-purple" />}
-                            label={`${a.pick} steals it`}
-                            sublabel={`${a.amount} × 2.5`}
-                            net={a.myPickNet}
-                            isActual={hasResult && a.resolution?.outcomeType === 'someone_else' && a.resolution?.actualPerson === a.pick}
-                            fmt={fmt} clr={clr}
-                          />
-                        )}
-
-                        {/* Row: Someone else steals */}
-                        <ScenarioRow
-                          icon={<AlertTriangle className="w-3.5 h-3.5 text-yellow-400" />}
-                          label={a.betOnFavorite ? 'Someone else steals it' : 'Wrong underdog wins'}
-                          sublabel={a.betOnFavorite ? `−${a.amount} lost bet${a.iAmFavorite ? ' − pot penalty' : ''}` : a.iAmFavorite ? 'pot penalty' : null}
-                          net={a.elseNet}
-                          isActual={hasResult && a.resolution?.outcomeType === 'someone_else' && a.actualNet === a.elseNet && a.actualLabel !== 'You stole it!'}
-                          fmt={fmt} clr={clr}
-                        />
-
-                        {/* Row: Nobody */}
-                        <ScenarioRow
-                          icon={<Minus className="w-3.5 h-3.5 text-gray-500" />}
-                          label="Nobody does it"
-                          sublabel={a.betOnFavorite ? `−${a.amount} lost bet${a.iAmFavorite ? ' − pot penalty' : ''}` : a.iAmFavorite ? 'pot penalty' : null}
-                          net={a.nobodyNet}
-                          isActual={hasResult && a.resolution?.outcomeType === 'nobody'}
-                          fmt={fmt} clr={clr}
-                        />
-                      </div>
-
-                      {/* Range bar */}
-                      <div className="mt-3 flex items-center gap-2 text-[11px]">
-                        <span className="text-accent-red font-bold w-10 text-right">{fmt(a.worstCase)}</span>
-                        <div className="flex-1 h-2 bg-dark-700 rounded-full overflow-hidden relative">
-                          {a.worstCase < 0 && a.bestCase > 0 && (
-                            <div
-                              className="absolute top-0 bottom-0 w-px bg-gray-500 z-10"
-                              style={{ left: `${(Math.abs(a.worstCase) / (a.bestCase - a.worstCase)) * 100}%` }}
-                            />
-                          )}
-                          <div className="h-full bg-gradient-to-r from-accent-red via-yellow-400 to-accent-green rounded-full" />
-                        </div>
-                        <span className="text-accent-green font-bold w-10">{fmt(a.bestCase)}</span>
-                      </div>
-                    </>
-                  ) : (
-                    <div className="text-xs text-gray-600 italic">
-                      No bet placed — {a.iAmFavorite ? 'but you\'re still the favorite with stakes above' : a.iAmNotFavorite ? 'steal opportunity still applies during the trip' : 'no exposure'}
-                    </div>
-                  )}
+                    ) : null}
+                  </div>
                 </div>
-              )}
-            </div>
-          );
-        })}
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {/* Bottom nav */}
@@ -431,25 +399,6 @@ export default function MyOddsPage() {
           Who's Winning?
         </button>
       </div>
-    </div>
-  );
-}
-
-function ScenarioRow({ icon, label, sublabel, net, highlight, isActual, fmt, clr }) {
-  return (
-    <div className={`flex items-center gap-3 px-3 py-2.5 ${
-      isActual ? 'bg-accent-green/10' :
-      highlight === 'purple' ? 'bg-accent-purple/5' : 'bg-dark-800'
-    }`}>
-      <div className="shrink-0">{icon}</div>
-      <div className="flex-1 min-w-0">
-        <div className={`text-xs font-medium ${isActual ? 'text-gray-200' : 'text-gray-400'}`}>{label}</div>
-        {sublabel && <div className="text-[10px] text-gray-600">{sublabel}</div>}
-      </div>
-      <div className={`text-sm font-black shrink-0 ${net === 0 ? 'text-gray-600' : clr(net)}`}>
-        {net === 0 ? '—' : fmt(net)}
-      </div>
-      {isActual && <Check className="w-3.5 h-3.5 text-accent-green shrink-0" />}
     </div>
   );
 }
