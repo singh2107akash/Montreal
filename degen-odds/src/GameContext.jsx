@@ -133,6 +133,8 @@ export function GameProvider({ children }) {
 
   const placeBet = useCallback((player, questionIndex, pick, amount) => {
     const current = stateRef.current;
+    // Block bets while still loading initial state
+    if (loading) return;
     // Block bets if betting is closed, player is locked, or question is already resolved
     if (current.bettingClosed) return;
     if (current.lockedPlayers.includes(player)) return;

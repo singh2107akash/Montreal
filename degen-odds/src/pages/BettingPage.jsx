@@ -8,7 +8,7 @@ export default function BettingPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const {
-    players, questions, bets, lockedPlayers, config, nicknames, saving,
+    players, questions, bets, lockedPlayers, config, nicknames, saving, loading,
     placeBet, lockPlayer, bettingClosed,
   } = useGame();
 
@@ -151,6 +151,14 @@ export default function BettingPage() {
     setLocalAmount(bet?.amount ? String(bet.amount) : '');
     setError('');
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-gray-500 text-sm">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen px-4 py-8 max-w-2xl mx-auto">
