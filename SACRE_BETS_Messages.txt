@@ -1,0 +1,164 @@
+=====================================
+WHATSAPP GROUP MESSAGE
+=====================================
+
+Alright boys, listen up. We've got a little game running for the Montreal trip.
+
+SACRÉ BETS — a betting game where you bet on who's most likely to do what during the trip. 26 questions, 250 points to spend. You place your bets BEFORE the trip, and during the trip we see who was right.
+
+HOW TO GET SET UP:
+
+1. Open this link: [LINK]
+2. You'll see a screen asking for a Game Code — I'll send it to you separately (do NOT share it outside this group)
+3. Enter the game code
+4. Click on your name from the player list
+5. Create a password — this is your personal password so nobody can mess with your bets. Remember it.
+6. That's it — you're in
+
+ONCE YOU'RE IN:
+- Go to "Place Bets" to start betting
+- You have 250 points to spread across 26 questions
+- Minimum 5 points per question (you don't have to bet on every question)
+- For each question, pick WHO you think will do it and how much you want to bet
+- Once you're happy, lock in your bets — after locking, you can't change them unless I unlock everyone
+- You can check "The Odds Board" to see who the group is betting on
+- Check "What's At Stake" to see your personal win/loss scenarios for every question
+
+HOW TO PLAY: There's a full "How to Play" section on the home page of the app — tap it to expand. Also see the attached instructions sheet for the full breakdown.
+
+Get your bets in before we leave. No excuses.
+
+
+=====================================
+INSTRUCTIONS SHEET (FOR WORD DOCUMENT)
+=====================================
+
+
+SACRÉ BETS — How to Play
+=========================
+
+OBJECTIVE
+---------
+You have 250 points to bet across 26 questions about who's most likely to do something during the Montreal trip. Bet smart, read the group, and finish with the highest score.
+
+
+1. BEFORE THE TRIP — PLACE YOUR BETS
+-------------------------------------
+- There are 26 "Who is most likely to..." questions.
+- For each question, pick one person you think will do it and bet points on them (minimum 5 points per question).
+- You do NOT have to bet on every question — spread your 250 points however you want.
+- You can bet on yourself.
+- Once you're done, lock in your bets. After locking, bets cannot be changed unless the admin unlocks everyone.
+- All bets are placed BEFORE the trip. No live betting.
+
+
+2. AFTER BETTING CLOSES — KEY TERMS
+------------------------------------
+Once everyone has locked in, the system calculates these for each question:
+
+- The Favorite — The person who received the most total points bet on them for that question. This is who the group collectively thinks will do it.
+- The Underdog — Anyone who is NOT the favorite. If you bet on someone who isn't the favorite, you're making an underdog bet.
+- The Pot — The total points bet on the favorite for that question.
+- Challenge Value — 50% of the Pot. This is what the favorite personally stands to win or lose.
+
+Example: For a question, Rahul gets the most bets totaling 60 pts. Favorite = Rahul, Pot = 60, Challenge Value = 30.
+
+
+3. DURING THE TRIP — THREE OUTCOMES
+------------------------------------
+Each question is resolved during the trip in one of three ways:
+
+A. THE FAVORITE DOES IT
+  - Anyone who bet on the favorite earns 1.5x their bet
+  - The favorite personally earns +50% of the Pot (bonus for delivering)
+  - Everyone else — no effect
+  Example: Pot = 60. You bet 10 on the favorite → +15. The favorite → +30 bonus.
+
+B. SOMEONE ELSE DOES IT (UNDERDOG STEALS IT)
+  This is the big swing outcome:
+  - Anyone who bet on the favorite loses their full bet
+  - Anyone who correctly bet on the actual person earns 2.5x their bet
+  - The favorite loses 50% of the Pot (penalty for choking)
+  - The person who actually did it earns 75% of the Pot (underdog bonus)
+  - Everyone who bet on someone else (wrong) — no effect
+  Example: Pot = 60. You bet 10 on the favorite → -10. You bet 10 on the actual person → +25. The favorite → -30. The person who did it → +45.
+
+C. NOBODY DOES IT
+  - Anyone who bet on the favorite loses their full bet
+  - The favorite loses 50% of the Pot
+  - Everyone else — no effect
+  Example: Pot = 60. You bet 10 on the favorite → -10. The favorite → -30.
+
+
+4. HOW SCORING WORKS
+---------------------
+Points move in two independent ways. You can earn from BOTH on the same question.
+
+A. Bet Results (based on who you bet on):
+  Correct bet on the favorite        → +1.5x your bet
+  Correct bet on a non-favorite      → +2.5x your bet
+  Wrong bet on the favorite          → lose full bet
+  Wrong bet on anyone else           → no effect
+
+B. Personal Results (if you're personally involved):
+  You're the favorite & you deliver      → +50% of the Pot
+  You're the favorite & you don't deliver → -50% of the Pot
+  You're the underdog & you steal it     → +75% of the Pot
+
+
+5. HOW TO WIN
+--------------
+After all 26 questions are resolved, add up all your gains and losses — from your bets, your personal bonuses, and your personal penalties. The player with the highest total score wins.
+
+
+QUICK REFERENCE — PAYOUT CHEAT SHEET
+--------------------------------------
+Bet Results:
+  Correct bet on favorite      → +1.5x your bet
+  Correct bet on someone else  → +2.5x your bet
+  Wrong bet on favorite        → lose full bet
+  Wrong bet on someone else    → no effect
+
+Personal Results:
+  Favorite delivers     → +50% of Pot
+  Favorite chokes       → -50% of Pot
+  Underdog steals it    → +75% of Pot
+
+
+PAGES IN THE APP
+-----------------
+- Place Bets — Where you pick a player and bet points for each question. This is the only page where you make choices.
+- The Odds Board — See every question's favorite, pot size, and who the group is betting on. Use this to spot big pots you might steal.
+- What's At Stake — Your personal breakdown. For each question, see exactly how much you win or lose under every possible outcome. Also shows if you're the favorite or have an underdog opportunity.
+- Who's Winning — The leaderboard. Shows total scores, who's been the favorite, who delivered, who choked, and who hijacked questions.
+- Judgment Day — (Admin only) Where the admin resolves each question during the trip.
+
+
+THE 26 QUESTIONS
+-----------------
+1. Who is most likely to be the first person to complain about the car, the temperature, the drive, or say that you all should have just flown?
+2. Who is most likely to be the reason you're late to literally everything?
+3. Who is most likely to be the first person to become best friends with a stranger?
+4. Who is most likely to be the first person to act as a wingman for someone?
+5. Who is most likely to be the first person to suggest getting shots?
+6. Who is most likely to be the first person to chug a full can of beer?
+7. Who is most likely to be the first person to become too loud at dinner?
+8. Who is most likely to be the first person to record a video with a stranger in it and make the stranger say something in Punjabi?
+9. Who is most likely to get sentimental and cry?
+10. Who is most likely to be the first person to lose their phone or wallet?
+11. Who is most likely to yak on the first night?
+12. Who is most likely to be the first person to wake up on Saturday morning?
+13. Who is most likely to be the first person to fall asleep on Friday night?
+14. Who is most likely to end up on the double bed or sofa bed?
+15. Who is most likely to get the bachelor trip's best group photo?
+16. Who is most likely to get kicked out of a bar?
+17. Who is least likely to take their shirt off?
+18. Who is most likely to be the last person to fall asleep on Friday night?
+19. Who is most likely to disappear for two hours and come back like nothing happened?
+20. Who is most likely to try speaking French and completely butcher it?
+21. Who is most likely to order a huge poutine and not come close to finishing it?
+22. Who is most likely to miss breakfast or lunch on Saturday?
+23. Who is most likely to say "one more" 6 times in a row?
+24. Who is most likely to be the last one to leave the bar?
+25. Who is most likely to lose their voice by Saturday afternoon?
+26. Who is most likely to wake up needing a full debrief and still say, "I wasn't even that drunk"?
