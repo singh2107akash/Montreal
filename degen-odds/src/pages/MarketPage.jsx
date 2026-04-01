@@ -107,7 +107,7 @@ export default function MarketPage() {
               {/* Favorite / Pot / Challenge */}
               <div className="flex flex-wrap gap-4 mb-3">
                 <div className="flex items-center gap-2">
-                  <Crown className="w-4 h-4 text-gold-400" />
+                  <Crown className="w-4 h-4 text-accent-green" />
                   <span className="text-sm font-semibold text-gray-200">
                     {md.favorite ? displayName(md.favorite) : 'No bets yet'}
                   </span>
@@ -141,7 +141,7 @@ export default function MarketPage() {
                         <button
                           key={tp}
                           onClick={() => setFavoriteOverride(md.index, tp)}
-                          className="bg-dark-700 hover:bg-gold-500/20 border border-dark-500 hover:border-gold-500 text-gray-300 hover:text-gold-400 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer"
+                          className="bg-dark-700 hover:bg-accent-green/20 border border-dark-500 hover:border-accent-green text-gray-300 hover:text-accent-green px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer"
                         >
                           Set {tp} as favorite
                         </button>
@@ -173,25 +173,25 @@ export default function MarketPage() {
                       <div key={p}>
                         <div className="flex items-center justify-between text-sm mb-0.5">
                           <div className="flex items-center gap-2">
-                            {isFav && <Crown className="w-3.5 h-3.5 text-gold-400" />}
-                            <span className={`font-medium ${isFav ? 'text-gold-400' : 'text-gray-300'}`}>
+                            {isFav && <Crown className="w-3.5 h-3.5 text-accent-green" />}
+                            <span className={`font-medium ${isFav ? 'text-accent-green' : 'text-gray-300'}`}>
                               {displayName(p)}
                             </span>
                             {isFav && (
-                              <span className="text-[10px] bg-gold-500/20 text-gold-400 px-1.5 py-0.5 rounded font-bold">
+                              <span className="text-[10px] bg-accent-green/20 text-accent-green px-1.5 py-0.5 rounded font-bold">
                                 FAVORITE
                               </span>
                             )}
                           </div>
                           <div className="flex items-center gap-2 text-xs">
                             <span className="text-gray-500">{backers} {backers === 1 ? 'bet' : 'bets'}</span>
-                            <span className={`font-bold ${isFav ? 'text-gold-400' : 'text-gray-400'}`}>{pts} pts</span>
+                            <span className={`font-bold ${isFav ? 'text-accent-green' : 'text-gray-400'}`}>{pts} pts</span>
                           </div>
                         </div>
                         <div className="w-full bg-dark-700 rounded-full h-1.5">
                           <div
                             className={`h-1.5 rounded-full transition-all duration-300 ${
-                              isFav ? 'bg-gold-500' : 'bg-gray-600'
+                              isFav ? 'bg-accent-green' : 'bg-gray-600'
                             }`}
                             style={{ width: `${barWidth}%` }}
                           />
