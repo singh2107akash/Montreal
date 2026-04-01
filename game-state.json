@@ -1595,6 +1595,13 @@
       "actualPerson": "Surkh",
       "favoriteOverride": null,
       "resolvedAt": "2026-04-01T02:52:37.432Z"
+    },
+    "11": {
+      "resolved": true,
+      "outcomeType": "favorite",
+      "actualPerson": null,
+      "favoriteOverride": null,
+      "resolvedAt": "2026-04-01T03:38:34.630Z"
     }
   },
   "favoriteOverrides": {},
