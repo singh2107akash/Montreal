@@ -384,6 +384,30 @@ export default function LandingPage() {
                 </p>
               </div>
 
+              {/* Quick Reference */}
+              <div className="bg-dark-700 rounded-lg p-3">
+                <div className="text-gold-400 font-bold text-xs mb-2">QUICK REFERENCE</div>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[11px]">
+                  <div className="text-gray-400 font-semibold col-span-2 mb-0.5">Bet Results</div>
+                  <div className="text-gray-500">Correct bet on favorite</div>
+                  <div className="text-accent-green font-bold">+1.5× your bet</div>
+                  <div className="text-gray-500">Correct bet on someone else</div>
+                  <div className="text-accent-green font-bold">+2.5× your bet</div>
+                  <div className="text-gray-500">Wrong bet on favorite</div>
+                  <div className="text-accent-red font-bold">−full bet</div>
+                  <div className="text-gray-500">Wrong bet on someone else</div>
+                  <div className="text-gray-500 font-bold">no effect</div>
+                  <div className="col-span-2 border-t border-dark-600 my-1"></div>
+                  <div className="text-gray-400 font-semibold col-span-2 mb-0.5">Personal Results</div>
+                  <div className="text-gray-500">Favorite delivers</div>
+                  <div className="text-accent-green font-bold">+50% of Pot</div>
+                  <div className="text-gray-500">Favorite chokes</div>
+                  <div className="text-accent-red font-bold">−50% of Pot</div>
+                  <div className="text-gray-500">Underdog steals it</div>
+                  <div className="text-accent-purple font-bold">+75% of Pot</div>
+                </div>
+              </div>
+
               {/* Pages Guide */}
               <div>
                 <h3 className="text-gold-400 font-bold text-sm mb-2 uppercase tracking-wider">Pages in the App</h3>
@@ -408,30 +432,6 @@ export default function LandingPage() {
                     <span className="text-gray-400 font-bold text-xs shrink-0 w-28">Judgment Day</span>
                     <span className="text-gray-400 text-xs">(Admin only) Where the admin resolves each question during the trip — did the favorite do it, did someone else, or nobody?</span>
                   </div>
-                </div>
-              </div>
-
-              {/* Quick Reference */}
-              <div className="bg-dark-700 rounded-lg p-3">
-                <div className="text-gold-400 font-bold text-xs mb-2">QUICK REFERENCE</div>
-                <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[11px]">
-                  <div className="text-gray-400 font-semibold col-span-2 mb-0.5">Bet Results</div>
-                  <div className="text-gray-500">Correct bet on favorite</div>
-                  <div className="text-accent-green font-bold">+1.5× your bet</div>
-                  <div className="text-gray-500">Correct bet on someone else</div>
-                  <div className="text-accent-green font-bold">+2.5× your bet</div>
-                  <div className="text-gray-500">Wrong bet on favorite</div>
-                  <div className="text-accent-red font-bold">−full bet</div>
-                  <div className="text-gray-500">Wrong bet on someone else</div>
-                  <div className="text-gray-500 font-bold">no effect</div>
-                  <div className="col-span-2 border-t border-dark-600 my-1"></div>
-                  <div className="text-gray-400 font-semibold col-span-2 mb-0.5">Personal Results</div>
-                  <div className="text-gray-500">Favorite delivers</div>
-                  <div className="text-accent-green font-bold">+50% of Pot</div>
-                  <div className="text-gray-500">Favorite chokes</div>
-                  <div className="text-accent-red font-bold">−50% of Pot</div>
-                  <div className="text-gray-500">Underdog steals it</div>
-                  <div className="text-accent-purple font-bold">+75% of Pot</div>
                 </div>
               </div>
             </div>
