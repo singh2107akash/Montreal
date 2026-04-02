@@ -115,6 +115,10 @@
       "24": {
         "pick": "Harman",
         "amount": 5
+      },
+      "25": {
+        "pick": "Jodha",
+        "amount": 5
       }
     }
   },
