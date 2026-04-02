@@ -351,6 +351,10 @@
       "3": {
         "pick": "Aman",
         "amount": 5
+      },
+      "4": {
+        "pick": "Gagan",
+        "amount": 10
       }
     }
   },
