@@ -411,6 +411,10 @@
       "18": {
         "pick": "Goldy",
         "amount": 5
+      },
+      "25": {
+        "pick": "Hinda",
+        "amount": 5
       }
     }
   },
