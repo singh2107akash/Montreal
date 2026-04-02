@@ -102,7 +102,7 @@
       },
       "19": {
         "pick": "Goldy",
-        "amount": 10
+        "amount": 5
       },
       "20": {
         "pick": "Robby",
@@ -148,6 +148,10 @@
       },
       "14": {
         "pick": "Akash",
+        "amount": 5
+      },
+      "15": {
+        "pick": "Goldy",
         "amount": 5
       },
       "16": {
