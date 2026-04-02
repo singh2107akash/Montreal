@@ -85,6 +85,10 @@
       "16": {
         "pick": "Goldy",
         "amount": 40
+      },
+      "17": {
+        "pick": "Robby",
+        "amount": 5
       }
     },
     "Matab": {
