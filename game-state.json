@@ -106,7 +106,7 @@
       },
       "20": {
         "pick": "Robby",
-        "amount": 5
+        "amount": 10
       },
       "21": {
         "pick": "Randy",
@@ -160,10 +160,6 @@
       },
       "17": {
         "pick": "Harman",
-        "amount": 5
-      },
-      "18": {
-        "pick": "Randy",
         "amount": 5
       }
     }
