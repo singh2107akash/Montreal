@@ -334,6 +334,12 @@
         "pick": "Hinda",
         "amount": 5
       }
+    },
+    "Goldy": {
+      "0": {
+        "pick": "Randy",
+        "amount": 5
+      }
     }
   },
   "lockedPlayers": [
