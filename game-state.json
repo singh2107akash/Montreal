@@ -407,6 +407,10 @@
       "17": {
         "pick": "Harman",
         "amount": 15
+      },
+      "18": {
+        "pick": "Goldy",
+        "amount": 5
       }
     }
   },
