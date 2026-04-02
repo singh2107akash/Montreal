@@ -403,6 +403,10 @@
       "16": {
         "pick": "Randy",
         "amount": 20
+      },
+      "17": {
+        "pick": "Harman",
+        "amount": 15
       }
     }
   },
