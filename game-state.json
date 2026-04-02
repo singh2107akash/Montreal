@@ -161,6 +161,10 @@
       "17": {
         "pick": "Harman",
         "amount": 5
+      },
+      "19": {
+        "pick": "Robby",
+        "amount": 5
       }
     }
   },
