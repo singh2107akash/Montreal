@@ -109,6 +109,10 @@
       "22": {
         "pick": "Robby",
         "amount": 5
+      },
+      "23": {
+        "pick": "Matab",
+        "amount": 5
       }
     },
     "Matab": {
