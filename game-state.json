@@ -50,7 +50,7 @@
       },
       "6": {
         "pick": "Goldy",
-        "amount": 10
+        "amount": 5
       },
       "7": {
         "pick": "Dilaver",
@@ -130,6 +130,10 @@
       }
     },
     "Aman": {
+      "0": {
+        "pick": "Robby",
+        "amount": 10
+      },
       "1": {
         "pick": "Matab",
         "amount": 10
