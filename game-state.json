@@ -130,6 +130,10 @@
       }
     },
     "Aman": {
+      "0": {
+        "pick": "Robby",
+        "amount": 15
+      },
       "1": {
         "pick": "Surkh",
         "amount": 15
