@@ -16,7 +16,14 @@
     "Goldy"
   ],
   "nicknames": {},
-  "bets": {},
+  "bets": {
+    "Robby": {
+      "0": {
+        "pick": "Hinda",
+        "amount": 20
+      }
+    }
+  },
   "lockedPlayers": [],
   "resolutions": {},
   "favoriteOverrides": {},
