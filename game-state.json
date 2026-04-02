@@ -26,7 +26,7 @@
     "Matab": {
       "0": {
         "pick": "Aman",
-        "amount": 5
+        "amount": 15
       },
       "1": {
         "pick": "Harman",
@@ -169,10 +169,6 @@
       "20": {
         "pick": "Aman",
         "amount": 5
-      },
-      "21": {
-        "pick": "Randy",
-        "amount": 15
       },
       "22": {
         "pick": "Matab",
