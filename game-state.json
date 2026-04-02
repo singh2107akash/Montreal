@@ -145,6 +145,10 @@
       "11": {
         "pick": "Dilaver",
         "amount": 5
+      },
+      "13": {
+        "pick": "Harman",
+        "amount": 5
       }
     }
   },
