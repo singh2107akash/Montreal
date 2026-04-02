@@ -229,6 +229,10 @@
       "24": {
         "pick": "Jodha",
         "amount": 5
+      },
+      "25": {
+        "pick": "Hinda",
+        "amount": 10
       }
     }
   },
