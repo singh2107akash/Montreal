@@ -170,6 +170,10 @@
         "pick": "Randy",
         "amount": 5
       },
+      "10": {
+        "pick": "Jodha",
+        "amount": 10
+      },
       "11": {
         "pick": "Dilaver",
         "amount": 5
