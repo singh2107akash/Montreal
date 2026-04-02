@@ -24,6 +24,10 @@
       }
     },
     "Matab": {
+      "0": {
+        "pick": "Aman",
+        "amount": 5
+      },
       "1": {
         "pick": "Harman",
         "amount": 15
