@@ -34,7 +34,7 @@
       },
       "2": {
         "pick": "Harjit",
-        "amount": 5
+        "amount": 10
       },
       "3": {
         "pick": "Robby",
@@ -161,10 +161,6 @@
       "17": {
         "pick": "Harman",
         "amount": 5
-      },
-      "18": {
-        "pick": "Randy",
-        "amount": 10
       },
       "19": {
         "pick": "Robby",
