@@ -114,7 +114,7 @@
       },
       "22": {
         "pick": "Harman",
-        "amount": 20
+        "amount": 5
       },
       "23": {
         "pick": "Pardeep",
@@ -168,6 +168,10 @@
       },
       "20": {
         "pick": "Aman",
+        "amount": 5
+      },
+      "22": {
+        "pick": "Matab",
         "amount": 5
       }
     }
