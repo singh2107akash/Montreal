@@ -145,6 +145,10 @@
       "11": {
         "pick": "Dilaver",
         "amount": 5
+      },
+      "12": {
+        "pick": "Gagan",
+        "amount": 10
       }
     }
   },
