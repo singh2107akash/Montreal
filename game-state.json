@@ -78,7 +78,7 @@
       },
       "13": {
         "pick": "Randy",
-        "amount": 10
+        "amount": 5
       },
       "14": {
         "pick": "Akash",
@@ -140,6 +140,10 @@
       },
       "9": {
         "pick": "Randy",
+        "amount": 5
+      },
+      "11": {
+        "pick": "Dilaver",
         "amount": 5
       }
     }
