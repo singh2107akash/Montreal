@@ -188,7 +188,9 @@
       }
     }
   },
-  "lockedPlayers": [],
+  "lockedPlayers": [
+    "Matab"
+  ],
   "resolutions": {},
   "favoriteOverrides": {},
   "playerPasswords": {
