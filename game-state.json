@@ -58,7 +58,7 @@
       },
       "8": {
         "pick": "Harman",
-        "amount": 15
+        "amount": 5
       },
       "9": {
         "pick": "Hinda",
@@ -137,6 +137,10 @@
       "8": {
         "pick": "Harman",
         "amount": 10
+      },
+      "9": {
+        "pick": "Randy",
+        "amount": 5
       }
     }
   },
