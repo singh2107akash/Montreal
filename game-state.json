@@ -22,6 +22,12 @@
         "pick": "Hinda",
         "amount": 20
       }
+    },
+    "Matab": {
+      "1": {
+        "pick": "Harman",
+        "amount": 15
+      }
     }
   },
   "lockedPlayers": [],
