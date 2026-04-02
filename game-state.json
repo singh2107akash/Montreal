@@ -99,6 +99,10 @@
       "20": {
         "pick": "Robby",
         "amount": 5
+      },
+      "21": {
+        "pick": "Randy",
+        "amount": 5
       }
     }
   },
