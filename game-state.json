@@ -133,6 +133,10 @@
       "1": {
         "pick": "Matab",
         "amount": 10
+      },
+      "4": {
+        "pick": "Aman",
+        "amount": 10
       }
     }
   },
