@@ -878,6 +878,10 @@
         "pick": "Akash",
         "amount": 10
       },
+      "3": {
+        "pick": "Harman",
+        "amount": 15
+      },
       "5": {
         "pick": "Goldy",
         "amount": 5
