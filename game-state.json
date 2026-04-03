@@ -1151,10 +1151,6 @@
       "15": {
         "pick": "Hinda",
         "amount": 25
-      },
-      "16": {
-        "pick": "Matab",
-        "amount": 5
       }
     },
     "Randy": {
@@ -1177,6 +1173,10 @@
       "7": {
         "pick": "Aman",
         "amount": 5
+      },
+      "8": {
+        "pick": "Hinda",
+        "amount": 15
       }
     }
   },
