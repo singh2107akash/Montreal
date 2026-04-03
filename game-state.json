@@ -647,6 +647,10 @@
       "24": {
         "pick": "Hinda",
         "amount": 5
+      },
+      "25": {
+        "pick": "Surkh",
+        "amount": 5
       }
     }
   },
