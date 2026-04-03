@@ -705,6 +705,10 @@
       "12": {
         "pick": "Surkh",
         "amount": 15
+      },
+      "13": {
+        "pick": "Harjit",
+        "amount": 10
       }
     }
   },
