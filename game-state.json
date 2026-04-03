@@ -1033,6 +1033,10 @@
       "11": {
         "pick": "Akash",
         "amount": 5
+      },
+      "12": {
+        "pick": "Surkh",
+        "amount": 5
       }
     }
   },
