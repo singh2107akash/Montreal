@@ -917,6 +917,10 @@
       "12": {
         "pick": "Pardeep",
         "amount": 20
+      },
+      "13": {
+        "pick": "Goldy",
+        "amount": 5
       }
     },
     "Pardeep": {
