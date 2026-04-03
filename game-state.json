@@ -546,6 +546,12 @@
         "pick": "Hinda",
         "amount": 5
       }
+    },
+    "Dilaver": {
+      "0": {
+        "pick": "Randy",
+        "amount": 5
+      }
     }
   },
   "lockedPlayers": [
