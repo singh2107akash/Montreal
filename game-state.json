@@ -1069,6 +1069,10 @@
       "20": {
         "pick": "Robby",
         "amount": 5
+      },
+      "21": {
+        "pick": "Hinda",
+        "amount": 10
       }
     }
   },
