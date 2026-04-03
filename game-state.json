@@ -923,6 +923,10 @@
       "10": {
         "pick": "Harman",
         "amount": 25
+      },
+      "11": {
+        "pick": "Pardeep",
+        "amount": 25
       }
     }
   },
