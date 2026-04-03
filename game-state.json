@@ -1323,6 +1323,10 @@
       "9": {
         "pick": "Hinda",
         "amount": 5
+      },
+      "10": {
+        "pick": "Aman",
+        "amount": 5
       }
     }
   },
