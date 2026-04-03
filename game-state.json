@@ -1518,7 +1518,15 @@
     "Harman",
     "Goldy"
   ],
-  "resolutions": {},
+  "resolutions": {
+    "0": {
+      "resolved": true,
+      "outcomeType": "favorite",
+      "actualPerson": null,
+      "favoriteOverride": null,
+      "resolvedAt": "2026-04-03T20:05:44.374Z"
+    }
+  },
   "favoriteOverrides": {
     "24": "Hinda"
   },
