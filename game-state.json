@@ -489,6 +489,10 @@
       "11": {
         "pick": "Aman",
         "amount": 5
+      },
+      "12": {
+        "pick": "Surkh",
+        "amount": 5
       }
     }
   },
