@@ -1013,6 +1013,10 @@
       "6": {
         "pick": "Harman",
         "amount": 15
+      },
+      "7": {
+        "pick": "Akash",
+        "amount": 10
       }
     }
   },
