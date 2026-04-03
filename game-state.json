@@ -697,6 +697,10 @@
       "10": {
         "pick": "Harman",
         "amount": 10
+      },
+      "11": {
+        "pick": "Gagan",
+        "amount": 5
       }
     }
   },
