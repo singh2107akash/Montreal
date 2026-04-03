@@ -1519,7 +1519,9 @@
     "Goldy"
   ],
   "resolutions": {},
-  "favoriteOverrides": {},
+  "favoriteOverrides": {
+    "24": "Hinda"
+  },
   "playerPasswords": {
     "Akash": "Rav",
     "Robby": "muxJuw-wyrxop-jybxi5",
