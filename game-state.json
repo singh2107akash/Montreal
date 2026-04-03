@@ -883,6 +883,10 @@
       "0": {
         "pick": "Goldy",
         "amount": 5
+      },
+      "2": {
+        "pick": "Goldy",
+        "amount": 5
       }
     }
   },
