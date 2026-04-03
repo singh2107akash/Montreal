@@ -787,6 +787,10 @@
       "6": {
         "pick": "Aman",
         "amount": 5
+      },
+      "7": {
+        "pick": "Matab",
+        "amount": 5
       }
     }
   },
