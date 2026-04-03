@@ -665,6 +665,10 @@
       "2": {
         "pick": "Harman",
         "amount": 20
+      },
+      "3": {
+        "pick": "Harjit",
+        "amount": 5
       }
     }
   },
