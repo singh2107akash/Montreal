@@ -891,6 +891,10 @@
       "2": {
         "pick": "Harman",
         "amount": 25
+      },
+      "3": {
+        "pick": "Harman",
+        "amount": 25
       }
     }
   },
