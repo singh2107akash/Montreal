@@ -599,6 +599,10 @@
       "12": {
         "pick": "Surkh",
         "amount": 10
+      },
+      "13": {
+        "pick": "Harman",
+        "amount": 15
       }
     }
   },
