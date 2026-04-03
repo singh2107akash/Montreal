@@ -870,6 +870,10 @@
         "pick": "Robby",
         "amount": 15
       },
+      "1": {
+        "pick": "Harman",
+        "amount": 25
+      },
       "5": {
         "pick": "Goldy",
         "amount": 5
