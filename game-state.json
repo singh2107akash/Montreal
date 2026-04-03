@@ -1095,6 +1095,10 @@
       "0": {
         "pick": "Jodha",
         "amount": 25
+      },
+      "1": {
+        "pick": "Harman",
+        "amount": 5
       }
     }
   },
