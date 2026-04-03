@@ -713,6 +713,10 @@
       "14": {
         "pick": "Matab",
         "amount": 5
+      },
+      "15": {
+        "pick": "Randy",
+        "amount": 5
       }
     }
   },
