@@ -763,6 +763,10 @@
       "0": {
         "pick": "Robby",
         "amount": 5
+      },
+      "1": {
+        "pick": "Harman",
+        "amount": 25
       }
     }
   },
