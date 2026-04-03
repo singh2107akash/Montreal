@@ -559,6 +559,10 @@
       "2": {
         "pick": "Harman",
         "amount": 25
+      },
+      "3": {
+        "pick": "Harjit",
+        "amount": 10
       }
     }
   },
