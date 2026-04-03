@@ -1512,7 +1512,11 @@
     "Randy",
     "Surkh",
     "Harjit",
-    "Akash"
+    "Akash",
+    "Aman",
+    "Pardeep",
+    "Harman",
+    "Goldy"
   ],
   "resolutions": {},
   "favoriteOverrides": {},
@@ -1566,5 +1570,5 @@
     "questionCount": 26,
     "maxSelfBets": 3
   },
-  "bettingClosed": false
+  "bettingClosed": true
 }
