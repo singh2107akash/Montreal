@@ -652,6 +652,12 @@
         "pick": "Surkh",
         "amount": 5
       }
+    },
+    "Gagan": {
+      "0": {
+        "pick": "Robby",
+        "amount": 10
+      }
     }
   },
   "lockedPlayers": [
