@@ -1316,6 +1316,10 @@
         "pick": "Aman",
         "amount": 5
       },
+      "3": {
+        "pick": "Matab",
+        "amount": 25
+      },
       "4": {
         "pick": "Akash",
         "amount": 10
