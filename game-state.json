@@ -975,6 +975,10 @@
       "23": {
         "pick": "Harman",
         "amount": 10
+      },
+      "24": {
+        "pick": "Pardeep",
+        "amount": 5
       }
     }
   },
