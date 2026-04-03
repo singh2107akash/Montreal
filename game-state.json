@@ -878,6 +878,12 @@
         "pick": "Harman",
         "amount": 15
       }
+    },
+    "Pardeep": {
+      "0": {
+        "pick": "Goldy",
+        "amount": 5
+      }
     }
   },
   "lockedPlayers": [
