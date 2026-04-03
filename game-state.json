@@ -1441,6 +1441,7 @@
     "Who is most likely to be the first person to complain about the car, the temperature, the drive, or say that you all should have just flown?",
     "Who is most likely to be the reason you're late to literally everything?",
     "Who is most likely to be the first person to become best friends with a stranger?",
+    "Who is most likely to be the first person to act as a wingman for someone?",
     "Who is most likely to be the first person to suggest getting shots?",
     "Who is most likely to be the first person to chug a full can of beer?",
     "Who is most likely to be the first person to become too loud at dinner?",
@@ -1468,7 +1469,7 @@
   "config": {
     "totalBudget": 250,
     "minBetPerQuestion": 5,
-    "questionCount": 25,
+    "questionCount": 26,
     "maxSelfBets": 3
   },
   "bettingClosed": false
