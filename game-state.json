@@ -783,6 +783,10 @@
       "5": {
         "pick": "Aman",
         "amount": 5
+      },
+      "6": {
+        "pick": "Aman",
+        "amount": 15
       }
     }
   },
