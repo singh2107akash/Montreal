@@ -701,6 +701,10 @@
       "11": {
         "pick": "Gagan",
         "amount": 5
+      },
+      "12": {
+        "pick": "Surkh",
+        "amount": 15
       }
     }
   },
