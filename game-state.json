@@ -984,6 +984,12 @@
         "pick": "Hinda",
         "amount": 5
       }
+    },
+    "Harman": {
+      "0": {
+        "pick": "Goldy",
+        "amount": 5
+      }
     }
   },
   "lockedPlayers": [
