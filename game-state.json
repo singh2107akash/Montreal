@@ -963,6 +963,10 @@
       "20": {
         "pick": "Matab",
         "amount": 5
+      },
+      "21": {
+        "pick": "Harman",
+        "amount": 10
       }
     }
   },
