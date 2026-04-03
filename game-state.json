@@ -1302,6 +1302,12 @@
         "pick": "Harman",
         "amount": 5
       }
+    },
+    "Surkh": {
+      "0": {
+        "pick": "Aman",
+        "amount": 5
+      }
     }
   },
   "lockedPlayers": [
