@@ -1315,6 +1315,10 @@
       "2": {
         "pick": "Harman",
         "amount": 5
+      },
+      "3": {
+        "pick": "Aman",
+        "amount": 5
       }
     }
   },
