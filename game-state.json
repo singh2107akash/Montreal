@@ -943,6 +943,10 @@
       "15": {
         "pick": "Surkh",
         "amount": 5
+      },
+      "16": {
+        "pick": "Randy",
+        "amount": 15
       }
     }
   },
