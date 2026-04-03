@@ -1154,7 +1154,7 @@
       },
       "17": {
         "pick": "Harman",
-        "amount": 10
+        "amount": 5
       },
       "18": {
         "pick": "Jodha",
@@ -1185,10 +1185,6 @@
       "8": {
         "pick": "Hinda",
         "amount": 15
-      },
-      "11": {
-        "pick": "Goldy",
-        "amount": 10
       }
     }
   },
