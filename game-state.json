@@ -993,6 +993,10 @@
       "1": {
         "pick": "Harman",
         "amount": 10
+      },
+      "2": {
+        "pick": "Harman",
+        "amount": 10
       }
     }
   },
