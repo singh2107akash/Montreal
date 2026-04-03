@@ -1107,10 +1107,6 @@
       "3": {
         "pick": "Randy",
         "amount": 10
-      },
-      "4": {
-        "pick": "Akash",
-        "amount": 25
       }
     }
   },
@@ -1135,7 +1131,8 @@
     "Hinda": "asdasd123",
     "Harjit": "sacrebleu",
     "Pardeep": "par*d26EE%$p",
-    "Harman": "Mtl1994!"
+    "Harman": "Mtl1994!",
+    "Randy": "Jovan12345!"
   },
   "questions": [
     "Who is most likely to be the first person to complain about the car, the temperature, the drive, or say that you all should have just flown?",
