@@ -1124,6 +1124,12 @@
         "pick": "Matab",
         "amount": 5
       }
+    },
+    "Randy": {
+      "0": {
+        "pick": "Goldy",
+        "amount": 10
+      }
     }
   },
   "lockedPlayers": [
