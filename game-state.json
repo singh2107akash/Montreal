@@ -1356,6 +1356,10 @@
         "pick": "Harman",
         "amount": 15
       },
+      "20": {
+        "pick": "Robby",
+        "amount": 20
+      },
       "23": {
         "pick": "Matab",
         "amount": 5
