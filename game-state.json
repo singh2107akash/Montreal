@@ -673,6 +673,10 @@
       "4": {
         "pick": "Aman",
         "amount": 10
+      },
+      "5": {
+        "pick": "Pardeep",
+        "amount": 10
       }
     }
   },
