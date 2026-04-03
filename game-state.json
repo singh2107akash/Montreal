@@ -827,16 +827,16 @@
       "18": {
         "pick": "Harman",
         "amount": 25
+      },
+      "19": {
+        "pick": "Matab",
+        "amount": 25
       }
     },
     "Harjit": {
       "0": {
         "pick": "Matab",
         "amount": 25
-      },
-      "5": {
-        "pick": "Goldy",
-        "amount": 5
       }
     }
   },
