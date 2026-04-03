@@ -1073,6 +1073,10 @@
       "21": {
         "pick": "Hinda",
         "amount": 10
+      },
+      "22": {
+        "pick": "Matab",
+        "amount": 10
       }
     }
   },
