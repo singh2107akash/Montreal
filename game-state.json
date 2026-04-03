@@ -1107,6 +1107,10 @@
       "3": {
         "pick": "Randy",
         "amount": 10
+      },
+      "4": {
+        "pick": "Akash",
+        "amount": 25
       }
     }
   },
