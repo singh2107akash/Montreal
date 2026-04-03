@@ -1090,6 +1090,12 @@
         "pick": "Hinda",
         "amount": 5
       }
+    },
+    "Jodha": {
+      "0": {
+        "pick": "Jodha",
+        "amount": 5
+      }
     }
   },
   "lockedPlayers": [
