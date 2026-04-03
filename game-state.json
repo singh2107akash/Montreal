@@ -795,9 +795,11 @@
       "9": {
         "pick": "Hinda",
         "amount": 5
-      },
-      "10": {
-        "pick": "Harman",
+      }
+    },
+    "Harjit": {
+      "0": {
+        "pick": "Matab",
         "amount": 25
       }
     }
