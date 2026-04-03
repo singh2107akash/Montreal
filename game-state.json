@@ -758,6 +758,12 @@
         "pick": "Hinda",
         "amount": 10
       }
+    },
+    "Hinda": {
+      "0": {
+        "pick": "Robby",
+        "amount": 5
+      }
     }
   },
   "lockedPlayers": [
