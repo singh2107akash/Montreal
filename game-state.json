@@ -440,6 +440,12 @@
         "pick": "Hinda",
         "amount": 5
       }
+    },
+    "Akash": {
+      "0": {
+        "pick": "Robby",
+        "amount": 5
+      }
     }
   },
   "lockedPlayers": [
