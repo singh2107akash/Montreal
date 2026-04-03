@@ -1319,6 +1319,10 @@
       "3": {
         "pick": "Aman",
         "amount": 5
+      },
+      "5": {
+        "pick": "Jodha",
+        "amount": 5
       }
     }
   },
