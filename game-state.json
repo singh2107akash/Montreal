@@ -681,6 +681,10 @@
       "6": {
         "pick": "Matab",
         "amount": 10
+      },
+      "7": {
+        "pick": "Akash",
+        "amount": 10
       }
     }
   },
