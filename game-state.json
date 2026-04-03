@@ -939,6 +939,10 @@
       "14": {
         "pick": "Akash",
         "amount": 10
+      },
+      "15": {
+        "pick": "Surkh",
+        "amount": 5
       }
     }
   },
