@@ -469,6 +469,10 @@
       "6": {
         "pick": "Goldy",
         "amount": 5
+      },
+      "7": {
+        "pick": "Akash",
+        "amount": 5
       }
     }
   },
