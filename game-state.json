@@ -955,6 +955,10 @@
       "18": {
         "pick": "Goldy",
         "amount": 5
+      },
+      "19": {
+        "pick": "Harman",
+        "amount": 5
       }
     }
   },
