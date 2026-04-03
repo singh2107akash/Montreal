@@ -1213,6 +1213,10 @@
       "12": {
         "pick": "Surkh",
         "amount": 10
+      },
+      "15": {
+        "pick": "Randy",
+        "amount": 10
       }
     }
   },
