@@ -1183,6 +1183,10 @@
       "22": {
         "pick": "Aman",
         "amount": 5
+      },
+      "23": {
+        "pick": "Harjit",
+        "amount": 5
       }
     },
     "Randy": {
@@ -1212,10 +1216,6 @@
       },
       "12": {
         "pick": "Surkh",
-        "amount": 10
-      },
-      "15": {
-        "pick": "Randy",
         "amount": 10
       }
     }
