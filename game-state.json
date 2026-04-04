@@ -1546,6 +1546,13 @@
       "actualPerson": null,
       "favoriteOverride": null,
       "resolvedAt": "2026-04-03T21:41:09.488Z"
+    },
+    "25": {
+      "resolved": true,
+      "outcomeType": "someone_else",
+      "actualPerson": "Pardeep",
+      "favoriteOverride": null,
+      "resolvedAt": "2026-04-04T15:10:07.428Z"
     }
   },
   "favoriteOverrides": {
