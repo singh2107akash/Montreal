@@ -1540,6 +1540,13 @@
       "favoriteOverride": null,
       "resolvedAt": "2026-04-03T20:06:08.838Z"
     },
+    "5": {
+      "resolved": true,
+      "outcomeType": "favorite",
+      "actualPerson": null,
+      "favoriteOverride": null,
+      "resolvedAt": "2026-04-07T00:47:04.908Z"
+    },
     "6": {
       "resolved": true,
       "outcomeType": "someone_else",
